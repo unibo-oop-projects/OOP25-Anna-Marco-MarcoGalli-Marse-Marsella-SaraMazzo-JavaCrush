@@ -7,4 +7,10 @@ package it.unibo.javacrush.model.api;
  */
 public interface Board {
 
+    int getRows();
+
+    int getCols();
+
+    
+
 }
