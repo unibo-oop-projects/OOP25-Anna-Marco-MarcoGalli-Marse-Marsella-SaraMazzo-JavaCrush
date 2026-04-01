@@ -2,7 +2,7 @@ package it.unibo.javacrush.model.impl;
 
 import it.unibo.javacrush.model.api.Board;
 
-public class BoarsdImpl implements Board {
+public class BoardImpl implements Board {
 
     @Override
     public int getRows() {
