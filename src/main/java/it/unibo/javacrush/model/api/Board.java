@@ -1,5 +1,7 @@
 package it.unibo.javacrush.model.api;
 
+import it.unibo.javacrush.common.Position;
+
 /**
  * Interface representing a game board.
  * This interface defines the contract for a game board,
@@ -11,6 +13,6 @@ public interface Board {
 
     int getCols();
 
-    
+    Cell getCellAt(Position pos);
 
 }
