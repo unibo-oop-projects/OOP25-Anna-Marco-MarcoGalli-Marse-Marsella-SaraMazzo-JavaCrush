@@ -11,6 +11,6 @@ public interface StallEngine {
      * 
      * @return true if there is stall.
      */
-    boolean isStall();
+    boolean isStall(Board board);
 
 }
