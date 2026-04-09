@@ -50,46 +50,46 @@ public class MatchDetectorImpl implements MatchDetector{
 
     private Set<Position> checkHorizontal(Board board, Position pos) {
         
-        Set<Position> match = new HashSet<>();
-        match.add(pos);
+        Set<Position> matches = new HashSet<>();
+        matches.add(pos);
         CellType matchType = board.getCellAt(pos).getType();
         
         int y = pos.y();
         int x = pos.x() - 1;
         while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
-            match.add(new Position(x,y));
+            matches.add(new Position(x,y));
             x--;
         }
 
         x = pos.x() + 1;
         while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
-            match.add(new Position(x,y));
+            matches.add(new Position(x,y));
             x++;
         }
 
-        return match.size()>=3 ? match : Collections.emptySet();
+        return matches.size()>=3 ? matches : Collections.emptySet();
     }
 
     private Set<Position> checkVertical(Board board, Position pos) {
         
-        Set<Position> match = new HashSet<>();
-        match.add(pos);
+        Set<Position> matches = new HashSet<>();
+        matches.add(pos);
         CellType matchType = board.getCellAt(pos).getType();
         
         int x = pos.x();
         int y = pos.y() - 1;
         while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
-            match.add(new Position(x,y));
+            matches.add(new Position(x,y));
             y--;
         }
 
         y = pos.y() + 1;
         while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
-            match.add(new Position(x,y));
+            matches.add(new Position(x,y));
             y++;
         }
 
-        return match.size()>=3 ? match : Collections.emptySet();
+        return matches.size()>= 3 ? matches : Collections.emptySet();
     }
 
 }

@@ -10,7 +10,7 @@ public interface MoveEngine {
      * @param pos2 the second position to check
      * @return true if the positions are adjacent, false otherwise
      */
-    boolean isAdiacent(Position pos1, Position pos2);
+    boolean isAdjacent(Position pos1, Position pos2);
 
     /**
      * Check if two positions can be swapped on the board, meaning that the swap would result in a match.

@@ -24,4 +24,10 @@ public class BoardImpl implements Board {
         throw new UnsupportedOperationException("Unimplemented method 'getCellAt'");
     }
 
+    @Override
+    public void swapCells(Position pos1, Position pos2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'swapCells'");
+    }
+
 }
