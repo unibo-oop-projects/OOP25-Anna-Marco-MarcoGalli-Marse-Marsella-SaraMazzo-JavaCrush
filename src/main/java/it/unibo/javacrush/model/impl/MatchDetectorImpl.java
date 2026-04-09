@@ -14,14 +14,33 @@ public class MatchDetectorImpl implements MatchDetector{
 
     @Override
     public Set<Match> findMatchesAt(Board board, Position pos) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findMatchesAt'");
+
+        Set<Match> matches = new HashSet<>();
+        Set<Position> horizontal = checkHorizontal(board, pos);
+        Set<Position> vertical = checkVertical(board, pos);
+
+        if(!horizontal.isEmpty()) {
+            matches.add(new Match(horizontal, board.getCellAt(pos).getType()));
+        }
+        if(!vertical.isEmpty()) {
+            matches.add(new Match(vertical, board.getCellAt(pos).getType()));
+        }
+
+        return matches;
     }
 
     @Override
     public Set<Match> findAllMatches(Board board) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllMatches'");
+
+        Set<Match> matches = new HashSet<>();
+
+        for(int i = 0; i < board.getCols(); i++) {
+            for(int j = 0; j < board.getRows(); j++) {
+                matches.addAll(findMatchesAt(board,new Position(i,j)));
+            }
+        }
+
+        return matches;
     }
 
     private boolean isInBounds(Board board, int col, int row) {
