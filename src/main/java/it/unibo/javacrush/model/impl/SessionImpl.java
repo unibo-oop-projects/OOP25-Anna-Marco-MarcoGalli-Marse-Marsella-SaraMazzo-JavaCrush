@@ -1,8 +1,9 @@
 package it.unibo.javacrush.model.impl;
 
-import java.util.Map;
+import java.util.List;
 
 import it.unibo.javacrush.common.CellType;
+import it.unibo.javacrush.model.api.Goal;
 import it.unibo.javacrush.model.api.Session;
 
 public class SessionImpl implements Session{
@@ -20,7 +21,7 @@ public class SessionImpl implements Session{
     }
 
     @Override
-    public Map<CellType, Integer> getGoals() {
+    public List<Goal> getGoals() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getGoals'");
     }

@@ -1,6 +1,6 @@
 package it.unibo.javacrush.model.api;
 
-import java.util.Map;
+import java.util.List;
 
 import it.unibo.javacrush.common.CellType;
 
@@ -24,9 +24,9 @@ public interface Session {
     /**
      * The updated goals of the game.
      * 
-     * @return a map with the updated goals of the game 
+     * @return a list with the updated goals of the game 
      */
-    Map<CellType, Integer> getGoals();
+   List<Goal> getGoals();
 
     /**
      * Update that cells of a specific type have been collected.

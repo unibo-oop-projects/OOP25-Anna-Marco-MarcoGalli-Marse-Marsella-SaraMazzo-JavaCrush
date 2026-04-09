@@ -9,7 +9,8 @@ import it.unibo.javacrush.common.CellType;
 public interface Cell {
 
     /**
-     * get the type of the cell
+     * Get the type of the cell.
+     * 
      * @return the type of the cell
      */
     CellType getType();
