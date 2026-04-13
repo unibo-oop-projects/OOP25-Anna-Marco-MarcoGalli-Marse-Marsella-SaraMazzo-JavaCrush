@@ -2,6 +2,7 @@ package it.unibo.javacrush.model.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
@@ -9,8 +10,8 @@ import it.unibo.javacrush.model.api.Cell;
 
 public class BoardImpl implements Board {
 
-    private Map<Position, Cell> cells = new HashMap<>();
-
+    private Map<Position, Optional<Cell>> cells = new HashMap<>();
+    
     /**
      * BoardImpl constructor.
      * 
@@ -22,7 +23,7 @@ public class BoardImpl implements Board {
             for (int j = 0; j < size; j++) {
 
                 //creiamo la griglia delle posizioni senza celle dentro
-                this.cells.put(new Position(i, j), null);
+                this.cells.put(new Position(i, j), Optional.empty());
             }
         }
     }
@@ -40,7 +41,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public Cell getCellAt(Position pos) {
+    public Optional<Cell> getCellAt(Position pos) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getCellAt'");
     }

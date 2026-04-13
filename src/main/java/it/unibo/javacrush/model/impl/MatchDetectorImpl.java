@@ -20,10 +20,10 @@ public class MatchDetectorImpl implements MatchDetector{
         Set<Position> vertical = checkVertical(board, pos);
 
         if(!horizontal.isEmpty()) {
-            matches.add(new Match(horizontal, board.getCellAt(pos).getType()));
+            matches.add(new Match(horizontal, board.getCellAt(pos).get().getType()));
         }
         if(!vertical.isEmpty()) {
-            matches.add(new Match(vertical, board.getCellAt(pos).getType()));
+            matches.add(new Match(vertical, board.getCellAt(pos).get().getType()));
         }
 
         return matches;
@@ -52,17 +52,17 @@ public class MatchDetectorImpl implements MatchDetector{
         
         Set<Position> matches = new HashSet<>();
         matches.add(pos);
-        CellType matchType = board.getCellAt(pos).getType();
+        CellType matchType = board.getCellAt(pos).get().getType();
         
         int y = pos.y();
         int x = pos.x() - 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
+        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
             matches.add(new Position(x,y));
             x--;
         }
 
         x = pos.x() + 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
+        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
             matches.add(new Position(x,y));
             x++;
         }
@@ -74,17 +74,17 @@ public class MatchDetectorImpl implements MatchDetector{
         
         Set<Position> matches = new HashSet<>();
         matches.add(pos);
-        CellType matchType = board.getCellAt(pos).getType();
+        CellType matchType = board.getCellAt(pos).get().getType();
         
         int x = pos.x();
         int y = pos.y() - 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
+        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
             matches.add(new Position(x,y));
             y--;
         }
 
         y = pos.y() + 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).getType() == matchType) {
+        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
             matches.add(new Position(x,y));
             y++;
         }
