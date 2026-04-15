@@ -28,6 +28,14 @@ public interface Board {
     Optional<Cell> getCellAt(Position pos);
 
     /**
+     * Sets the cell at the specified position.
+     * 
+     * @param pos the position of the cell to set.
+     * @param cell the cell to set at the specified position.
+     */
+    void setCell(Position pos, Optional<Cell> cell);
+
+    /**
      * Swaps the cells at the specified positions.
      * 
      * @param pos1 the first position to swap.

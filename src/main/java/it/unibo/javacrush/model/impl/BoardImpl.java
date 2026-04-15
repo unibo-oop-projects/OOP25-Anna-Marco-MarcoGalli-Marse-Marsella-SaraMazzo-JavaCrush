@@ -10,18 +10,22 @@ import it.unibo.javacrush.model.api.Cell;
 
 public class BoardImpl implements Board {
 
-    private Map<Position, Optional<Cell>> cells = new HashMap<>();
+    private final Map<Position, Optional<Cell>> cells = new HashMap<>();
+    private final int rows;
+    private final int cols;
     
     /**
      * BoardImpl constructor.
      * 
      * @param size the size of the board.
      */
-    public BoardImpl(int size) {
+    public BoardImpl(int rows, int cols) {
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        this.rows = rows;
+        this.cols = cols;
 
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 //creiamo la griglia delle posizioni senza celle dentro
                 this.cells.put(new Position(i, j), Optional.empty());
             }
@@ -30,26 +34,29 @@ public class BoardImpl implements Board {
 
     @Override
     public int getRows() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getRows'");
+        return this.rows;
     }
 
     @Override
     public int getCols() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCols'");
+        return this.cols;
     }
 
     @Override
     public Optional<Cell> getCellAt(Position pos) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCellAt'");
+        return cells.get(pos);
     }
 
     @Override
     public void swapCells(Position pos1, Position pos2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'swapCells'");
+        var tmp = cells.get(pos1);
+        cells.replace(pos1, cells.get(pos2));
+        cells.replace(pos2, tmp);
+    }
+
+    @Override
+    public void setCell(Position pos, Optional<Cell> cell) {
+        cells.replace(pos,cell);
     }
 
 }
