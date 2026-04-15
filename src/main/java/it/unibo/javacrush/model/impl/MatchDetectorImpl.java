@@ -39,9 +39,9 @@ public class MatchDetectorImpl implements MatchDetector{
 
         Set<Match> matches = new HashSet<>();
 
-        for(int i = 0; i < board.getCols(); i++) {
-            for(int j = 0; j < board.getRows(); j++) {
-                var match = findMatchesAt(board, new Position(i,j));
+        for(int i = 0; i < board.getRows(); i++) {
+            for(int j = 0; j < board.getCols(); j++) {
+                var match = findMatchesAt(board, new Position(j,i));
                 if(match != null) {
                     matches.add(match);
                 }

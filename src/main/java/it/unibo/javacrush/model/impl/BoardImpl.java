@@ -27,7 +27,7 @@ public class BoardImpl implements Board {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 //creiamo la griglia delle posizioni senza celle dentro
-                this.cells.put(new Position(i, j), Optional.empty());
+                this.cells.put(new Position(j, i), Optional.empty());
             }
         }
     }
