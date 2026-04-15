@@ -5,28 +5,33 @@ import java.util.HashSet;
 import java.util.Set;
 
 import it.unibo.javacrush.common.CellType;
-import it.unibo.javacrush.common.Match;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
+import it.unibo.javacrush.model.api.Cell;
+import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.api.MatchDetector;
 
 public class MatchDetectorImpl implements MatchDetector{
 
     @Override
-    public Set<Match> findMatchesAt(Board board, Position pos) {
+    public Match findMatchesAt(Board board, Position pos) {
 
-        Set<Match> matches = new HashSet<>();
+        Set<Position> matches = new HashSet<>();
         Set<Position> horizontal = checkHorizontal(board, pos);
         Set<Position> vertical = checkVertical(board, pos);
 
         if(!horizontal.isEmpty()) {
-            matches.add(new Match(horizontal, board.getCellAt(pos).get().getType()));
+            matches.addAll(horizontal);
         }
         if(!vertical.isEmpty()) {
-            matches.add(new Match(vertical, board.getCellAt(pos).get().getType()));
+            matches.addAll(vertical);
         }
 
-        return matches;
+        if (matches.isEmpty()) {
+            return null; 
+        }
+
+        return new MatchImpl(matches, board.getCellAt(pos).get().getType());
     }
 
     @Override
@@ -36,7 +41,10 @@ public class MatchDetectorImpl implements MatchDetector{
 
         for(int i = 0; i < board.getCols(); i++) {
             for(int j = 0; j < board.getRows(); j++) {
-                matches.addAll(findMatchesAt(board,new Position(i,j)));
+                var match = findMatchesAt(board, new Position(i,j));
+                if(match != null) {
+                    matches.add(match);
+                }
             }
         }
 
@@ -56,13 +64,23 @@ public class MatchDetectorImpl implements MatchDetector{
         
         int y = pos.y();
         int x = pos.x() - 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
+        while(isInBounds(board,x,y) && 
+                board.getCellAt(new Position(x,y))
+                    .map(Cell::getType)
+                    .filter(type -> type == matchType)
+                    .isPresent()) {
+
             matches.add(new Position(x,y));
             x--;
         }
 
         x = pos.x() + 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
+        while(isInBounds(board,x,y) && 
+                board.getCellAt(new Position(x,y))
+                    .map(Cell::getType)
+                    .filter(type -> type == matchType)
+                    .isPresent()) {
+
             matches.add(new Position(x,y));
             x++;
         }
@@ -78,13 +96,23 @@ public class MatchDetectorImpl implements MatchDetector{
         
         int x = pos.x();
         int y = pos.y() - 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
+        while(isInBounds(board,x,y) && 
+                board.getCellAt(new Position(x,y))
+                    .map(Cell::getType)
+                    .filter(type -> type == matchType)
+                    .isPresent()) {
+
             matches.add(new Position(x,y));
             y--;
         }
 
         y = pos.y() + 1;
-        while(isInBounds(board,x,y) && board.getCellAt(new Position(x,y)).get().getType() == matchType) {
+        while(isInBounds(board,x,y) && 
+                board.getCellAt(new Position(x,y))
+                    .map(Cell::getType)
+                    .filter(type -> type == matchType)
+                    .isPresent()) {
+    
             matches.add(new Position(x,y));
             y++;
         }
