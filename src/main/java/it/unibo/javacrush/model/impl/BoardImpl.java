@@ -59,4 +59,34 @@ public class BoardImpl implements Board {
         cells.replace(pos,cell);
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((cells == null) ? 0 : cells.hashCode());
+        result = prime * result + rows;
+        result = prime * result + cols;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BoardImpl other = (BoardImpl) obj;
+        if (cells == null) {
+            if (other.cells != null)
+                return false;
+        } else if (!cells.equals(other.cells))
+            return false;
+        if (rows != other.rows)
+            return false;
+        if (cols != other.cols)
+            return false;
+        return true;
+    }
 }
