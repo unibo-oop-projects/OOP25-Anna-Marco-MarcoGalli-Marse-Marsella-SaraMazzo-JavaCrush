@@ -2,22 +2,21 @@ package it.unibo.javacrush.model.api;
 
 import java.util.Set;
 
-import it.unibo.javacrush.common.Match;
 import it.unibo.javacrush.common.Position;
 
 public interface MatchDetector {
 
     /**
-     * Find a match at the given position on the board.
+     * Finds all matches at the given position on the board.
      * 
      * @param board the board to check for matches
      * @param pos the position to check for matches
-     * @return a set of matches found at the given position,or an empty set if no matches are found
+     * @return the match found at the given position, which could be empty if no match is found.
     */
-    Set<Match> findMatchesAt(Board board, Position pos);
+    Match findMatchesAt(Board board, Position pos);
 
     /**
-     * Find all matches on the board.
+     * Finds all matches on the board.
      * 
      * @param board the board to check for matches
      * @return a set of all matches found on the board
