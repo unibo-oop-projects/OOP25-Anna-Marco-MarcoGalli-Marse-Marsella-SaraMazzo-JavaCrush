@@ -3,6 +3,7 @@ package it.unibo.javacrush.model.impl;
 import java.util.List;
 
 import it.unibo.javacrush.common.CellType;
+import it.unibo.javacrush.common.GameState;
 import it.unibo.javacrush.model.api.Goal;
 import it.unibo.javacrush.model.api.Session;
 
@@ -27,15 +28,16 @@ public class SessionImpl implements Session{
     }
 
     @Override
-    public void updateCellsCollected(CellType type, int count) {
+    public void updateGoals(CellType type, int count) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateCellsCollected'");
+        throw new UnsupportedOperationException("Unimplemented method 'updateGoals'");
     }
 
     @Override
-    public boolean isWon() {
+    public GameState getGameStatus() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isWon'");
+        throw new UnsupportedOperationException("Unimplemented method 'getGameStatus'");
     }
+
 
 }
