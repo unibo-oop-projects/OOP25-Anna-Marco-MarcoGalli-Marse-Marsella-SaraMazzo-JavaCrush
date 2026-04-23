@@ -35,29 +35,38 @@ public class GravityEngineTest {
         Cell moka = new CellImpl(CellType.MOKA);
         board.setCell(start, Optional.of(moka));
 
-        gravity.applyGravity(board);
+        boolean gravityApplied = gravity.applyGravity(board);
 
+        assertTrue(gravityApplied, "Gravity should have been applied.");
         assertTrue(board.getCellAt(start).isEmpty(), "The original position should be empty after falling.");
         assertTrue(board.getCellAt(expected).isPresent(), "The new position should contain the cell after falling.");
-        assertEquals(moka, board.getCellAt(expected).get(), "The cell in the new position should be the same as the original cell.");}
+        assertEquals(moka, board.getCellAt(expected).get(), "The cell in the new position should be the same as the original cell.");
+    }
 
     @Test
     void testBlockedByAnotherCell() {
         Cell topCell = new CellImpl(CellType.MOKA);
+        Cell midCell = new CellImpl(CellType.CUP);
         Cell bottomCell = new CellImpl(CellType.CUP);
 
         Position pos0 = new Position(0,0);
         Position pos1 = new Position(0,1);
+        Position pos2 = new Position(0,2);
 
         board.setCell(pos0, Optional.of(topCell));
-        board.setCell(pos1, Optional.of(bottomCell));
+        board.setCell(pos1, Optional.of(midCell));
+        board.setCell(pos2, Optional.of(bottomCell));
 
-        gravity.applyGravity(board);
+        boolean gravityApplied = gravity.applyGravity(board);
 
+        assertFalse(gravityApplied, "Gravity should not have been applied since cells are blocked.");
         assertTrue(board.getCellAt(pos0).isPresent(), "The top cell should remain in place.");
         assertEquals(topCell, board.getCellAt(pos0).get(), "The top cell should be unchanged.");
-        assertTrue(board.getCellAt(pos1).isPresent(), "The bottom cell should remain in place.");
-        assertEquals(bottomCell, board.getCellAt(pos1).get(), "The bottom cell should be unchanged.");
+        assertTrue(board.getCellAt(pos1).isPresent(), "The middle cell should remain in place.");
+        assertEquals(midCell, board.getCellAt(pos1).get(), "The middle cell should be unchanged.");
+        assertTrue(board.getCellAt(pos2).isPresent(), "The bottom cell should remain in place.");
+        assertEquals(bottomCell, board.getCellAt(pos2).get(), "The bottom cell should be unchanged.");
+
     }
 
     @Test
