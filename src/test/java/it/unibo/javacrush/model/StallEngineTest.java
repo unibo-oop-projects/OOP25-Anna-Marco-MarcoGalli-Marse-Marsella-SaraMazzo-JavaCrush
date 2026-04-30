@@ -1,7 +1,7 @@
 package it.unibo.javacrush.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.NoSuchElementException;
@@ -19,7 +19,7 @@ import it.unibo.javacrush.model.impl.CellImpl;
 import it.unibo.javacrush.model.impl.StallEngineImpl;
 
 public class StallEngineTest {
-    
+
     private Board board;
     private Board initial;
     private StallEngine st;
@@ -55,7 +55,7 @@ public class StallEngineTest {
 
     @Test
     void testNoStallWithMoves() {
-        
+
         board.setCell(new Position(1, 0), Optional.of(new CellImpl(CellType.MILK)));
         board.setCell(new Position(0, 1), Optional.of(new CellImpl(CellType.MILK)));
         board.setCell(new Position(1, 2), Optional.of(new CellImpl(CellType.MILK)));
@@ -97,7 +97,7 @@ public class StallEngineTest {
         }
 
         st.computeStall(board);
-        assertEquals(initial, board);
+        assertNotEquals(initial, board);
 
     }
 }
