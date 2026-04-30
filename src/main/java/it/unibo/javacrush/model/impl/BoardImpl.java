@@ -46,17 +46,22 @@ public class BoardImpl implements Board {
     public Optional<Cell> getCellAt(Position pos) {
         return cells.get(pos);
     }
+    
+    @Override
+    public Map<Position, Optional<Cell>> getGrid() {
+        return Map.copyOf(this.cells);
+    }
 
     @Override
     public void swapCells(Position pos1, Position pos2) {
         var tmp = cells.get(pos1);
-        cells.replace(pos1, cells.get(pos2));
-        cells.replace(pos2, tmp);
+        cells.put(pos1, cells.get(pos2));
+        cells.put(pos2, tmp);
     }
 
     @Override
     public void setCell(Position pos, Optional<Cell> cell) {
-        cells.replace(pos,cell);
+        cells.put(pos,cell);
     }
 
     @Override
@@ -89,4 +94,10 @@ public class BoardImpl implements Board {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "BoardImpl [cells=" + cells + "]";
+    }
+
 }

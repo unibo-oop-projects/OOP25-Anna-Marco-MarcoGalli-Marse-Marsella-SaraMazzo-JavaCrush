@@ -1,5 +1,6 @@
 package it.unibo.javacrush.model.api;
 
+import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.javacrush.common.Position;
@@ -26,6 +27,11 @@ public interface Board {
      * @return the cell at the specified position.
      */
     Optional<Cell> getCellAt(Position pos);
+
+    /**
+     * @return the Map with all the cells mapped to all their positions.
+     */
+    Map<Position, Optional<Cell>> getGrid();
 
     /**
      * Sets the cell at the specified position.
