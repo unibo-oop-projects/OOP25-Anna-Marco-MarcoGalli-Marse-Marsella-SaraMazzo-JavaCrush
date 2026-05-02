@@ -41,9 +41,14 @@ public class MatchDetectorImpl implements MatchDetector{
 
         for(int i = 0; i < board.getRows(); i++) {
             for(int j = 0; j < board.getCols(); j++) {
-                var match = findMatchesAt(board, new Position(j,i));
-                if(match != null) {
+                Position pos = new Position(j,i);
+                if(!board.getCellAt(pos).isEmpty()) {
+
+                    var match = findMatchesAt(board, pos);
+                    if(match != null) {
                     matches.add(match);
+                    }
+
                 }
             }
         }
