@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.model.api.Goal;
 import it.unibo.javacrush.model.api.GoalFactory;
+import it.unibo.javacrush.model.impl.GoalFactoryImpl;
 
 /**
  * Test for {@link it.unibo.javacrush.model.api.Goal}.
@@ -26,8 +27,8 @@ public class GoalTest {
 
     @BeforeEach
     void initialize(){
-        var factory = new GoalFactoryImpl();
-        goal = factory.createGoal(TYPE, INITIAL_TARGET);
+        final GoalFactory factory = new GoalFactoryImpl();
+        this.goal = factory.createGoal(TYPE, INITIAL_TARGET);
     }
 
     /**
