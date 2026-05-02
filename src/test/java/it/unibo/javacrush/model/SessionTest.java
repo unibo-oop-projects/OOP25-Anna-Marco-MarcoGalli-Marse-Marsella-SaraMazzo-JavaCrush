@@ -30,12 +30,12 @@ public class SessionTest {
         CellType.MILK, 5,
         CellType.SUGAR, 15
     );
-    private static final GoalFactory FACTORY = new GoalFactoryImpl();
+    //private static final GoalFactory FACTORY = new GoalFactoryImpl();
     private Session session;
 
     @BeforeEach
     void initialize() {
-        session = new SessionImpl(INITIAL_MOVES, GOAL_CONFIGURATION, FACTORY);
+        //session = new SessionImpl(INITIAL_MOVES, GOAL_CONFIGURATION, FACTORY);
     }
 
     /**

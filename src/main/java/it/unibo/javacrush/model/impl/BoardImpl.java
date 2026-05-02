@@ -24,10 +24,10 @@ public class BoardImpl implements Board {
         this.rows = rows;
         this.cols = cols;
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int j = 0; j < cols; j++) {
+            for (int i = 0; i < rows; i++) {
                 //creiamo la griglia delle posizioni senza celle dentro
-                this.cells.put(new Position(j, i), Optional.empty());
+                this.cells.put(new Position(i, j), Optional.empty());
             }
         }
     }

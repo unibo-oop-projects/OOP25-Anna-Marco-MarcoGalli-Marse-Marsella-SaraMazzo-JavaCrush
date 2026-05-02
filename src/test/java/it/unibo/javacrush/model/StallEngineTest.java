@@ -18,6 +18,9 @@ import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.CellImpl;
 import it.unibo.javacrush.model.impl.StallEngineImpl;
 
+/**
+ * Test for {@link it.unibo.javacrush.model.api.StallEngine}.
+ */
 public class StallEngineTest {
 
     private Board board;
@@ -25,6 +28,9 @@ public class StallEngineTest {
     private StallEngine st;
     private static final int DIMENSION = 4;
 
+    /**
+     * Initialises and fill board and initial with equal-typed cells.
+     */
     @BeforeEach
     void init() {
 
@@ -40,6 +46,9 @@ public class StallEngineTest {
         }
     }
 
+    /**
+     * Test that StallEngine throws ad Exception if the given board contains any null cell.
+     */
     @Test
     void testNoStallEmptyBoard() {
         for (int y = 0; y < DIMENSION; y++) {
@@ -53,6 +62,9 @@ public class StallEngineTest {
         }, "Constructor should throw NoSuchElementException if any cell of the board is empty");
     }
 
+    /**
+     * Test that StallEngine doesn't modify the given board if there are possible moves.
+     */
     @Test
     void testNoStallWithMoves() {
 
@@ -84,6 +96,9 @@ public class StallEngineTest {
         assertEquals(initial, board);
     }
 
+    /**
+     * Test that, if there's stall, StallEngine shuffles the cells in a manner that possible moves appear.
+     */
     @Test
     void testStall() {
 

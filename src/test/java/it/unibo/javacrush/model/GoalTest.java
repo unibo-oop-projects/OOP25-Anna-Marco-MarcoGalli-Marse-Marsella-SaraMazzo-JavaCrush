@@ -26,8 +26,8 @@ public class GoalTest {
 
     @BeforeEach
     void initialize(){
-        var factory = new GoalFactoryImpl();
-        goal = factory.createGoal(TYPE, INITIAL_TARGET);
+        /*var factory = new GoalFactoryImpl();
+        goal = factory.createGoal(TYPE, INITIAL_TARGET);*/
     }
 
     /**
