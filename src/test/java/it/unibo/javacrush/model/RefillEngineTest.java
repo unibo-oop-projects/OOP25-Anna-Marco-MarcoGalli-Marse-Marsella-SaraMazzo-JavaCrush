@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
+import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.api.RefillEngine;
 import it.unibo.javacrush.model.impl.BoardImpl;
-import it.unibo.javacrush.model.impl.DownwardRefill;
+import it.unibo.javacrush.model.impl.DownwardGravity;
+import it.unibo.javacrush.model.impl.AdaptiveRefill;
 
 public class RefillEngineTest {
     private RefillEngine refillEngine;
@@ -19,7 +21,8 @@ public class RefillEngineTest {
 
     @BeforeEach
     public void setUp() {
-        this.refillEngine = new DownwardRefill();
+        GravityEngine gravity = new DownwardGravity();
+        this.refillEngine = new AdaptiveRefill(gravity);
         this.board = new BoardImpl(ROWS, COLS);
     }
 
