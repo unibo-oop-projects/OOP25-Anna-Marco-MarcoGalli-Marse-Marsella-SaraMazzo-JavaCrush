@@ -6,6 +6,7 @@ import it.unibo.javacrush.model.api.GravityEngine;
 import java.util.Optional;
 
 import it.unibo.javacrush.model.api.Cell;
+import it.unibo.javacrush.common.Direction;
 import it.unibo.javacrush.common.Position;
 
 public class DownwardGravity implements GravityEngine {
@@ -31,5 +32,10 @@ public class DownwardGravity implements GravityEngine {
             }
         }
         return gravityApplied;
+    }
+
+    @Override
+    public Direction getDirection() {
+        return Direction.DOWN;
     }
 }

@@ -11,7 +11,8 @@ public interface RefillEngine {
      * Refill the board, filling the empty cells with new random cells.
      * 
      * @param board the board to refill
+     * @return true if the board was changed, false otherwise
      */
-    void refill(Board board);
+    Boolean refill(Board board);
 
 }

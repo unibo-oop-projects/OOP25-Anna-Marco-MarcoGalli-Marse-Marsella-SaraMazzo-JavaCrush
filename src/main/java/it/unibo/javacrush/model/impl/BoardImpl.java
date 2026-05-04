@@ -30,6 +30,7 @@ public class BoardImpl implements Board {
                 this.cells.put(new Position(j, i), Optional.empty());
             }
         }
+        System.out.println(this.cells);
     }
 
     @Override
