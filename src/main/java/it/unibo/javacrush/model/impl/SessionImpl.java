@@ -21,7 +21,7 @@ import it.unibo.javacrush.model.api.Session;
 public class SessionImpl implements Session{
 
     private static final int GOAL_TARGET = 10;
-    private static final int NUMER_GOALS = 2;
+    private static final int NUMBER_GOALS = 2;
 
     private int movesLeft;
     private final List<Goal> goals = new ArrayList<>();
@@ -34,11 +34,12 @@ public class SessionImpl implements Session{
             .filter(Optional::isPresent)
             .map(Optional::get)
             .map(elem -> elem.getType())
+            .distinct()
             .collect(Collectors.toList());
 
         Collections.shuffle(availableType);
 
-        availableType.stream().limit(NUMER_GOALS).forEach(type -> {
+        availableType.stream().limit(NUMBER_GOALS).forEach(type -> {
             this.goals.add(factory.createGoal(type, GOAL_TARGET));
         });
     }
@@ -71,16 +72,10 @@ public class SessionImpl implements Session{
 
     @Override
     public GameState getGameStatus() {
-        var goalCompleted= this.goals.stream()
-            .allMatch(Goal::isReached);
-
-        if (goalCompleted && this.movesLeft >= 0) {
+        if (this.goals.stream().allMatch(Goal::isReached)) {
             return GameState.WON;
-        } else if (!goalCompleted && this.movesLeft == 0) {
-            return GameState.LOST;
-        } else {
-            return GameState.PLAYING;
         }
+        return this.movesLeft == 0 ? GameState.LOST : GameState.PLAYING;
     }
 
 }
