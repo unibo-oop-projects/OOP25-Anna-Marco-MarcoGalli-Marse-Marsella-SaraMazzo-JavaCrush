@@ -15,4 +15,9 @@ public interface RefillEngine {
      */
     Boolean refill(Board board);
 
+    /**
+     * Refill the board, filling the empty cells with new random cells without checking for matches.
+     * @param board the board to refill
+     */
+    void RefillAll(Board board);
 }

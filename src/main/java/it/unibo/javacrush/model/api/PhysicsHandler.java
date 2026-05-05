@@ -14,4 +14,11 @@ public interface PhysicsHandler {
      * @param gravity the new gravity strategy to be applied
      */
     void setGravity(GravityEngine gravity);
+
+
+    /**
+     * initializes the board with a random configuration of cells, ensuring that there are no initial matches.
+     * @param board the game board to initialize
+     */
+    void initializeBoard(Board board);
 }

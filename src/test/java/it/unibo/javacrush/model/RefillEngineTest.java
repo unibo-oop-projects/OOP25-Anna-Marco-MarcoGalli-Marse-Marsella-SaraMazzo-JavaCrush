@@ -46,4 +46,14 @@ public class RefillEngineTest {
         boolean changed = refillEngine.refill(board);
         assertFalse(changed, "The refill method should return false if the board was not changed");
     }
+
+    @Test
+    void refillAll() {
+        refillEngine.RefillAll(board);
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                assertTrue(board.getCellAt(new Position(col, row)).isPresent(), "the cell at (" + col + ", " + row + ") should be filled");
+            }
+        }
+    }
 }

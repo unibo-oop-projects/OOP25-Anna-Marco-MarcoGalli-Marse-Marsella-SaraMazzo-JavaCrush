@@ -11,6 +11,7 @@ import it.unibo.javacrush.model.api.PhysicsHandler;
 import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.DownwardGravity;
 import it.unibo.javacrush.model.impl.PhysicsHandlerImpl;
+import it.unibo.javacrush.model.impl.StallEngineImpl;
 
 public class PhysicsHandlerTest {
 
@@ -22,7 +23,18 @@ public class PhysicsHandlerTest {
     @BeforeEach
     void setUp() {
         this.board = new BoardImpl(ROWS, COLS);
-        this.physics = new PhysicsHandlerImpl(new DownwardGravity());
+        this.physics = new PhysicsHandlerImpl(new DownwardGravity(), new StallEngineImpl());
+    }
+
+    @Test
+    void testInitializeBoard() {
+        physics.initializeBoard(board);
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                assertTrue(board.getCellAt(new Position(col, row)).isPresent(), "the cell at (" + col + ", " + row + ") should be filled");
+            }
+        }
+        assertFalse(physics.update(board), "The board should be stable and not change after initialization");
     }
 
     /**
@@ -51,7 +63,7 @@ public class PhysicsHandlerTest {
      */
     @Test
     void testStability() {
-        /* * The safetyCounter prevents infinite loops during testing if the 
+        /* The safetyCounter prevents infinite loops during testing if the 
          * physics logic fails to stabilize.
          */
         int safetyCounter = 0;

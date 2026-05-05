@@ -39,4 +39,16 @@ public class AdaptiveRefill implements RefillEngine {
         return dir.isVertical() ? new Position(index, fixed) : new Position(fixed, index);
     }
 
+    @Override
+    public void RefillAll(Board board) {
+        for (int r = 0; r < board.getRows(); r++) {
+            for (int c = 0; c < board.getCols(); c++) {
+                Position pos = new Position(c, r);
+                if (board.getCellAt(pos).isEmpty()) {
+                    board.setCell(pos, Optional.of(new CellImpl(CellType.getRandomType())));
+                }
+            }
+        }
+    }
+
 }
