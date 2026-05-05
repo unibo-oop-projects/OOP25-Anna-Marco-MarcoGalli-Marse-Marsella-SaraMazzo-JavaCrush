@@ -1,43 +1,86 @@
 package it.unibo.javacrush.model.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
+import it.unibo.javacrush.common.Position;
+import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Goal;
+import it.unibo.javacrush.model.api.GoalFactory;
 import it.unibo.javacrush.model.api.Session;
 
+/** 
+ * Implementation of the {@link Session} interface.
+*/
 public class SessionImpl implements Session{
+
+    private static final int GOAL_TARGET = 10;
+    private static final int NUMER_GOALS = 2;
+
+    private int movesLeft;
+    private final List<Goal> goals = new ArrayList<>();
+
+    public SessionImpl(final int moves, final Map<Position, Optional<Cell>> cells, final GoalFactory factory) {
+        this.movesLeft = moves;
+
+        // Find the available types in the board
+        List<CellType> availableType = cells.values().stream()
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .map(elem -> elem.getType())
+            .collect(Collectors.toList());
+
+        Collections.shuffle(availableType);
+
+        availableType.stream().limit(NUMER_GOALS).forEach(type -> {
+            this.goals.add(factory.createGoal(type, GOAL_TARGET));
+        });
+    }
 
     @Override
     public int getMovesLeft() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMovesLeft'");
+        return this.movesLeft;
     }
 
     @Override
     public void decreaseMoves() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'decreaseMoves'");
+        if(this.movesLeft == 0) {
+            throw new IllegalStateException("We cannot decrease moves when already at 0");
+        }
+        this.movesLeft--;
     }
 
     @Override
     public List<Goal> getGoals() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGoals'");
+        return Collections.unmodifiableList(goals);
     }
 
     @Override
     public void updateGoals(CellType type, int count) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateGoals'");
+        this.goals.forEach(goal -> {
+            if (goal.getTargetType() == type)
+                goal.addProgress(count);
+        });
     }
 
     @Override
     public GameState getGameStatus() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGameStatus'");
-    }
+        var goal_complete = this.goals.stream()
+            .allMatch(goal -> goal.isReached());
 
+        if (goal_complete && this.movesLeft >= 0) {
+            return GameState.WON;
+        } else if (!goal_complete && this.movesLeft == 0) {
+            return GameState.LOST;
+        } else {
+            return GameState.PLAYING;
+        }
+    }
 
 }
