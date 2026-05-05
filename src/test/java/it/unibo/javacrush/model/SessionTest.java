@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -163,6 +164,12 @@ public class SessionTest {
         }
 
         assertEquals(0, this.session.getMovesLeft());
+
+        boolean goal_complete = this.session.getGoals().stream()
+            .allMatch(Goal::isReached);
+
+        assertFalse(goal_complete);
+        
         assertEquals(GameState.LOST, this.session.getGameStatus());
     }
 }

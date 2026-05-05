@@ -72,7 +72,7 @@ public class SessionImpl implements Session{
     @Override
     public GameState getGameStatus() {
         var goal_complete = this.goals.stream()
-            .allMatch(goal -> goal.isReached());
+            .allMatch(Goal::isReached);
 
         if (goal_complete && this.movesLeft >= 0) {
             return GameState.WON;
