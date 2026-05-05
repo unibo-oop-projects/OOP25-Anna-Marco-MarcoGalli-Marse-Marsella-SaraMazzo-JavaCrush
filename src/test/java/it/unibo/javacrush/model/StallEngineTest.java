@@ -1,8 +1,10 @@
 package it.unibo.javacrush.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -58,7 +60,7 @@ public class StallEngineTest {
             }
         }
         assertThrows(NoSuchElementException.class, () -> {
-            st.computeStall(board);
+            st.resolveStall(board);
         }, "Constructor should throw NoSuchElementException if any cell of the board is empty");
     }
 
@@ -68,6 +70,7 @@ public class StallEngineTest {
     @Test
     void testNoStallWithMoves() {
 
+        //set board and init with the same distribution of cellTypes that forms possible moves
         board.setCell(new Position(1, 0), Optional.of(new CellImpl(CellType.MILK)));
         board.setCell(new Position(0, 1), Optional.of(new CellImpl(CellType.MILK)));
         board.setCell(new Position(1, 2), Optional.of(new CellImpl(CellType.MILK)));
@@ -92,8 +95,13 @@ public class StallEngineTest {
         initial.setCell(new Position(2, 3), Optional.of(new CellImpl(CellType.MOKA)));
         initial.setCell(new Position(3, 3), Optional.of(new CellImpl(CellType.MOKA)));
 
-        st.computeStall(board);
+        assertFalse(st.isStall(board));
+
+        st.resolveStall(board);
+
+        assertFalse(st.isStall(board));
         assertEquals(initial, board);
+
     }
 
     /**
@@ -111,7 +119,11 @@ public class StallEngineTest {
             }
         }
 
-        st.computeStall(board);
+        assertTrue(st.isStall(board));
+
+        st.resolveStall(board);
+
+        assertFalse(st.isStall(board));
         assertNotEquals(initial, board);
 
     }

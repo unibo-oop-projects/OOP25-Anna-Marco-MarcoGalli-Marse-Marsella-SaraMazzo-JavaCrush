@@ -17,33 +17,7 @@ public class StallEngineImpl implements StallEngine{
     private MatchDetector detector = new MatchDetectorImpl();
 
     @Override
-    public void computeStall(Board board) {
-
-        List<Cell> tmp = new ArrayList<>();
-        int index = 0;
-
-        while (this.isStall(board) || !detector.findAllMatches(board).isEmpty()) {
-
-            tmp.clear();
-            for (int y = 0; y < board.getCols(); y++) {
-                for (int x = 0; x < board.getRows(); x++) {
-                    tmp.add(board.getCellAt(new Position(x, y)).get());
-                }
-            }
-            Collections.shuffle(tmp);
-            index = 0;
-
-            for (int j = 0; j < board.getCols(); j++) {
-                for (int i = 0; i < board.getRows(); i++) {
-                    board.setCell(new Position(i, j), Optional.of(tmp.get(index)));
-                    index++;
-                }
-            }
-        }
-
-    }
-
-    private boolean isStall(Board board) {
+    public boolean isStall(Board board) {
 
         Board tmp = new BoardImpl(board.getRows(), board.getCols());
 
@@ -74,6 +48,33 @@ public class StallEngineImpl implements StallEngine{
         }
 
         return true;
+    }
+
+    @Override
+    public void resolveStall(Board board) {
+
+        List<Cell> tmp = new ArrayList<>();
+        int index;
+
+        while (this.isStall(board) || !detector.findAllMatches(board).isEmpty()) {
+
+            tmp.clear();
+            for (int y = 0; y < board.getCols(); y++) {
+                for (int x = 0; x < board.getRows(); x++) {
+                    tmp.add(board.getCellAt(new Position(x, y)).get());
+                }
+            }
+            Collections.shuffle(tmp);
+            index = 0;
+
+            for (int j = 0; j < board.getCols(); j++) {
+                for (int i = 0; i < board.getRows(); i++) {
+                    board.setCell(new Position(i, j), Optional.of(tmp.get(index)));
+                    index++;
+                }
+            }
+        }
+
     }
 
     private Board swapRight(Board tmp, Position p) {

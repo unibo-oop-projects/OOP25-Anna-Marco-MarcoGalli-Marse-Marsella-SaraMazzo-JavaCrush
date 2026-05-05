@@ -7,11 +7,19 @@ package it.unibo.javacrush.model.api;
 public interface StallEngine {
 
     /**
-     * Check if there's a stall situation and refresh all the cells on the board
-     * to create admitted moves, if there isn't any stall this method won't change anything.
+     * Check if there is stall.
      * 
-     * @param board the board on where check the stall.
+     * @param board the board where to check.
+     * @return true if there is stall, false otherwise.
      */
-    void computeStall(Board board);
+    boolean isStall(Board board);
+
+    /**
+     * Refresh all the cells on the board to create admitted moves,
+     * if there isn't any stall this method won't change anything.
+     * 
+     * @param board the board where to resolve the stall.
+     */
+    void resolveStall(Board board);
 
 }
