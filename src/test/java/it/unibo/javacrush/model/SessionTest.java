@@ -1,7 +1,9 @@
 package it.unibo.javacrush.model;
 
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -11,12 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.javacrush.model.api.Session;
-import it.unibo.javacrush.model.impl.SessionImpl;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
+import it.unibo.javacrush.common.Position;
+import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Goal;
 import it.unibo.javacrush.model.api.GoalFactory;
+import it.unibo.javacrush.model.api.Session;
+import it.unibo.javacrush.model.impl.CellImpl;
+import it.unibo.javacrush.model.impl.GoalFactoryImpl;
+import it.unibo.javacrush.model.impl.SessionImpl;
 
 /**
  * Test for {@link it.unibo.javacrush.model.api.Session}.
@@ -24,18 +30,18 @@ import it.unibo.javacrush.model.api.GoalFactory;
 public class SessionTest {
 
     private static final int INITIAL_MOVES = 10;
-    // We create an example of grid
-    private static final Map<CellType, Integer> GOAL_CONFIGURATION = Map.of(
-        CellType.COFFEE_BEAN, 10,
-        CellType.MILK, 5,
-        CellType.SUGAR, 15
-    );
     private static final GoalFactory FACTORY = new GoalFactoryImpl();
     private Session session;
 
     @BeforeEach
     void initialize() {
-        session = new SessionImpl(INITIAL_MOVES, GOAL_CONFIGURATION, FACTORY);
+        // Creation of a mock grid
+        Map<Position, Optional<Cell>> mockgrid = new HashMap<>();
+        mockgrid.put(new Position(0, 0), Optional.of(new CellImpl(CellType.COFFEE_BEAN)));
+        mockgrid.put(new Position(0, 1), Optional.of(new CellImpl(CellType.CUP)));
+        mockgrid.put(new Position(0, 2), Optional.of(new CellImpl(CellType.MILK)));
+
+        session = new SessionImpl(INITIAL_MOVES, mockgrid, FACTORY);
     }
 
     /**
@@ -108,17 +114,16 @@ public class SessionTest {
      */
     @Test
     void testUpdateGoalsWithExistingType() {
-        // We create a template goal using stream
-        Goal sugarGoal = this.session.getGoals().stream()
-            .filter(elem -> elem.getTargetType() == CellType.SUGAR)
-            .findAny()
+        // We find a goal used in the session
+        Goal targetGoal = this.session.getGoals().stream()
+            .findFirst()
             .orElseThrow();
 
-        assertEquals(0, sugarGoal.getCurrentAmount());
+        assertEquals(0, targetGoal.getCurrentAmount());
 
-        this.session.updateGoals(CellType.SUGAR, 3);
+        this.session.updateGoals(targetGoal.getTargetType(), 3);
 
-        assertEquals(3, sugarGoal.getCurrentAmount());
+        assertEquals(3, targetGoal.getCurrentAmount());
     }
 
     /**
@@ -126,7 +131,7 @@ public class SessionTest {
      */
     @Test
     void testUpdateGoalsWithoutExistingType() {
-        this.session.updateGoals(CellType.CUP, 3);
+        this.session.updateGoals(CellType.SUGAR, 3);
 
         // No goal should be updated
         this.session.getGoals().stream()
@@ -140,8 +145,8 @@ public class SessionTest {
      */
     @Test
     void testGameWon() {
-        GOAL_CONFIGURATION.forEach((type, amount) -> {
-            this.session.updateGoals(type, amount);
+        this.session.getGoals().forEach(goal -> {
+            this.session.updateGoals(goal.getTargetType(), goal.getTargetAmount());
         });
 
         assertTrue(this.session.getMovesLeft() > 0);

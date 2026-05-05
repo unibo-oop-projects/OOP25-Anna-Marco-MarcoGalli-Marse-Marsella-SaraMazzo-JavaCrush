@@ -10,7 +10,7 @@ import it.unibo.javacrush.model.api.GoalFactory;
 public class GoalFactoryImpl implements GoalFactory{
 
     /**
-     * Private inner class implementing the Goal interface.
+     * Private inner class implementing the {@link Goal} interface.
      */
     private static class GoalImpl implements Goal{
 
