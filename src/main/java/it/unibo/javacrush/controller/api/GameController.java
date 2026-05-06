@@ -10,12 +10,17 @@ import it.unibo.javacrush.common.Position;
 public interface GameController {
     
     /**
-     * The method responsible of the move making by swapping two cells.
+     * The method responsible of the move made by swapping two cells.
      * 
      * @param p1 the first selected cell.
      * @param p2 the second selected cell.
      */
     void makeMove(Position p1, Position p2);
+
+    /**
+     * The method responsible for updating the board after a move, before the next one.
+     */
+    void gameLoop();
 
     /**
      * Returns if the player had loose the game.

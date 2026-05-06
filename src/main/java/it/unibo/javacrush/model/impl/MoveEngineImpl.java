@@ -5,13 +5,13 @@ import java.util.Set;
 
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
-import it.unibo.javacrush.model.api.MatchDetector;
+import it.unibo.javacrush.model.api.MatchManager;
 import it.unibo.javacrush.model.api.MoveEngine;
 import it.unibo.javacrush.model.api.Match;
 
 public class MoveEngineImpl implements MoveEngine{
 
-    private final MatchDetector detector = new MatchDetectorImpl();
+    private final MatchManager detector = new MatchManagerImpl();
     private final Set<Match> matches = new HashSet<>();
 
     @Override
