@@ -165,10 +165,10 @@ public class SessionTest {
 
         assertEquals(0, this.session.getMovesLeft());
 
-        boolean goal_complete = this.session.getGoals().stream()
+        boolean goalCompleted = this.session.getGoals().stream()
             .allMatch(Goal::isReached);
 
-        assertFalse(goal_complete);
+        assertFalse(goalCompleted);
         
         assertEquals(GameState.LOST, this.session.getGameStatus());
     }
