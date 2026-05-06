@@ -9,9 +9,9 @@ import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Match;
-import it.unibo.javacrush.model.api.MatchDetector;
+import it.unibo.javacrush.model.api.MatchManager;
 
-public class MatchDetectorImpl implements MatchDetector{
+public class MatchManagerImpl implements MatchManager{
 
     @Override
     public Match findMatchesAt(Board board, Position pos) {
@@ -54,6 +54,13 @@ public class MatchDetectorImpl implements MatchDetector{
         }
 
         return matches;
+    }
+
+    @Override
+    public void removeMatch(Board board, Match match) {
+        for(Position pos : match.getPositions()) {
+            board.removeCell(pos);
+        }
     }
 
     private boolean isInBounds(Board board, int col, int row) {
@@ -124,5 +131,7 @@ public class MatchDetectorImpl implements MatchDetector{
 
         return matches.size()>= 3 ? matches : Collections.emptySet();
     }
+
+    
 
 }

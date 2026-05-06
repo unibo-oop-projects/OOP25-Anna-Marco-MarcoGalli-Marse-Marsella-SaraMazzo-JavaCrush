@@ -4,7 +4,7 @@ import java.util.Set;
 
 import it.unibo.javacrush.common.Position;
 
-public interface MatchDetector {
+public interface MatchManager {
 
     /**
      * Finds all matches at the given position on the board.
@@ -23,5 +23,12 @@ public interface MatchDetector {
      */
     Set<Match> findAllMatches(Board board);
 
+    /**
+     * Removes the cells involved in the given match from the board.
+     * 
+     * @param board the board to remove the cells from
+     * @param match the match whose cells are to be removed
+     */
+    void removeMatch(Board board, Match match);
 }
 

@@ -67,6 +67,11 @@ public class BoardImpl implements Board {
     }
 
     @Override
+    public void removeCell(Position pos) {
+        this.setCell(pos, Optional.empty());
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;

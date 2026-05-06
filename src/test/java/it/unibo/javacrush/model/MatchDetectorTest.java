@@ -13,20 +13,20 @@ import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.Match;
-import it.unibo.javacrush.model.api.MatchDetector;
+import it.unibo.javacrush.model.api.MatchManager;
 import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.CellImpl;
-import it.unibo.javacrush.model.impl.MatchDetectorImpl;
+import it.unibo.javacrush.model.impl.MatchManagerImpl;
 
 public class MatchDetectorTest {
 
     private Board board;
-    private MatchDetector detector;
+    private MatchManager detector;
 
     @BeforeEach
     void init() {
         board = new BoardImpl(5, 5);
-        detector = new MatchDetectorImpl();
+        detector = new MatchManagerImpl();
     }
 
     @Test

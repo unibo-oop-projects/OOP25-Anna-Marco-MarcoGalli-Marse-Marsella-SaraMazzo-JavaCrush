@@ -31,18 +31,18 @@ import it.unibo.javacrush.model.impl.SessionImpl;
 public class SessionTest {
 
     private static final int INITIAL_MOVES = 10;
-    // We create an example of grid
-    private static final Map<CellType, Integer> GOAL_CONFIGURATION = Map.of(
-        CellType.COFFEE_BEAN, 10,
-        CellType.MILK, 5,
-        CellType.SUGAR, 15
-    );
-    //private static final GoalFactory FACTORY = new GoalFactoryImpl();
+    private static final GoalFactory FACTORY = new GoalFactoryImpl();
     private Session session;
 
     @BeforeEach
     void initialize() {
-        //session = new SessionImpl(INITIAL_MOVES, GOAL_CONFIGURATION, FACTORY);
+        // Creation of a mock grid
+        Map<Position, Optional<Cell>> mockgrid = new HashMap<>();
+        mockgrid.put(new Position(0, 0), Optional.of(new CellImpl(CellType.COFFEE_BEAN)));
+        mockgrid.put(new Position(0, 1), Optional.of(new CellImpl(CellType.CUP)));
+        mockgrid.put(new Position(0, 2), Optional.of(new CellImpl(CellType.MILK)));
+
+        session = new SessionImpl(INITIAL_MOVES, mockgrid, FACTORY);
     }
 
     /**
@@ -165,10 +165,10 @@ public class SessionTest {
 
         assertEquals(0, this.session.getMovesLeft());
 
-        boolean goal_complete = this.session.getGoals().stream()
+        boolean goalCompleted = this.session.getGoals().stream()
             .allMatch(Goal::isReached);
 
-        assertFalse(goal_complete);
+        assertFalse(goalCompleted);
         
         assertEquals(GameState.LOST, this.session.getGameStatus());
     }

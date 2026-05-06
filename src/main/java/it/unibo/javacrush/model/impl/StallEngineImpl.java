@@ -10,11 +10,11 @@ import it.unibo.javacrush.common.*;
 import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.StallEngine;
-import it.unibo.javacrush.model.api.MatchDetector;
+import it.unibo.javacrush.model.api.MatchManager;
 
 public class StallEngineImpl implements StallEngine{
 
-    private MatchDetector detector = new MatchDetectorImpl();
+    private MatchManager detector = new MatchManagerImpl();
 
     @Override
     public boolean isStall(Board board) {
