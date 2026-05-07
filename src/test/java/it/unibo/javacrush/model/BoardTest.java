@@ -72,4 +72,16 @@ public class BoardTest {
         assertEquals(Optional.empty(), board.getCellAt(p1));
         assertEquals(c1, board.getCellAt(p3).get());
     }
+
+    @Test
+    void testRemoveCell() {
+        Position pos = new Position(0, 0);
+
+        board.setCell(pos, Optional.of(new CellImpl(CellType.COFFEE_BEAN)));
+        assertTrue(board.getCellAt(pos).isPresent());
+
+        board.removeCell(pos);
+        assertTrue(board.getCellAt(pos).isEmpty());
+
+    }
 }
