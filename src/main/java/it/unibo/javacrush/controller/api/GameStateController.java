@@ -4,10 +4,8 @@ import it.unibo.javacrush.common.Position;
 
 /**
  * Interface representing a game controller.
- * This interface defines the contract for controlling the game logic,
- * including handling user input, updating the game state, and managing the game flow.
 */
-public interface GameController {
+public interface GameStateController {
     
     /**
      * The method responsible of the move made by swapping two cells.

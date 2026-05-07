@@ -1,9 +1,9 @@
 package it.unibo.javacrush.controller.impl;
 
 import it.unibo.javacrush.common.Position;
-import it.unibo.javacrush.controller.api.GameController;
+import it.unibo.javacrush.controller.api.GameStateController;
 
-public class GameControllerImpl implements GameController{
+public class GameControllerImpl implements GameStateController{
 
     @Override
     public void makeMove(Position p1, Position p2) {

@@ -72,10 +72,30 @@ public class SessionImpl implements Session{
 
     @Override
     public GameState getGameStatus() {
-        if (this.goals.stream().allMatch(Goal::isReached)) {
+        if (this.isGameWon()) {
             return GameState.WON;
+        } else if (this.isGameLost()) {
+            return GameState.LOST;
         }
-        return this.movesLeft == 0 ? GameState.LOST : GameState.PLAYING;
+        return GameState.PLAYING;
+    }
+
+    /**
+     * Check if the game is won by verifying if all goals are reached.
+     * 
+     * @return true if all goals are reached, false otherwise
+     */
+    private boolean isGameWon() {
+        return this.goals.stream().allMatch(Goal::isReached);
+    }
+
+    /**
+     * Check if the game is lost by verifying if the player has no moves left.
+     * 
+     * @return true if the player has no moves left, false otherwise
+     */
+    private boolean isGameLost() {
+        return this.movesLeft <= 0;
     }
 
 }
