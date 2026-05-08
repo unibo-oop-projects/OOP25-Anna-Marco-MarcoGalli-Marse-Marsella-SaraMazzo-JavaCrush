@@ -2,12 +2,15 @@ package it.unibo.javacrush.model.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
 
 import it.unibo.javacrush.common.*;
 import it.unibo.javacrush.model.api.Cell;
+import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.StallEngine;
 import it.unibo.javacrush.model.api.MatchManager;
@@ -19,35 +22,13 @@ public class StallEngineImpl implements StallEngine{
     @Override
     public boolean isStall(Board board) {
 
-        Board tmp = new BoardImpl(board.getRows(), board.getCols());
-
-        for (int y = 0; y < board.getCols(); y++) {
-            for (int x = 0; x < board.getRows(); x++) {
-                var p = new Position(x, y);
-                if (board.getCellAt(p).isEmpty()) {
-                    throw new NoSuchElementException("The current board is not well initialized");
-                }
-                tmp.setCell(p, board.getCellAt(p));
-            }
+        if (this.possibleMatches(board).isEmpty()) {
+            return true;
+        }
+        else {
+            return false;
         }
 
-        for (int y = 0; y < tmp.getCols() - 2; y++) {
-            for (int x = 0; x < tmp.getRows() - 2; x++) {
-
-                var current = new Position(x, y);
-                if (detector.findMatchesAt(this.swapRight(tmp, current), current) != null) {
-                    return false;
-                }
-                this.swapRight(tmp, current);
-
-                if  (detector.findMatchesAt(this.swapDown(tmp, current), current) != null) {
-                    return false;
-                }
-                this.swapDown(tmp, current);
-            }
-        }
-
-        return true;
     }
 
     @Override
@@ -75,6 +56,41 @@ public class StallEngineImpl implements StallEngine{
             }
         }
 
+    }
+
+    @Override
+    public Set<Match> possibleMatches(Board board) {
+        
+        Board tmp = new BoardImpl(board.getRows(), board.getCols());
+        Set<Match> resultSet = new HashSet<>();
+
+        for (int y = 0; y < board.getCols(); y++) {
+            for (int x = 0; x < board.getRows(); x++) {
+                var p = new Position(x, y);
+                if (board.getCellAt(p).isEmpty()) {
+                    throw new NoSuchElementException("The current board is not well initialized");
+                }
+                tmp.setCell(p, board.getCellAt(p));
+            }
+        }
+
+        for (int y = 0; y < tmp.getCols() - 2; y++) {
+            for (int x = 0; x < tmp.getRows() - 2; x++) {
+
+                var current = new Position(x, y);
+                if (detector.findMatchesAt(this.swapRight(tmp, current), current) != null) {
+                    resultSet.add(detector.findMatchesAt(tmp, current));
+                }
+                this.swapRight(tmp, current);
+
+                if  (detector.findMatchesAt(this.swapDown(tmp, current), current) != null) {
+                    resultSet.add(detector.findMatchesAt(tmp, current));
+                }
+                this.swapDown(tmp, current);
+            }
+        }
+
+        return resultSet;
     }
 
     private Board swapRight(Board tmp, Position p) {
