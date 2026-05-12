@@ -6,16 +6,20 @@ import it.unibo.javacrush.model.api.GravityEngine;
 
 public class CrazyGravity implements GravityEngine{
 
+    private GravityEngine currentStrategy;
+
+    public CrazyGravity() {
+        this.currentStrategy = GravityEngine.getRandom();
+    }
     @Override
     public Boolean applyGravity(Board board) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'applyGravity'");
+        boolean moved = currentStrategy.applyGravity(board);
+        this.currentStrategy = GravityEngine.getRandom();
+        return moved;
     }
 
     @Override
     public Direction getDirection() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDirection'");
+        return currentStrategy.getDirection();
     }
-
 }
