@@ -28,7 +28,7 @@ import it.unibo.javacrush.model.impl.SessionImpl;
 /**
  * Test for {@link it.unibo.javacrush.model.api.Session}.
  */
-public class SessionTest {
+class SessionTest {
 
     private static final int INITIAL_MOVES = 10;
     private static final GoalFactory FACTORY = new GoalFactoryImpl();

@@ -13,7 +13,7 @@ import it.unibo.javacrush.model.impl.DownwardGravity;
 import it.unibo.javacrush.model.impl.PhysicsHandlerImpl;
 import it.unibo.javacrush.model.impl.StallEngineImpl;
 
-public class PhysicsHandlerTest {
+class PhysicsHandlerTest {
 
     private Board board;
     private PhysicsHandler physics;

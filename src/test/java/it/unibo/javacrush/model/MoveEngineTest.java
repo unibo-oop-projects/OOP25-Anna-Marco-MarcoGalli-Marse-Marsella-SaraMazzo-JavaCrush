@@ -19,7 +19,7 @@ import it.unibo.javacrush.model.impl.CellImpl;
 import it.unibo.javacrush.model.impl.MatchImpl;
 import it.unibo.javacrush.model.impl.MoveEngineImpl;
 
-public class MoveEngineTest {
+class MoveEngineTest {
 
     private Board board;
     private MoveEngine moveEngine;

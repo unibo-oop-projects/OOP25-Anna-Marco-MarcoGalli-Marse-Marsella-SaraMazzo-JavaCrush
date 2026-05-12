@@ -3,6 +3,9 @@ package it.unibo.javacrush.powerup.api;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 
+/**
+ * This interface PowerUpManager manages all the PowerUps of the game.
+ */
 public interface PowerUpManager {
 
     /**
@@ -12,7 +15,7 @@ public interface PowerUpManager {
      * @return false if the specified PowerUp doesn't exist.
      */
     Boolean selectPowerUp(int num);
-    
+
     /**
      * Apply the selected PowerUp.
      * 

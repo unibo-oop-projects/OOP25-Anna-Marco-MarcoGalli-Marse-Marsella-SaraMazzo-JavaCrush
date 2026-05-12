@@ -18,7 +18,7 @@ import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.CellImpl;
 import it.unibo.javacrush.model.impl.MatchManagerImpl;
 
-public class MatchDetectorTest {
+class MatchDetectorTest {
 
     private Board board;
     private MatchManager detector;

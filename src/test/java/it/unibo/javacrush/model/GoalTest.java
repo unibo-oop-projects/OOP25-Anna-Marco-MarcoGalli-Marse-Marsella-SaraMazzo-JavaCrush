@@ -18,7 +18,7 @@ import it.unibo.javacrush.model.impl.GoalFactoryImpl;
 /**
  * Test for {@link it.unibo.javacrush.model.api.Goal}.
  */
-public class GoalTest {
+class GoalTest {
 
     private static final int INITIAL_TARGET = 10;
     private static final int PROGRESS_TARGET = 6;

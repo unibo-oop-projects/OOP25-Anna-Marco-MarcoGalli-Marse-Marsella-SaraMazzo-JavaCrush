@@ -13,7 +13,7 @@ import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.DownwardGravity;
 import it.unibo.javacrush.model.impl.AdaptiveRefill;
 
-public class RefillEngineTest {
+class RefillEngineTest {
     private RefillEngine refillEngine;
     private Board board;
     private final int ROWS = 3;

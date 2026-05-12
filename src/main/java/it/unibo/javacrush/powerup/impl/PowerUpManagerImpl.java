@@ -2,15 +2,21 @@ package it.unibo.javacrush.powerup.impl;
 
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
-import it.unibo.javacrush.powerup.api.PowerUp;
+import it.unibo.javacrush.powerup.api.AbstractPowerUp;
 import it.unibo.javacrush.powerup.api.PowerUpManager;
 
-public class PowerUpManagerImpl implements PowerUpManager{
+/**
+ * This class manages all the PowerUps of the game.
+ */
+public class PowerUpManagerImpl implements PowerUpManager { 
 
-    private PowerUp power;
+    private AbstractPowerUp power;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Boolean selectPowerUp(int num) {
+    public Boolean selectPowerUp(final int num) {
         switch (num) {
             case 0:
                 this.power = new CleanerPowerUp();
@@ -24,22 +30,17 @@ public class PowerUpManagerImpl implements PowerUpManager{
             default:
                 return false;
         }
-        if (this.power == null) {
-            return false;
-        }
-        return true;
+        return this.power != null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Boolean applyPowerUp(Board board, Position pos) {
-        
-        if (this.power == null) {
-            return false;
-        }
+    public Boolean applyPowerUp(final Board board, final Position pos) {
 
-        return this.power.applyPowerUp(board, pos);
+        return this.power != null && this.power.applyPowerUp(board, pos);
 
     }
 
-    
 }

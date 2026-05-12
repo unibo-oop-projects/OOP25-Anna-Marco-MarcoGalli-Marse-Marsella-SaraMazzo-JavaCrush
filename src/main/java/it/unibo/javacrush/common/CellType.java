@@ -15,6 +15,11 @@ public enum CellType {
 
     private static final Random RANDOM = new Random();
 
+    /**
+     * With this method you can get a random CellType.
+     * 
+     * @return a random CellType.
+     */
     public static CellType getRandomType() {
         return values()[RANDOM.nextInt(values().length)];
     }
