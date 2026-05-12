@@ -7,17 +7,16 @@ import it.unibo.javacrush.powerup.api.PowerUp;
 /**
  * This PowerUp removes a specified cell from the board.
  */
-public class CleanerPowerUp implements PowerUp{
+public class CleanerPowerUp extends PowerUp{
 
     @Override
     public Boolean applyPowerUp(Board board, Position pos) {
-
-        if(!board.getGrid().containsKey(pos) || board.getCellAt(pos).isEmpty()) {
-            return false;
+        if (this.isAppliable(board, pos)) {
+            board.removeCell(pos);
+            return true;
         }
 
-        board.removeCell(pos);
-        return true;
+        return false;
     }
     
 }
