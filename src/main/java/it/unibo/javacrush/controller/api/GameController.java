@@ -32,7 +32,12 @@ public interface GameController {
      */
     void gameLoop();
 
-    // There will be another method for the power up.
+    /**
+     * Select a power up to use in the current level.
+     * 
+     * @param powerUpNumber the number of the power up to select
+     */
+    void selectPowerUp(int powerUpNumber);
 
     /**
      * Update the state of the game based on the current board and the player's actions.

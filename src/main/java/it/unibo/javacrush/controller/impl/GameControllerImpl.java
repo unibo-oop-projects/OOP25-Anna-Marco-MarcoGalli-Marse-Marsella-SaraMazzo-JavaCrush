@@ -28,6 +28,12 @@ public class GameControllerImpl implements GameController{
     }
 
     @Override
+    public void selectPowerUp(final int powerUpNumber) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'selectPowerUp'");
+    }
+
+    @Override
     public GameState updateGameState() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateGameState'");
