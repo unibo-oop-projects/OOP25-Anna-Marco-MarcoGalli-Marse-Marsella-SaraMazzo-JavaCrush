@@ -23,26 +23,26 @@ import it.unibo.javacrush.model.impl.StallEngineImpl;
 /**
  * Test for {@link it.unibo.javacrush.model.api.StallEngine}.
  */
-public class StallEngineTest {
+class StallEngineTest {
 
-    private Board board;
-    private Board initial;
-    private StallEngine st;
     private static final int DIMENSION = 4;
+    private Board board;
+    private Board init;
+    private StallEngine st;
 
     /**
      * Initialises and fill board and initial with equal-typed cells.
      */
     @BeforeEach
-    void init() {
+    void setUp() {
 
         board = new BoardImpl(DIMENSION, DIMENSION);
-        initial = new BoardImpl(DIMENSION, DIMENSION);
+        init = new BoardImpl(DIMENSION, DIMENSION);
         st = new StallEngineImpl();
 
         for (int y = 0; y < board.getCols(); y++) {
             for (int x = 0; x < board.getRows(); x++) {
-                initial.setCell(new Position(x, y), Optional.of(new CellImpl(CellType.CUP)));
+                init.setCell(new Position(x, y), Optional.of(new CellImpl(CellType.CUP)));
                 board.setCell(new Position(x, y), Optional.of(new CellImpl(CellType.CUP)));
             }
         }
@@ -55,7 +55,7 @@ public class StallEngineTest {
     void testNoStallEmptyBoard() {
         for (int y = 0; y < DIMENSION; y++) {
             for (int x = 0; x < DIMENSION; x++) {
-                initial.setCell(new Position(x, y), Optional.empty());
+                init.setCell(new Position(x, y), Optional.empty());
                 board.setCell(new Position(x, y), Optional.empty());
             }
         }
@@ -83,24 +83,26 @@ public class StallEngineTest {
         board.setCell(new Position(2, 3), Optional.of(new CellImpl(CellType.MOKA)));
         board.setCell(new Position(3, 3), Optional.of(new CellImpl(CellType.MOKA)));
 
-        initial.setCell(new Position(1, 0), Optional.of(new CellImpl(CellType.MILK)));
-        initial.setCell(new Position(0, 1), Optional.of(new CellImpl(CellType.MILK)));
-        initial.setCell(new Position(1, 2), Optional.of(new CellImpl(CellType.MILK)));
-        initial.setCell(new Position(2, 1), Optional.of(new CellImpl(CellType.SPOON)));
-        initial.setCell(new Position(3, 1), Optional.of(new CellImpl(CellType.SPOON)));
-        initial.setCell(new Position(0, 3), Optional.of(new CellImpl(CellType.SPOON)));
-        initial.setCell(new Position(1, 3), Optional.of(new CellImpl(CellType.SPOON)));
-        initial.setCell(new Position(2, 2), Optional.of(new CellImpl(CellType.MOKA)));
-        initial.setCell(new Position(3, 2), Optional.of(new CellImpl(CellType.MOKA)));
-        initial.setCell(new Position(2, 3), Optional.of(new CellImpl(CellType.MOKA)));
-        initial.setCell(new Position(3, 3), Optional.of(new CellImpl(CellType.MOKA)));
+        init.setCell(new Position(1, 0), Optional.of(new CellImpl(CellType.MILK)));
+        init.setCell(new Position(0, 1), Optional.of(new CellImpl(CellType.MILK)));
+        init.setCell(new Position(1, 2), Optional.of(new CellImpl(CellType.MILK)));
+        init.setCell(new Position(2, 1), Optional.of(new CellImpl(CellType.SPOON)));
+        init.setCell(new Position(3, 1), Optional.of(new CellImpl(CellType.SPOON)));
+        init.setCell(new Position(0, 3), Optional.of(new CellImpl(CellType.SPOON)));
+        init.setCell(new Position(1, 3), Optional.of(new CellImpl(CellType.SPOON)));
+        init.setCell(new Position(2, 2), Optional.of(new CellImpl(CellType.MOKA)));
+        init.setCell(new Position(3, 2), Optional.of(new CellImpl(CellType.MOKA)));
+        init.setCell(new Position(2, 3), Optional.of(new CellImpl(CellType.MOKA)));
+        init.setCell(new Position(3, 3), Optional.of(new CellImpl(CellType.MOKA)));
 
         assertFalse(st.isStall(board));
+        assertFalse(st.possibleMatches(board).isEmpty());
 
         st.resolveStall(board);
 
         assertFalse(st.isStall(board));
-        assertEquals(initial, board);
+        assertFalse(st.possibleMatches(board).isEmpty());
+        assertEquals(init, board);
 
     }
 
@@ -113,18 +115,20 @@ public class StallEngineTest {
         int index = 0;
         for (int y = 0; y < DIMENSION; y++) {
             for (int x = 0; x < DIMENSION; x++) {
-                initial.setCell(new Position(x, y), Optional.of(new CellImpl(CellType.values()[index % CellType.values().length])));
+                init.setCell(new Position(x, y), Optional.of(new CellImpl(CellType.values()[index % CellType.values().length])));
                 board.setCell(new Position(x, y), Optional.of(new CellImpl(CellType.values()[index % CellType.values().length])));
                 index++;
             }
         }
 
         assertTrue(st.isStall(board));
+        assertTrue(st.possibleMatches(board).isEmpty());
 
         st.resolveStall(board);
 
         assertFalse(st.isStall(board));
-        assertNotEquals(initial, board);
+        assertFalse(st.possibleMatches(board).isEmpty());
+        assertNotEquals(init, board);
 
     }
 }

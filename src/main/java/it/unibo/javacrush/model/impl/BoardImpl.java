@@ -8,18 +8,22 @@ import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.Cell;
 
+/**
+ * This class is the implementation of {@link it.unibo.javacrush.model.api.Board}.
+ */
 public class BoardImpl implements Board {
 
     private final Map<Position, Optional<Cell>> cells = new HashMap<>();
     private final int rows;
     private final int cols;
-    
+
     /**
      * BoardImpl constructor.
      * 
-     * @param size the size of the board.
+     * @param rows the rows size of the board.
+     * @param cols the columns size of the board.
      */
-    public BoardImpl(int rows, int cols) {
+    public BoardImpl(final int rows, final int cols) {
 
         this.rows = rows;
         this.cols = cols;
@@ -33,44 +37,68 @@ public class BoardImpl implements Board {
         System.out.println(this.cells);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getRows() {
         return this.rows;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getCols() {
         return this.cols;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Optional<Cell> getCellAt(Position pos) {
+    public Optional<Cell> getCellAt(final Position pos) {
         return cells.get(pos);
     }
-    
+
     //forse si può cancellare, non è usato da nessuna parte
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<Position, Optional<Cell>> getGrid() {
         return Map.copyOf(this.cells);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void swapCells(Position pos1, Position pos2) {
-        var tmp = cells.get(pos1);
+    public void swapCells(final Position pos1, final Position pos2) {
+        final var tmp = cells.get(pos1);
         cells.put(pos1, cells.get(pos2));
         cells.put(pos2, tmp);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setCell(Position pos, Optional<Cell> cell) {
-        cells.put(pos,cell);
+    public void setCell(final Position pos, final Optional<Cell> cell) {
+        cells.put(pos, cell);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void removeCell(Position pos) {
+    public void removeCell(final Position pos) {
         this.setCell(pos, Optional.empty());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -81,27 +109,34 @@ public class BoardImpl implements Board {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        BoardImpl other = (BoardImpl) obj;
+        }
+        final BoardImpl other = (BoardImpl) obj;
         if (cells == null) {
-            if (other.cells != null)
+            if (other.cells != null) {
                 return false;
-        } else if (!cells.equals(other.cells))
+            }
+        } else if (!cells.equals(other.cells)) {
             return false;
-        if (rows != other.rows)
-            return false;
-        if (cols != other.cols)
-            return false;
-        return true;
+        }
+        return rows == other.rows && cols == other.cols;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "BoardImpl [cells=" + cells + "]";

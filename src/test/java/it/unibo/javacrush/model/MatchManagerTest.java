@@ -6,6 +6,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,17 +17,18 @@ import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.api.MatchManager;
 import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.CellImpl;
+import it.unibo.javacrush.model.impl.MatchImpl;
 import it.unibo.javacrush.model.impl.MatchManagerImpl;
 
-public class MatchDetectorTest {
+class MatchManagerTest {
 
     private Board board;
-    private MatchManager detector;
+    private MatchManager manager;
 
     @BeforeEach
     void init() {
         board = new BoardImpl(5, 5);
-        detector = new MatchManagerImpl();
+        manager = new MatchManagerImpl();
     }
 
     @Test
@@ -40,7 +42,7 @@ public class MatchDetectorTest {
         board.setCell(pos2, Optional.of(new CellImpl(expectedType)));
         board.setCell(pos3, Optional.of(new CellImpl(expectedType)));
 
-        Match horizontalMatch = detector.findMatchesAt(board, new Position(1, 0));
+        Match horizontalMatch = manager.findMatchesAt(board, new Position(1, 0));
 
         assertFalse(horizontalMatch.isEmpty());
         assertEquals(3, horizontalMatch.getSize());
@@ -61,7 +63,7 @@ public class MatchDetectorTest {
         board.setCell(pos3, Optional.of(new CellImpl(expectedType)));
         board.setCell(pos4, Optional.of(new CellImpl(expectedType)));
 
-        Match verticalMatch = detector.findMatchesAt(board, new Position(0, 1));
+        Match verticalMatch = manager.findMatchesAt(board, new Position(0, 1));
 
         assertFalse(verticalMatch.isEmpty());
         assertEquals(4, verticalMatch.getSize());
@@ -84,7 +86,7 @@ public class MatchDetectorTest {
         board.setCell(pos4, Optional.of(new CellImpl(expectedType)));
         board.setCell(pos5, Optional.of(new CellImpl(expectedType)));
 
-        Match tShapeMatch = detector.findMatchesAt(board, new Position(1, 0));
+        Match tShapeMatch = manager.findMatchesAt(board, new Position(1, 0));
 
         assertFalse(tShapeMatch.isEmpty());
         assertEquals(5, tShapeMatch.getSize());
@@ -109,7 +111,7 @@ public class MatchDetectorTest {
         board.setCell(pos5, Optional.of(new CellImpl(expectedType)));
         board.setCell(pos6, Optional.of(new CellImpl(expectedType)));
 
-        Match lShapeMatch = detector.findMatchesAt(board, new Position(0, 2));
+        Match lShapeMatch = manager.findMatchesAt(board, new Position(0, 2));
 
         assertFalse(lShapeMatch.isEmpty());
         assertEquals(6, lShapeMatch.getSize());
@@ -129,7 +131,7 @@ public class MatchDetectorTest {
         board.setCell(pos2, Optional.of(new CellImpl(type1)));
         board.setCell(pos3, Optional.of(new CellImpl(type2)));
 
-        Match noMatch = detector.findMatchesAt(board, new Position(1, 0));
+        Match noMatch = manager.findMatchesAt(board, new Position(1, 0));
 
         assertNull(noMatch);
     }
@@ -157,8 +159,29 @@ public class MatchDetectorTest {
         board.setCell(pos6, Optional.of(new CellImpl(expectedType2)));
         board.setCell(pos7, Optional.of(new CellImpl(expectedType2)));
 
-        Set<Match> allMatches = detector.findAllMatches(board);
+        Set<Match> allMatches = manager.findAllMatches(board);
 
         assertEquals(2, allMatches.size());
+    }
+
+    @Test
+    void testRemoveMatch() {
+        Position pos1 = new Position(2,0);
+        Position pos2 = new Position(2,1);
+        Position pos3 = new Position(2,2);
+        CellType type = CellType.CUP;
+
+        board.setCell(pos1,Optional.of(new CellImpl(type)));
+        board.setCell(pos2,Optional.of(new CellImpl(type)));
+        board.setCell(pos3,Optional.of(new CellImpl(type)));
+
+        Match match = new MatchImpl(Set.of(pos1,pos2,pos3), type);
+
+        manager.removeMatch(board, match);
+
+        assertTrue(board.getCellAt(pos1).isEmpty());
+        assertTrue(board.getCellAt(pos2).isEmpty());
+        assertTrue(board.getCellAt(pos3).isEmpty());
+
     }
 }

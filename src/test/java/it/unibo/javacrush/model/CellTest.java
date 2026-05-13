@@ -9,7 +9,7 @@ import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.impl.CellImpl;
 
-public class CellTest {
+class CellTest {
 
     @Test
     void testCellCreation() {

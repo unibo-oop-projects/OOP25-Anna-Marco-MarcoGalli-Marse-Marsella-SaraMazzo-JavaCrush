@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GravityEngineTest {
+class GravityEngineTest {
 
     private Board board;
     private GravityEngine gravity;
