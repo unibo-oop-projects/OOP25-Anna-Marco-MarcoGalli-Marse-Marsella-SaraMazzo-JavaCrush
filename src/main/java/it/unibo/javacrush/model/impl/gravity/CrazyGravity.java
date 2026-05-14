@@ -1,5 +1,8 @@
 package it.unibo.javacrush.model.impl.gravity;
 
+import java.util.List;
+import java.util.Random;
+
 import it.unibo.javacrush.common.Direction;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.GravityEngine;
@@ -7,14 +10,24 @@ import it.unibo.javacrush.model.api.GravityEngine;
 public class CrazyGravity implements GravityEngine{
 
     private GravityEngine currentStrategy;
+    private final Random random = new Random();
+    private final List<GravityEngine> strategies;
 
-    public CrazyGravity() {
-        this.currentStrategy = GravityEngine.getRandom();
+    public CrazyGravity(List<GravityEngine> strategies) {
+        if(strategies == null || strategies.isEmpty()) {
+            throw new IllegalArgumentException("Strategies list cannot be null or empty");
+        }
+        this.strategies = List.copyOf(strategies);
+        this.currentStrategy = getRandomStrategy();
     }
+    private GravityEngine getRandomStrategy() {
+        return strategies.get(random.nextInt(strategies.size()));
+    }
+
     @Override
     public Boolean applyGravity(Board board) {
         boolean moved = currentStrategy.applyGravity(board);
-        this.currentStrategy = GravityEngine.getRandom();
+        this.currentStrategy = getRandomStrategy();
         return moved;
     }
 

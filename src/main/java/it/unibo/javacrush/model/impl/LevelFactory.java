@@ -1,8 +1,10 @@
 package it.unibo.javacrush.model.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import it.unibo.javacrush.common.CellType;
+import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.api.LevelConfig;
 import it.unibo.javacrush.model.impl.gravity.*;
 
@@ -32,12 +34,21 @@ public class LevelFactory {
 
             case 5 -> new LevelConfig(9, 9, 40, 
                 Map.of(CellType.SUGAR, 30), 
-                new DownwardGravity());
+                new CrazyGravity(allGravities()));
 
             default -> new LevelConfig(8, 8, 20, 
                 Map.of(CellType.COFFEE_BEAN, 10), 
                 new DownwardGravity());
         };
 
+    }
+
+    private static List<GravityEngine> allGravities() {
+        return List.of(
+            new DownwardGravity(),
+            new UpwardGravity(),
+            new LeftwardGravity(),
+            new RightwardGravity()
+        );
     }
 }

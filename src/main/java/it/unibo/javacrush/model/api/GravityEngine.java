@@ -30,18 +30,4 @@ public interface GravityEngine {
      */
     Direction getDirection();
 
-    /**
-     * get a random gravity engine instance.
-     * @return a random gravity engine instance
-     */
-    static GravityEngine getRandom() {
-        List<Supplier<GravityEngine>> strategies = List.of(
-            DownwardGravity::new,
-            UpwardGravity::new,
-            LeftwardGravity::new,
-            RightwardGravity::new
-        );
-        int randomIndex = new Random().nextInt(strategies.size());
-        return strategies.get(randomIndex).get();
-    }
 }
