@@ -9,12 +9,26 @@ import it.unibo.javacrush.model.api.Board;
 public interface PowerUpManager {
 
     /**
+     * Check if there is a PowerUp already selected.
+     * 
+     * @return true if there's a PowerUp selected.
+     */
+    Boolean isPowerUpSelected();
+
+    /**
      * Select one of the possible PowerUps.
      * 
      * @param num the index of the PowerUp to select.
      * @return false if the specified PowerUp doesn't exist.
      */
     Boolean selectPowerUp(int num);
+
+    /**
+     * Reset the selection of the PowerUp.
+     * 
+     * @return true if the resetting operation had success.
+     */
+    Boolean resetPowerUpSelection();
 
     /**
      * Apply the selected PowerUp.
