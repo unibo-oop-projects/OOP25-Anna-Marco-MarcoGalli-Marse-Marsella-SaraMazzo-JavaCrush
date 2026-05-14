@@ -50,7 +50,8 @@ public interface Board {
     void swapCells(Position pos1, Position pos2);
 
     /**
-     * Removes the cell at the specified position. 
+     * Removes the cell at the specified position.
+     * 
      * @param pos the position of the cell to remove.
      */
     void removeCell(Position pos);

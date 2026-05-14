@@ -11,7 +11,7 @@ import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.impl.MatchImpl;
 
-public class MatchTest {
+class MatchTest {
 
     @Test
     void testMatchCreation() {

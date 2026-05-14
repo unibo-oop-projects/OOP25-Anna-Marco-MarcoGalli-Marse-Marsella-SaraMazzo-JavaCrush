@@ -15,7 +15,7 @@ import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.gravity.*;
 import it.unibo.javacrush.model.impl.AdaptiveRefill;
 
-public class RefillEngineTest {
+class RefillEngineTest {
     private RefillEngine refillEngine;
     private Board board;
     private GravityEngine gravity;

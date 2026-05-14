@@ -15,7 +15,7 @@ import it.unibo.javacrush.model.impl.PhysicsHandlerImpl;
 import it.unibo.javacrush.model.impl.StallEngineImpl;
 import it.unibo.javacrush.model.impl.gravity.*;
 
-public class PhysicsHandlerTest {
+class PhysicsHandlerTest {
 
     private Board board;
     private PhysicsHandler physics;
