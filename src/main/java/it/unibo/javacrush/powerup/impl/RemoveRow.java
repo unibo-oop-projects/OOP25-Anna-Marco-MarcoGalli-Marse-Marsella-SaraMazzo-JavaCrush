@@ -7,7 +7,7 @@ import it.unibo.javacrush.powerup.api.AbstractPowerUp;
 /**
  * This PowerUp removes the entire row of cells of the given cell from the board.
  */
-public class MelterPowerUp extends AbstractPowerUp {
+public class RemoveRow extends AbstractPowerUp {
 
     /**
      * {@inheritDoc}

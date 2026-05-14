@@ -7,7 +7,7 @@ import it.unibo.javacrush.powerup.api.AbstractPowerUp;
 /**
  * This PowerUp removes a specified cell from the board.
  */
-public class CleanerPowerUp extends AbstractPowerUp {
+public class RemoveCell extends AbstractPowerUp {
 
     /**
      * {@inheritDoc}

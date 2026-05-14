@@ -8,7 +8,7 @@ import it.unibo.javacrush.powerup.api.AbstractPowerUp;
 /**
  * This PowerUp removes all the cells on the board with the same type of the given cell.
  */
-public class VaporizerPowerUp extends AbstractPowerUp {
+public class RemoveType extends AbstractPowerUp {
 
     /**
      * {@inheritDoc}
