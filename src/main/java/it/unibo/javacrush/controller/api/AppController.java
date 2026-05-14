@@ -7,6 +7,13 @@ package it.unibo.javacrush.controller.api;
 public interface AppController {
 
     /**
+     * Handles a specific event and executes the corresponding command.
+     * 
+     * @param event the event to handle
+     */
+    void notifyEvent(Event event);
+
+    /**
      * Display the main menu of the application.
      */
     void displayMainMenu();

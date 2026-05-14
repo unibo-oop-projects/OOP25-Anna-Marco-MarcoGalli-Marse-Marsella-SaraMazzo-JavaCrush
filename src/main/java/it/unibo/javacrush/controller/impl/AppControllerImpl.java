@@ -1,11 +1,18 @@
 package it.unibo.javacrush.controller.impl;
 
 import it.unibo.javacrush.controller.api.AppController;
+import it.unibo.javacrush.controller.api.Event;
 
 /**
  * Implementation of the {@link AppController} interface.
  */
-public class AppControllerImpl implements AppController{
+public class AppControllerImpl implements AppController {
+
+    @Override
+    public void notifyEvent(Event event) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyEvent'");
+    }
 
     @Override
     public void displayMainMenu() {
