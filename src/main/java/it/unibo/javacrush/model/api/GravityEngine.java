@@ -1,14 +1,6 @@
 package it.unibo.javacrush.model.api;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
-
 import it.unibo.javacrush.common.Direction;
-import it.unibo.javacrush.model.impl.gravity.DownwardGravity;
-import it.unibo.javacrush.model.impl.gravity.LeftwardGravity;
-import it.unibo.javacrush.model.impl.gravity.RightwardGravity;
-import it.unibo.javacrush.model.impl.gravity.UpwardGravity;
 
 /**
  * Interface representing the gravity engine in the game.
