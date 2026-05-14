@@ -32,7 +32,7 @@ public class PhysicsHandlerImpl implements PhysicsHandler{
 
     @Override
     public void initializeBoard(Board board) {
-        this.refill.RefillAll(board);
+        this.refill.refillAll(board);
         this.stallEngine.resolveStall(board);
     }
 

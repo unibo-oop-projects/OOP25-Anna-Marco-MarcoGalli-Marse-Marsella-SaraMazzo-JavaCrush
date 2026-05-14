@@ -8,33 +8,37 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
-import it.unibo.javacrush.common.*;
 import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Match;
+import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.StallEngine;
 import it.unibo.javacrush.model.api.MatchManager;
 
-public class StallEngineImpl implements StallEngine{
+/**
+ * This class implements the interface StallEngine and handle the stall state of the board.
+ */
+public class StallEngineImpl implements StallEngine {
 
-    private MatchManager detector = new MatchManagerImpl();
+    private final MatchManager detector = new MatchManagerImpl();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean isStall(Board board) {
+    public boolean isStall(final Board board) {
 
-        if (this.possibleMatches(board).isEmpty()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return this.possibleMatches(board).isEmpty();
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void resolveStall(Board board) {
+    public void resolveStall(final Board board) {
 
-        List<Cell> tmp = new ArrayList<>();
+        final List<Cell> tmp = new ArrayList<>();
         int index;
 
         while (this.isStall(board) || !detector.findAllMatches(board).isEmpty()) {
@@ -58,15 +62,19 @@ public class StallEngineImpl implements StallEngine{
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Set<Match> possibleMatches(Board board) {
-        
-        Board tmp = new BoardImpl(board.getRows(), board.getCols());
-        Set<Match> resultSet = new HashSet<>();
+    public Set<Match> possibleMatches(final Board board) {
 
+        final Board tmp = new BoardImpl(board.getRows(), board.getCols());
+        final Set<Match> resultSet = new HashSet<>();
+
+        Position p;
         for (int y = 0; y < board.getCols(); y++) {
             for (int x = 0; x < board.getRows(); x++) {
-                var p = new Position(x, y);
+                p = new Position(x, y);
                 if (board.getCellAt(p).isEmpty()) {
                     throw new NoSuchElementException("The current board is not well initialized");
                 }
@@ -77,23 +85,23 @@ public class StallEngineImpl implements StallEngine{
         for (int y = 0; y < tmp.getCols() - 2; y++) {
             for (int x = 0; x < tmp.getRows() - 2; x++) {
 
-                var current = new Position(x, y);
-                if (detector.findMatchesAt(this.swapRight(tmp, current), current) != null) {
-                    resultSet.add(detector.findMatchesAt(tmp, current));
+                p = new Position(x, y);
+                if (detector.findMatchesAt(this.swapRight(tmp, p), p) != null) {
+                    resultSet.add(detector.findMatchesAt(tmp, p));
                 }
-                this.swapRight(tmp, current);
+                this.swapRight(tmp, p);
 
-                if  (detector.findMatchesAt(this.swapDown(tmp, current), current) != null) {
-                    resultSet.add(detector.findMatchesAt(tmp, current));
+                if (detector.findMatchesAt(this.swapDown(tmp, p), p) != null) {
+                    resultSet.add(detector.findMatchesAt(tmp, p));
                 }
-                this.swapDown(tmp, current);
+                this.swapDown(tmp, p);
             }
         }
 
         return resultSet;
     }
 
-    private Board swapRight(Board tmp, Position p) {
+    private Board swapRight(final Board tmp, final Position p) {
 
         if (p.x() + 1 < tmp.getCols()) {
             tmp.swapCells(p, new Position(p.x() + 1, p.y()));
@@ -101,7 +109,7 @@ public class StallEngineImpl implements StallEngine{
         return tmp;
     }
 
-    private Board swapDown(Board tmp, Position p) {
+    private Board swapDown(final Board tmp, final Position p) {
 
         if (p.y() + 1 < tmp.getRows()) {
             tmp.swapCells(p, new Position(p.x(), p.y() + 1));

@@ -20,7 +20,7 @@ import it.unibo.javacrush.model.impl.CellImpl;
 import it.unibo.javacrush.model.impl.MatchImpl;
 import it.unibo.javacrush.model.impl.MatchManagerImpl;
 
-public class MatchManagerTest {
+class MatchManagerTest {
 
     private Board board;
     private MatchManager manager;

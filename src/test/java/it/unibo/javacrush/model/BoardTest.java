@@ -18,14 +18,20 @@ import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.CellImpl;
 
-public class BoardTest {
+/**
+ * Test for {@link it.unibo.javacrush.model.api.Board}.
+ */
+class BoardTest {
 
-    private Board board;
     private static final int DIMENSION = 3;
+    private Board board;
 
+    /**
+     * Initialises the testMap with empty optionals and create the board.
+     */
     @BeforeEach
     void init() {
-        Map<Position, Optional<Cell>> testMap = new HashMap<>();
+        final Map<Position, Optional<Cell>> testMap = new HashMap<>();
         for (int y = 0; y < DIMENSION; y++) {
             for (int x = 0; x < DIMENSION; x++) {
                 testMap.put(new Position(x, y), Optional.empty());
@@ -33,7 +39,7 @@ public class BoardTest {
         }
         board = new BoardImpl(DIMENSION, DIMENSION);
     }
-    
+
     @Test
     void testDimensions() {
         assertEquals(DIMENSION, board.getRows()); //testa getRows
@@ -42,20 +48,20 @@ public class BoardTest {
 
     @Test
     void testSetAndGetCell() {
-        Cell testCell = new CellImpl(CellType.MOKA);
-        board.setCell(new Position(0,0), Optional.of(testCell));
-        assertTrue(board.getCellAt(new Position(0,0)).isPresent());
-        assertFalse(board.getCellAt(new Position(0,1)).isPresent());
-        assertEquals(testCell, board.getCellAt(new Position(0,0)).get());
+        final Cell testCell = new CellImpl(CellType.MOKA);
+        board.setCell(new Position(0, 0), Optional.of(testCell));
+        assertTrue(board.getCellAt(new Position(0, 0)).isPresent());
+        assertFalse(board.getCellAt(new Position(0, 1)).isPresent());
+        assertEquals(testCell, board.getCellAt(new Position(0, 0)).get());
     }
 
     @Test
     void testSwapCell() {
-        Position p1 = new Position(1, 1);
-        Position p2 = new Position(1, 2);
-        Position p3 = new Position(1,0);
-        Cell c1 = new CellImpl(CellType.COFFEE_BEAN);
-        Cell c2 = new CellImpl(CellType.CUP);
+        final Position p1 = new Position(1, 1);
+        final Position p2 = new Position(1, 2);
+        final Position p3 = new Position(1, 0);
+        final Cell c1 = new CellImpl(CellType.COFFEE_BEAN);
+        final Cell c2 = new CellImpl(CellType.CUP);
         board.setCell(p1, Optional.of(c1));
         board.setCell(p2, Optional.of(c2));
 
@@ -75,7 +81,7 @@ public class BoardTest {
 
     @Test
     void testRemoveCell() {
-        Position pos = new Position(0, 0);
+        final Position pos = new Position(0, 0);
 
         board.setCell(pos, Optional.of(new CellImpl(CellType.COFFEE_BEAN)));
         assertTrue(board.getCellAt(pos).isPresent());
