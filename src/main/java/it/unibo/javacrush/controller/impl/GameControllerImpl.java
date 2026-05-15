@@ -50,9 +50,9 @@ public class GameControllerImpl implements GameController{
     }
 
     @Override
-    public void notifyEvent(final Event event) {
+    public void handleEvent(final Event event) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyEvent'");
+        throw new UnsupportedOperationException("Unimplemented method 'handleEvent'");
     }
 
     @Override

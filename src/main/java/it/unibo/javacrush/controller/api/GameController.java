@@ -13,7 +13,7 @@ public interface GameController {
      * 
      * @param event the event to handle
      */
-    void notifyEvent(Event event);
+    void handleEvent(Event event);
 
     /**
      * Update the state of the game based on the current board and the player's actions.
