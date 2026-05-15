@@ -9,7 +9,7 @@ import it.unibo.javacrush.model.api.LevelConfig;
 import it.unibo.javacrush.model.api.LevelManager;
 import it.unibo.javacrush.model.impl.LevelManagerImpl;
 
-public class LevelManagerTest {
+class LevelManagerTest {
 
     private LevelManager levelManager;
 
@@ -20,7 +20,7 @@ public class LevelManagerTest {
 
     @Test
     void testDefaultLevel() {
-        LevelConfig config = levelManager.getLevelSetup(-999);
+        final LevelConfig config = levelManager.getLevelSetup(-999);
         assertNotNull(config);
         assertEquals(8, config.rows());
     }

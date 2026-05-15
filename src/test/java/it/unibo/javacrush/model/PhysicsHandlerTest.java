@@ -47,7 +47,7 @@ class PhysicsHandlerTest {
     void testContinuousFlow() {
 
         physics.update(board); 
-        boolean secondUpdate = physics.update(board);
+        final boolean secondUpdate = physics.update(board);
         
         assertTrue(secondUpdate, "The board should have changed");
 
@@ -124,7 +124,7 @@ class PhysicsHandlerTest {
         }
     }
 
-    private void clearBoard(Board board) {
+    private void clearBoard(final Board board) {
             for (int row = 0; row < ROWS; row++) {
                 for (int col = 0; col < COLS; col++) {
                     board.setCell(new Position(col, row), Optional.empty());

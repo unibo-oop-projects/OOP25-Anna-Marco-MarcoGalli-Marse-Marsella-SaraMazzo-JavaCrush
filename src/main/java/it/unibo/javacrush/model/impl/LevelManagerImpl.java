@@ -11,20 +11,20 @@ public class LevelManagerImpl implements LevelManager {
     private final Map<Integer, Integer> starsRecords = new HashMap<>();
 
     @Override
-    public LevelConfig getLevelSetup(int level) {    
+    public LevelConfig getLevelSetup(final int level) {    
         return LevelFactory.createLevel(level);
     }
 
     @Override
-    public void updateStars(int level, int stars) {
-        int currentBest = starsRecords.getOrDefault(level, 0);
+    public void updateStars(final int level, final int stars) {
+        final int currentBest = starsRecords.getOrDefault(level, 0);
         if (stars > currentBest) {
             starsRecords.put(level, stars);
         }
     }
 
     @Override
-    public int getStarsForLevel(int level) {
+    public int getStarsForLevel(final int level) {
         return starsRecords.getOrDefault(level, 0);
     }
 

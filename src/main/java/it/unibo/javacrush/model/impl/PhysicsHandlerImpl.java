@@ -18,20 +18,20 @@ public class PhysicsHandlerImpl implements PhysicsHandler{
     }
 
     @Override
-    public boolean update(Board board) {
-        boolean moved = gravity.applyGravity(board);
-        boolean refilled = refill.refill(board);
+    public boolean update(final Board board) {
+        final boolean moved = gravity.applyGravity(board);
+        final boolean refilled = refill.refill(board);
         return moved || refilled;
     }
 
     @Override
-    public void setGravity(GravityEngine newGravity) {
+    public final void setGravity(final GravityEngine newGravity) {
         this.gravity = newGravity;
         this.refill = new AdaptiveRefill(newGravity);
     }
 
     @Override
-    public void initializeBoard(Board board) {
+    public void initializeBoard(final Board board) {
         this.refill.refillAll(board);
         this.stallEngine.resolveStall(board);
     }

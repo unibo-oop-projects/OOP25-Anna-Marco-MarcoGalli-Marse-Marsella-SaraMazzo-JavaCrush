@@ -18,7 +18,7 @@ public class AdaptiveRefill implements RefillEngine {
         }
 
     @Override
-    public Boolean refill(Board board) {
+    public Boolean refill(final Board board) {
         final Direction dir = gravity.getDirection();
         final int rows = board.getRows();
         final int cols = board.getCols();
@@ -26,13 +26,13 @@ public class AdaptiveRefill implements RefillEngine {
         final int range = dir.isVertical() ? cols : rows;
         final int fixedCoord = dir.getEntryPoint(rows, cols);
 
-        long AddedCount = IntStream.range(0, range)
+        final long addedCount = IntStream.range(0, range)
                 .mapToObj(i -> createEntryPoint(i, fixedCoord, dir))
                 .filter(pos -> board.getCellAt(pos).isEmpty())
                 .peek(pos -> board.setCell(pos, Optional.of(new CellImpl(CellType.getRandomType()))))
                 .count();
 
-        return AddedCount > 0;
+        return addedCount > 0;
     } 
     
     private Position createEntryPoint(final int index, final int fixed, final Direction dir) {
@@ -40,10 +40,10 @@ public class AdaptiveRefill implements RefillEngine {
     }
 
     @Override
-    public void refillAll(Board board) {
+    public void refillAll(final Board board) {
         for (int r = 0; r < board.getRows(); r++) {
             for (int c = 0; c < board.getCols(); c++) {
-                Position pos = new Position(c, r);
+                final Position pos = new Position(c, r);
                 if (board.getCellAt(pos).isEmpty()) {
                     board.setCell(pos, Optional.of(new CellImpl(CellType.getRandomType())));
                 }
