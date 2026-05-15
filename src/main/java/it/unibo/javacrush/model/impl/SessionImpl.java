@@ -4,13 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
-import it.unibo.javacrush.common.Position;
-import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Goal;
 import it.unibo.javacrush.model.api.GoalFactory;
 import it.unibo.javacrush.model.api.Session;
@@ -20,28 +16,15 @@ import it.unibo.javacrush.model.api.Session;
 */
 public class SessionImpl implements Session{
 
-    private static final int GOAL_TARGET = 10;
-    private static final int NUMBER_GOALS = 2;
-
     private int movesLeft;
     private final List<Goal> goals = new ArrayList<>();
 
-    public SessionImpl(final int moves, final Map<Position, Optional<Cell>> cells, final GoalFactory factory) {
+    public SessionImpl(final int moves, final Map<CellType, Integer> goalsMap, final GoalFactory factory) {
         this.movesLeft = moves;
 
-        // Find the available types in the board
-        List<CellType> availableType = cells.values().stream()
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .map(elem -> elem.getType())
-            .distinct()
-            .collect(Collectors.toList());
-
-        Collections.shuffle(availableType);
-
-        availableType.stream().limit(NUMBER_GOALS).forEach(type -> {
-            this.goals.add(factory.createGoal(type, GOAL_TARGET));
-        });
+        goalsMap.entrySet().stream()
+            .map(entry -> factory.createGoal(entry.getKey(), entry.getValue()))
+            .forEach(goals::add);
     }
 
     @Override

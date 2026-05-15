@@ -1,9 +1,7 @@
 package it.unibo.javacrush.model;
 
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,12 +14,9 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
-import it.unibo.javacrush.common.Position;
-import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Goal;
 import it.unibo.javacrush.model.api.GoalFactory;
 import it.unibo.javacrush.model.api.Session;
-import it.unibo.javacrush.model.impl.CellImpl;
 import it.unibo.javacrush.model.impl.GoalFactoryImpl;
 import it.unibo.javacrush.model.impl.SessionImpl;
 
@@ -37,12 +32,12 @@ class SessionTest {
     @BeforeEach
     void initialize() {
         // Creation of a mock grid
-        Map<Position, Optional<Cell>> mockgrid = new HashMap<>();
-        mockgrid.put(new Position(0, 0), Optional.of(new CellImpl(CellType.COFFEE_BEAN)));
-        mockgrid.put(new Position(0, 1), Optional.of(new CellImpl(CellType.CUP)));
-        mockgrid.put(new Position(0, 2), Optional.of(new CellImpl(CellType.MILK)));
+        Map<CellType, Integer> mockGoals = Map.of(
+            CellType.COFFEE_BEAN, 5,
+            CellType.MILK, 10
+        );
 
-        session = new SessionImpl(INITIAL_MOVES, mockgrid, FACTORY);
+        session = new SessionImpl(INITIAL_MOVES, mockGoals, FACTORY);
     }
 
     /**
