@@ -2,6 +2,8 @@ package it.unibo.javacrush.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +11,9 @@ import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.PhysicsHandler;
 import it.unibo.javacrush.model.impl.BoardImpl;
-import it.unibo.javacrush.model.impl.DownwardGravity;
 import it.unibo.javacrush.model.impl.PhysicsHandlerImpl;
 import it.unibo.javacrush.model.impl.StallEngineImpl;
+import it.unibo.javacrush.model.impl.gravity.*;
 
 class PhysicsHandlerTest {
 
@@ -77,4 +79,56 @@ class PhysicsHandlerTest {
         }
         assertFalse(physics.update(board), "The board should be stable and not change after the last update");
     }
+
+    @Test
+    void testGravityDirectionSwitch() {
+
+        physics.setGravity(new DownwardGravity());
+        clearBoard(board);
+        physics.update(board);
+        for (int col = 0; col < COLS; col++) {
+            assertTrue(board.getCellAt(new Position(col, 0)).isPresent(), "Cell at col " + col + " should have fallen from row 0 to row 1");
+            for (int row = 1; row < ROWS; row++) {
+                assertTrue(board.getCellAt(new Position(col, row)).isEmpty(), "Cells below the first row should be empty");
+            }
+        }
+
+        physics.setGravity(new UpwardGravity());
+        clearBoard(board);
+        physics.update(board);
+        for (int col = 0; col < COLS; col++) {
+            assertTrue(board.getCellAt(new Position(col, ROWS - 1)).isPresent(), "Cell at col " + col + " should have risen to the top row");
+            for (int row = 0; row < ROWS - 1; row++) {
+                assertTrue(board.getCellAt(new Position(col, row)).isEmpty(), "Cells above the last row should be empty");
+            }
+        }
+
+        physics.setGravity(new LeftwardGravity());
+        clearBoard(board);
+        physics.update(board);
+        for (int row = 0; row < ROWS; row++) {
+            assertTrue(board.getCellAt(new Position(COLS - 1, row)).isPresent(), "Cell at row " + row + " should have moved to the leftmost column");
+            for (int col = 0; col < COLS - 1; col++) {
+                assertTrue(board.getCellAt(new Position(col, row)).isEmpty(), "Cells to the right of the first column should be empty");
+            }
+        }
+
+        physics.setGravity(new RightwardGravity());
+        clearBoard(board);
+        physics.update(board);
+        for (int row = 0; row < ROWS; row++) {
+            assertTrue(board.getCellAt(new Position(0, row)).isPresent(), "Cell at row " + row + " should have moved to the rightmost column");
+            for (int col = 1; col < COLS; col++) {
+                assertTrue(board.getCellAt(new Position(col, row)).isEmpty(), "Cells to the left of the last column should be empty");
+            }
+        }
+    }
+
+    private void clearBoard(Board board) {
+            for (int row = 0; row < ROWS; row++) {
+                for (int col = 0; col < COLS; col++) {
+                    board.setCell(new Position(col, row), Optional.empty());
+                }
+            }
+        }
 }

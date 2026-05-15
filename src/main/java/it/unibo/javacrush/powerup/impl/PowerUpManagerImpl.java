@@ -8,9 +8,17 @@ import it.unibo.javacrush.powerup.api.PowerUpManager;
 /**
  * This class manages all the PowerUps of the game.
  */
-public class PowerUpManagerImpl implements PowerUpManager { 
+public class PowerUpManagerImpl implements PowerUpManager {
 
     private AbstractPowerUp power;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Boolean isPowerUpSelected() {
+        return this.power != null;
+    }
 
     /**
      * {@inheritDoc}
@@ -30,7 +38,16 @@ public class PowerUpManagerImpl implements PowerUpManager {
             default:
                 return false;
         }
-        return this.power != null;
+        return this.isPowerUpSelected();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Boolean resetPowerUpSelection() {
+        this.power = null;
+        return !this.isPowerUpSelected();
     }
 
     /**
@@ -39,7 +56,7 @@ public class PowerUpManagerImpl implements PowerUpManager {
     @Override
     public Boolean applyPowerUp(final Board board, final Position pos) {
 
-        return this.power != null && this.power.applyPowerUp(board, pos);
+        return this.isPowerUpSelected() && this.power.applyPowerUp(board, pos);
 
     }
 

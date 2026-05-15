@@ -1,0 +1,27 @@
+package it.unibo.javacrush.model.api;
+
+/**
+ * Manages the configuration for different game levels.
+ */
+public interface LevelManager {
+
+    /**
+     * @param level the level number to get the configuration for
+     * @return the configuration for the specified level
+     */
+    LevelConfig getLevelSetup(int level);
+
+    /**
+     * Updates the number of stars for a specific level.
+     * @param level the level number
+     * @param stars the number of stars to set for the level
+     */
+    void updateStars(int level, int stars);
+
+    /**
+     * Gets the number of stars for a specific level.
+     * @param level the level number
+     * @return the number of stars for the specified level
+     */
+    int getStarsForLevel(int level);
+}
