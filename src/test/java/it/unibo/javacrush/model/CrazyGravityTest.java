@@ -56,10 +56,10 @@ class CrazyGravityTest {
 
         final Direction initialDir = crazyGravity.getDirection();
 
-        int startY = (initialDir == Direction.DOWN) ? 0 : 7;
+        final int startY = (initialDir == Direction.DOWN) ? 0 : 7;
         board.setCell(new Position(0, startY), Optional.of(new CellImpl(CellType.MOKA)));
 
-        boolean moved = crazyGravity.applyGravity(board);
+        final boolean moved = crazyGravity.applyGravity(board);
         
         assertTrue(moved, "Il pezzo avrebbe dovuto muoversi");
         assertEquals(initialDir, crazyGravity.getDirection(), 

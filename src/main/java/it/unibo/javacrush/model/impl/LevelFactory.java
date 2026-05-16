@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.unibo.javacrush.common.CellType;
+import it.unibo.javacrush.model.api.GameMatchContext;
 import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.api.LevelConfig;
 import it.unibo.javacrush.model.impl.gravity.DownwardGravity;
@@ -41,6 +42,22 @@ public final class LevelFactory {
 
     private LevelFactory() {
         // Prevent instantiation
+    }
+
+    public static GameMatchContext createGameMatchContext(final int levelNumber) {
+        final var levelConfig = createLevel(levelNumber);
+        final var board = new BoardImpl(levelConfig.rows(), levelConfig.cols());
+        final var physicsHandler = new PhysicsHandlerImpl(levelConfig.gravity(), new StallEngineImpl());
+        final var moveEngine = new MoveEngineImpl();
+        final var matchManager = new MatchManagerImpl();
+        final var stallEngine = new StallEngineImpl();
+        
+        //TODO: create a session and inject it into the game match context
+        //final var session = new SessionImpl(levelConfig.moves(), levelConfig.goals(), new GoalFactoryImpl());
+
+        physicsHandler.initializeBoard(board);
+
+        return new GameMatchContextImpl(board, physicsHandler, levelConfig, moveEngine, matchManager, stallEngine, null);
     }
 
     /**

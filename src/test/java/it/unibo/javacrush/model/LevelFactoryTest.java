@@ -1,10 +1,12 @@
 package it.unibo.javacrush.model;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import it.unibo.javacrush.model.api.GameMatchContext;
 import it.unibo.javacrush.model.api.LevelConfig;
 import it.unibo.javacrush.model.impl.LevelFactory;
 
@@ -23,6 +25,23 @@ class LevelFactoryTest {
             assertNotNull(config.gravity(), "the gravity of level " + i + " should be non-null");
             assertNotNull(config.goals(), "the goals of level " + i + " should be non-null");
             assertTrue(!config.goals().isEmpty(), "the goals of level " + i + " should not be empty");
+        }
+    }
+    @Test
+    void testGameMatchContextInjection() {
+        for (int i = 1; i <= 5; i++) {
+            final GameMatchContext context = LevelFactory.createGameMatchContext(i);
+            assertNotNull(context, "the game match context of level " + i + " should be non-null");
+            assertNotNull(context.getBoard());
+            assertNotNull(context.getPhysicsHandler());
+            assertNotNull(context.getLevelConfig());
+            assertNotNull(context.getMoveEngine());
+            assertNotNull(context.getMatchManager());
+            assertNotNull(context.getStallEngine());
+            //assertNotNull(context.getSession());
+
+            assertEquals(context.getLevelConfig().cols(), context.getBoard().getCols());
+            assertEquals(context.getLevelConfig().rows(), context.getBoard().getRows());
         }
     }
 }
