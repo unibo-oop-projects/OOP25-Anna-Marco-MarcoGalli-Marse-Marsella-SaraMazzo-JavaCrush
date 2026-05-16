@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unibo.javacrush.common.Position;
+import it.unibo.javacrush.common.PowerUpNumber;
 import it.unibo.javacrush.model.api.Board;
-import it.unibo.javacrush.powerup.api.AbstractPowerUp;
 import it.unibo.javacrush.powerup.api.PowerUpManager;
 
 /**
- * This class manages all the PowerUps of the game.
+ * This class implements {@link it.unibo.javacrush.powerup.api.PowerUpManager}.
  */
 public class PowerUpManagerImpl implements PowerUpManager {
 
-    private static final int TOTPOWERUPS = 3;
+    private static final int TOTPOWERUPS = PowerUpNumber.values().length;
     private int selected;
-    private List<AbstractPowerUp> power;
     private List<Boolean> permission;
 
     /**
@@ -23,14 +22,10 @@ public class PowerUpManagerImpl implements PowerUpManager {
      */
     public PowerUpManagerImpl() {
         this.selected = -1;
-        this.power = new ArrayList<>();
         this.permission = new ArrayList<>();
 
-        this.power.addLast(new RemoveCell());
-        this.power.addLast(new RemoveRow());
-        this.power.addLast(new RemoveType());
         for (int i = 0; i < TOTPOWERUPS; i++) {
-            this.permission.addLast(true);
+            this.permission.add(true);
         }
     }
 
@@ -69,8 +64,8 @@ public class PowerUpManagerImpl implements PowerUpManager {
     public Boolean applyPowerUp(final Board board, final Position pos) {
         if (this.isPowerUpSelected() &&
             this.permission.get(this.selected) &&
-            this.power.get(this.selected).applyPowerUp(board, pos)) {
-            
+            PowerUpNumber.values()[this.selected].getPowerUp().applyPowerUp(board, pos)) {
+
                 this.permission.remove(this.selected);
                 this.permission.add(this.selected, false);
                 return this.resetPowerUpSelection();

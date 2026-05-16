@@ -24,9 +24,9 @@ import it.unibo.javacrush.powerup.impl.PowerUpManagerImpl;
 class PowerUpManagerTest {
 
     private static final int DIM = 3;
-    private static final int CLEANER = 0;
-    private static final int MELTER = 1;
-    private static final int VAPORIZER = 2;
+    private static final int CELL = 0;
+    private static final int ROW = 1;
+    private static final int TYPE = 2;
     private PowerUpManager manager;
     private Board board;
     private Board initial;
@@ -66,7 +66,7 @@ class PowerUpManagerTest {
         assertFalse(manager.applyPowerUp(board, pos));
         assertEquals(board, initial);
 
-        assertTrue(manager.selectPowerUp(CLEANER));
+        assertTrue(manager.selectPowerUp(CELL));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
         assertFalse(manager.applyPowerUp(board, pos));
@@ -87,7 +87,7 @@ class PowerUpManagerTest {
         assertFalse(manager.applyPowerUp(board, pos));
         assertEquals(board, initial);
 
-        assertTrue(manager.selectPowerUp(MELTER));
+        assertTrue(manager.selectPowerUp(ROW));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
         assertFalse(manager.applyPowerUp(board, pos));
@@ -111,7 +111,7 @@ class PowerUpManagerTest {
         assertFalse(manager.applyPowerUp(board, pos));
         assertEquals(board, initial);
 
-        assertTrue(manager.selectPowerUp(VAPORIZER));
+        assertTrue(manager.selectPowerUp(TYPE));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
         assertFalse(manager.applyPowerUp(board, pos));
