@@ -52,12 +52,11 @@ public final class LevelFactory {
         final var matchManager = new MatchManagerImpl();
         final var stallEngine = new StallEngineImpl();
         
-        //TODO: create a session and inject it into the game match context
-        //final var session = new SessionImpl(levelConfig.moves(), levelConfig.goals(), new GoalFactoryImpl());
+        final var session = new SessionImpl(levelConfig.moves(), levelConfig.goals(), new GoalFactoryImpl());
 
         physicsHandler.initializeBoard(board);
 
-        return new GameMatchContextImpl(board, physicsHandler, levelConfig, moveEngine, matchManager, stallEngine, null);
+        return new GameMatchContextImpl(board, physicsHandler, levelConfig, moveEngine, matchManager, stallEngine, session);
     }
 
     /**

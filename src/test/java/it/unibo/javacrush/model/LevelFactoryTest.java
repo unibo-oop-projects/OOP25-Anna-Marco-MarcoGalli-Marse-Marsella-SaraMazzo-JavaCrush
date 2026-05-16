@@ -38,7 +38,7 @@ class LevelFactoryTest {
             assertNotNull(context.getMoveEngine());
             assertNotNull(context.getMatchManager());
             assertNotNull(context.getStallEngine());
-            //assertNotNull(context.getSession());
+            assertNotNull(context.getSession());
 
             assertEquals(context.getLevelConfig().cols(), context.getBoard().getCols());
             assertEquals(context.getLevelConfig().rows(), context.getBoard().getRows());
