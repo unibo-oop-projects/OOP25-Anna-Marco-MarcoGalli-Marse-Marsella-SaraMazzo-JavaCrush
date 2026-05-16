@@ -1,6 +1,6 @@
 package it.unibo.javacrush.controller.api;
 
-import it.unibo.javacrush.common.GameState;
+import it.unibo.javacrush.common.Position;
 
 /**
  * Interface representing the game controller, 
@@ -9,17 +9,31 @@ import it.unibo.javacrush.common.GameState;
 public interface GameController {
 
     /**
-     * Handles a specific event and executes the corresponding command.
-     * 
-     * @param event the event to handle
+     * Handle the click on the board, it will select the cell and then deselect it if it's already selected.
+     *
+     * @param p the position of the cell clicked
+     *
+     * @return true if we can select the cell, false otherwise
      */
-    void handleEvent(Event event);
+    boolean hit(Position pos);
 
     /**
-     * Update the state of the game based on the current board and the player's actions.
-     * 
-     * @return the state of the game
+     * Swap two cells.
+     *
+     * @param p1 the first selected cell
+     * @param p2 the second selected cell
      */
-    GameState updateGameState();
+    void swap(Position p1, Position p2);
+
+    /**
+     * Start the game loop, it will be called when the level is loaded and will
+     * handle the game logic until the level is completed or the player quits.
+     */
+    void gameLoop();
+
+    /**
+     * Quit the level and go back to the main menu.
+     */
+    void quitLevel();
 
 }

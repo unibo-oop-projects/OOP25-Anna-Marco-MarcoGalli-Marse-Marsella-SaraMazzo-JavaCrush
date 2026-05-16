@@ -48,5 +48,17 @@ public class JavaCrushApp extends Application implements SceneManager{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'showGame'");
     }
+
+    @Override
+    public void quit() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'quit'");
+    }
+
+    @Override
+    public void showInstructions() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'showInstructions'");
+    }
 }
 

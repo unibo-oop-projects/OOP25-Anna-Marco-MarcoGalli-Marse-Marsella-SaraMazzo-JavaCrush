@@ -13,30 +13,4 @@ public interface AppController {
      */
     void notifyEvent(Event event);
 
-    /**
-     * Display the main menu of the application.
-     */
-    void displayMainMenu();
-
-    /**
-     * Display the levels menu.
-     */
-    void displayLevelsMenu();
-
-    /**
-     * Display the instructions of the game.
-     */
-    void displayInstructions();
-
-    /**
-     * Start a specific level based on the number passed in input.
-     * 
-     * @param levelNumber the level's number
-     */
-    void startLevel(int levelNumber);
-
-    /**
-     * Quit the game.
-     */
-    void quit();
 }

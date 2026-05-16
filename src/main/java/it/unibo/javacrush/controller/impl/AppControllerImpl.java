@@ -5,55 +5,64 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import it.unibo.javacrush.common.EventType;
+import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.Command;
 import it.unibo.javacrush.controller.api.Event;
 import it.unibo.javacrush.controller.api.GameController;
+import it.unibo.javacrush.controller.impl.commands.ExitGameCommand;
+import it.unibo.javacrush.controller.impl.commands.GoToLevelsCommand;
+import it.unibo.javacrush.controller.impl.commands.GoToMenuCommand;
+import it.unibo.javacrush.controller.impl.commands.ShowInstructiosCommand;
+import it.unibo.javacrush.model.api.LevelManager;
+
+import it.unibo.javacrush.view.api.SceneManager;
 
 /**
  * Implementation of the {@link AppController} interface.
  */
 public class AppControllerImpl implements AppController {
 
-    // VARIABLE FOR THE VIEW (CURRENT MISSING)
+    private final SceneManager sceneManager;
+    private final Map<AppEventType, Function<Event, Command>> commands = new EnumMap<>(AppEventType.class);
+    private final LevelManager levelManager;
     private Optional<GameController> currentGameController = Optional.empty();
-    private final Map<EventType, Function<Event, Command>> commands = new EnumMap<>(EventType.class);
 
-    @Override
-    public void notifyEvent(Event event) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'notifyEvent'");
+
+    public AppControllerImpl(final SceneManager sceneManager, final LevelManager levelManager) {
+        this.sceneManager = sceneManager;
+        this.levelManager = levelManager;
+
+        this.setUpCommands();
     }
 
     @Override
-    public void displayMainMenu() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayMainMenu'");
+    public void notifyEvent(final Event event) {
+        var commandFactory = commands.get(event.type());
+
+        if (commandFactory != null) {
+            commandFactory.apply(event).execute();
+        }
     }
 
-    @Override
-    public void displayLevelsMenu() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayLevelsMenu'");
+    public Optional<GameController> getCurrentGameController() {
+        return currentGameController;
     }
 
-    @Override
-    public void displayInstructions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'displayInstructions'");
+    /**
+     * Set up the mapping between events and commands.
+     */
+    private void setUpCommands() {
+        this.commands.put(AppEventType.EXIT_GAME, event -> new ExitGameCommand(this.sceneManager));
+        this.commands.put(AppEventType.GO_TO_LEVELS, event -> new GoToLevelsCommand(this.sceneManager));
+        this.commands.put(AppEventType.GO_TO_MENU, event -> new GoToMenuCommand(this.sceneManager));
+        this.commands.put(AppEventType.SHOW_INSTRUCTIONS, event -> new ShowInstructiosCommand(this.sceneManager));
     }
 
-    @Override
-    public void startLevel(final int levelNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'startLevel'");
+    /**
+     * Cancel the GameController used for the game.
+     */
+    private void terminateGame() {
+        this.currentGameController = Optional.empty();
     }
-
-    @Override
-    public void quit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'quit'");
-    }
-
 }
