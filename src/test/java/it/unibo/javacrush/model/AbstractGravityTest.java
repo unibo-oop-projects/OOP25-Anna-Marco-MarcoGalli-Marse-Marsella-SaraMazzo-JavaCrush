@@ -33,12 +33,12 @@ public abstract class AbstractGravityTest {
 
     @Test
     void testSingleMovement() {
-        Position start = new Position(2, 2);
-        Direction dir = gravity.getDirection();
+        final Position start = new Position(2, 2);
+        final Direction dir = gravity.getDirection();
 
-        Position expected = new Position(start.x() + dir.getDx(), start.y() + dir.getDy());
+        final Position expected = new Position(start.x() + dir.getDx(), start.y() + dir.getDy());
         board.setCell(start,Optional.of(new CellImpl(CellType.MOKA)));
-        boolean moved = gravity.applyGravity(board);
+        final boolean moved = gravity.applyGravity(board);
 
         assertTrue(moved, "Expected movement in direction " + dir);
         assertTrue(board.getCellAt(start).isEmpty());
@@ -47,27 +47,27 @@ public abstract class AbstractGravityTest {
 
     @Test
     void testBlockedByAnotherCell() {
-        Direction dir = gravity.getDirection();
-        int edgeX = dir.getDx() > 0 ? COLS - 1 : (dir.getDx() < 0 ? 0 : 2);
-        int edgeY = dir.getDy() > 0 ? ROWS - 1 : (dir.getDy() < 0 ? 0 : 2);
+        final Direction dir = gravity.getDirection();
+        final int edgeX = dir.getDx() > 0 ? COLS - 1 : dir.getDx() < 0 ? 0 : 2;
+        final int edgeY = dir.getDy() > 0 ? ROWS - 1 : dir.getDy() < 0 ? 0 : 2;
 
-        Position posEdge = new Position(edgeX, edgeY);
-        Position posBeforeEdge = new Position(edgeX - dir.getDx(), edgeY - dir.getDy());
+        final Position posEdge = new Position(edgeX, edgeY);
+        final Position posBeforeEdge = new Position(edgeX - dir.getDx(), edgeY - dir.getDy());
         
         board.setCell(posEdge, Optional.of(new CellImpl(CellType.MOKA)));
         board.setCell(posBeforeEdge, Optional.of(new CellImpl(CellType.CUP)));
 
-        boolean moved = gravity.applyGravity(board);
+        final boolean moved = gravity.applyGravity(board);
         assertFalse(moved, "Expected no movement due to blockage");
     }
 
     @Test
     void testReachingTheEdge() {
-        Direction dir = gravity.getDirection();
+        final Direction dir = gravity.getDirection();
         
-        int startX = dir.getDx() > 0 ? 0 : (dir.getDx() < 0 ? COLS - 1 : 2);
-        int startY = dir.getDy() > 0 ? 0 : (dir.getDy() < 0 ? ROWS - 1 : 2);
-        Position startPos = new Position(startX, startY);
+        final int startX = dir.getDx() > 0 ? 0 : dir.getDx() < 0 ? COLS - 1 : 2;
+        final int startY = dir.getDy() > 0 ? 0 : dir.getDy() < 0 ? ROWS - 1 : 2;
+        final Position startPos = new Position(startX, startY);
 
         board.setCell(startPos, Optional.of(new CellImpl(CellType.MOKA)));
 
@@ -75,9 +75,9 @@ public abstract class AbstractGravityTest {
             gravity.applyGravity(board);
         }
 
-        int endX = dir.getDx() > 0 ? COLS - 1 : (dir.getDx() < 0 ? 0 : startX);
-        int endY = dir.getDy() > 0 ? ROWS - 1 : (dir.getDy() < 0 ? 0 : startY);
-        Position endPos = new Position(endX, endY);
+        final int endX = dir.getDx() > 0 ? COLS - 1 : dir.getDx() < 0 ? 0 : startX;
+        final int endY = dir.getDy() > 0 ? ROWS - 1 : dir.getDy() < 0 ? 0 : startY;
+        final Position endPos = new Position(endX, endY);
 
         assertTrue(board.getCellAt(endPos).isPresent(), "Expected cell to reach the edge");
         assertDoesNotThrow(() -> gravity.applyGravity(board));

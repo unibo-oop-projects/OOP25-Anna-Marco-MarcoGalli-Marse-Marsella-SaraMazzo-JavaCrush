@@ -12,7 +12,7 @@ public abstract class AbstractGravity implements GravityEngine {
 
     private final Direction direction;
 
-    protected AbstractGravity(Direction direction) {
+    protected AbstractGravity(final Direction direction) {
         this.direction = direction;
     }
 
@@ -24,7 +24,7 @@ public abstract class AbstractGravity implements GravityEngine {
         return this.direction;
     }
 
-    protected boolean isInBound(Board board, final Position pos) {
+    protected boolean isInBound(final Board board, final Position pos) {
         return pos.x() >= 0 && pos.x() < board.getCols() 
         && pos.y() >= 0 && pos.y() < board.getRows();
     }

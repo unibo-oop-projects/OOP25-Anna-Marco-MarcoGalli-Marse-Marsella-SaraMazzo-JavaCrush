@@ -11,12 +11,12 @@ public class UpwardGravity extends AbstractGravity {
     }
 
     @Override
-    public Boolean applyGravity(Board board) {
+    public Boolean applyGravity(final Board board) {
         boolean moved = false;
         for (int row = 1; row < board.getRows(); row++) {
             for (int col = 0; col < board.getCols(); col++) {
-                Position current = new Position(col, row);
-                Position target = new Position(col, row - 1);
+                final Position current = new Position(col, row);
+                final Position target = new Position(col, row - 1);
 
                 if (tryMove(board, current, target)) {
                     moved = true;
