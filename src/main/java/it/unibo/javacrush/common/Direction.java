@@ -15,7 +15,7 @@ public enum Direction {
     private final int dx;
     private final int dy;
 
-    Direction(int dx, int dy) {
+    Direction(final int dx, final int dy) {
         this.dx = dx;
         this.dy = dy;
     }
@@ -35,7 +35,7 @@ public enum Direction {
      * @param cols the total number of columns in the board
      * @return the index (0 or max-1) of the entry row/column
      */
-    public int getEntryPoint(int rows, int cols) {
+    public int getEntryPoint(final int rows, final int cols) {
         return switch (this) {
             case DOWN -> 0;
             case UP -> rows - 1;
