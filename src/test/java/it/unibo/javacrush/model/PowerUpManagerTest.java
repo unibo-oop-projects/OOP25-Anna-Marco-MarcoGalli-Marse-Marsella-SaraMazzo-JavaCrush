@@ -70,6 +70,7 @@ class PowerUpManagerTest {
         assertTrue(manager.selectPowerUp(PowerUpNumber.SINGLECELL.ordinal()));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
+        assertFalse(manager.selectPowerUp(PowerUpNumber.SINGLECELL.ordinal()));
         assertFalse(manager.applyPowerUp(board, pos));
 
         assertTrue(board.getCellAt(pos).isEmpty());
@@ -91,6 +92,7 @@ class PowerUpManagerTest {
         assertTrue(manager.selectPowerUp(PowerUpNumber.ROW.ordinal()));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
+        assertFalse(manager.selectPowerUp(PowerUpNumber.ROW.ordinal()));
         assertFalse(manager.applyPowerUp(board, pos));
 
         for (int x = 0; x < board.getCols(); x++) {
@@ -115,6 +117,7 @@ class PowerUpManagerTest {
         assertTrue(manager.selectPowerUp(PowerUpNumber.TYPE.ordinal()));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
+        assertFalse(manager.selectPowerUp(PowerUpNumber.TYPE.ordinal()));
         assertFalse(manager.applyPowerUp(board, pos));
 
         for (int y = 0; y < board.getRows(); y++) {
