@@ -3,6 +3,7 @@ package it.unibo.javacrush;
 import it.unibo.javacrush.controller.api.GameController;
 import it.unibo.javacrush.controller.api.MockMenuController;
 import it.unibo.javacrush.controller.impl.MockMenuControllerImpl;
+import it.unibo.javacrush.view.api.GameView;
 import it.unibo.javacrush.view.api.LevelsView;
 import it.unibo.javacrush.view.api.MenuView;
 import it.unibo.javacrush.view.api.SceneManager;
@@ -60,6 +61,12 @@ public class JavaCrushApp extends Application implements SceneManager{
     public void showInstructions() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'showInstructions'");
+    }
+
+    @Override
+    public GameView getGameView() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getGameView'");
     }
 }
 

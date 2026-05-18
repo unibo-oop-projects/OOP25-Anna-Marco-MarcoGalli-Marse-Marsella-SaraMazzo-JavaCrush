@@ -16,7 +16,6 @@ import it.unibo.javacrush.controller.impl.commands.GoToMenuCommand;
 import it.unibo.javacrush.controller.impl.commands.ShowInstructiosCommand;
 import it.unibo.javacrush.controller.impl.commands.StartLevelCommand;
 import it.unibo.javacrush.model.api.LevelManager;
-
 import it.unibo.javacrush.view.api.SceneManager;
 
 /**
@@ -46,6 +45,7 @@ public class AppControllerImpl implements AppController {
         }
     }
 
+    // Maybe to put it in the interface
     public Optional<GameController> getCurrentGameController() {
         return currentGameController;
     }
@@ -69,7 +69,8 @@ public class AppControllerImpl implements AppController {
                 this.sceneManager,
                 this.levelManager,
                 levelId,
-                controller -> this.currentGameController = Optional.of(controller)
+                controller -> this.currentGameController = Optional.of(controller),
+                this.sceneManager.getGameView()
             );
         });
     }

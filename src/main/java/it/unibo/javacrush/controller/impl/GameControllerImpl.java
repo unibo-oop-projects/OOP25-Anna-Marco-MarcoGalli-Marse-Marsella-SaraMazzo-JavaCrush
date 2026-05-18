@@ -16,6 +16,7 @@ import it.unibo.javacrush.model.api.MoveEngine;
 import it.unibo.javacrush.model.api.PhysicsHandler;
 import it.unibo.javacrush.model.api.Session;
 import it.unibo.javacrush.model.api.StallEngine;
+import it.unibo.javacrush.view.api.GameView;
 
 /**
  * Implementation of the {@link GameController} interface.
@@ -26,6 +27,7 @@ public class GameControllerImpl implements GameController{
     //private final int rows;
     //private final int cols;
     //private final int moves;
+    private final GameView view;
     private final Map<CellType, Integer> goals;
     private final GravityEngine gravity;
     private final Board board;
@@ -39,9 +41,10 @@ public class GameControllerImpl implements GameController{
     private Set<Match> matches = Set.of();
     
 
-    public GameControllerImpl(final GameMatchContext gameContext) {
+    public GameControllerImpl(final GameMatchContext gameContext, final GameView view) {
         //this.rows = gameContext.getLevelConfig().rows();
         //this.cols = gameContext.getLevelConfig().cols();
+        this.view = view;
         this.board = gameContext.getBoard();
         //this.moves = gameContext.getLevelConfig().moves();
         this.goals = gameContext.getLevelConfig().goals();
