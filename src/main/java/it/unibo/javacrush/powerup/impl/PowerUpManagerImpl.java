@@ -1,23 +1,40 @@
 package it.unibo.javacrush.powerup.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import it.unibo.javacrush.common.Position;
+import it.unibo.javacrush.common.PowerUpNumber;
 import it.unibo.javacrush.model.api.Board;
-import it.unibo.javacrush.powerup.api.AbstractPowerUp;
 import it.unibo.javacrush.powerup.api.PowerUpManager;
 
 /**
- * This class manages all the PowerUps of the game.
+ * This class implements {@link it.unibo.javacrush.powerup.api.PowerUpManager}.
  */
 public class PowerUpManagerImpl implements PowerUpManager {
 
-    private AbstractPowerUp power;
+    private static final int TOTPOWERUPS = PowerUpNumber.values().length;
+    private int selected;
+    private final List<Boolean> permission;
+
+    /**
+     * PowerUpManagerImpl constructor.
+     */
+    public PowerUpManagerImpl() {
+        this.selected = -1;
+        this.permission = new ArrayList<>();
+
+        for (int i = 0; i < TOTPOWERUPS; i++) {
+            this.permission.add(true);
+        }
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Boolean isPowerUpSelected() {
-        return this.power != null;
+        return this.selected >= 0 && this.selected < TOTPOWERUPS;
     }
 
     /**
@@ -25,18 +42,8 @@ public class PowerUpManagerImpl implements PowerUpManager {
      */
     @Override
     public Boolean selectPowerUp(final int num) {
-        switch (num) {
-            case 0:
-                this.power = new CleanerPowerUp();
-                break;
-            case 1:
-                this.power = new MelterPowerUp();
-                break;
-            case 2:
-                this.power = new VaporizerPowerUp();
-                break;
-            default:
-                return false;
+        if (this.permission.size() > num && num >= 0 && this.permission.get(num)) {
+            this.selected = num;
         }
         return this.isPowerUpSelected();
     }
@@ -46,7 +53,7 @@ public class PowerUpManagerImpl implements PowerUpManager {
      */
     @Override
     public Boolean resetPowerUpSelection() {
-        this.power = null;
+        this.selected = -1;
         return !this.isPowerUpSelected();
     }
 
@@ -55,9 +62,16 @@ public class PowerUpManagerImpl implements PowerUpManager {
      */
     @Override
     public Boolean applyPowerUp(final Board board, final Position pos) {
+        if (this.isPowerUpSelected()
+            && this.permission.get(this.selected)
+            && PowerUpNumber.values()[this.selected].getPowerUp().applyPowerUp(board, pos)) {
 
-        return this.isPowerUpSelected() && this.power.applyPowerUp(board, pos);
+                this.permission.remove(this.selected);
+                this.permission.add(this.selected, false);
+                return this.resetPowerUpSelection();
+        }
 
+        return false;
     }
 
 }

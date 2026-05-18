@@ -1,4 +1,4 @@
-package it.unibo.javacrush.powerup.api;
+package it.unibo.javacrush.powerup.impl;
 
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;

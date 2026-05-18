@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.Position;
+import it.unibo.javacrush.common.PowerUpNumber;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.CellImpl;
@@ -24,9 +25,6 @@ import it.unibo.javacrush.powerup.impl.PowerUpManagerImpl;
 class PowerUpManagerTest {
 
     private static final int DIM = 3;
-    private static final int CLEANER = 0;
-    private static final int MELTER = 1;
-    private static final int VAPORIZER = 2;
     private PowerUpManager manager;
     private Board board;
     private Board initial;
@@ -57,16 +55,19 @@ class PowerUpManagerTest {
         assertFalse(manager.selectPowerUp(-1));
         assertFalse(manager.selectPowerUp(3));
         assertTrue(manager.selectPowerUp(0));
+        assertTrue(manager.isPowerUpSelected());
+        assertTrue(manager.resetPowerUpSelection());
+        assertFalse(manager.isPowerUpSelected());
     }
 
     @Test
-    void testApplyCleanerPowerUp() {
+    void testApplyRemoveCellPowerUp() {
 
         assertFalse(manager.isPowerUpSelected());
         assertFalse(manager.applyPowerUp(board, pos));
         assertEquals(board, initial);
 
-        assertTrue(manager.selectPowerUp(CLEANER));
+        assertTrue(manager.selectPowerUp(PowerUpNumber.SINGLECELL.ordinal()));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
         assertFalse(manager.applyPowerUp(board, pos));
@@ -81,13 +82,13 @@ class PowerUpManagerTest {
     }
 
     @Test
-    void testApplyMelterPowerUp() {
+    void testApplyRemoveRowPowerUp() {
 
         assertFalse(manager.isPowerUpSelected());
         assertFalse(manager.applyPowerUp(board, pos));
         assertEquals(board, initial);
 
-        assertTrue(manager.selectPowerUp(MELTER));
+        assertTrue(manager.selectPowerUp(PowerUpNumber.ROW.ordinal()));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
         assertFalse(manager.applyPowerUp(board, pos));
@@ -105,13 +106,13 @@ class PowerUpManagerTest {
     }
 
     @Test
-    void testApplyVaporizerPowerUp() {
+    void testApplyRemoveTypePowerUp() {
 
         assertFalse(manager.isPowerUpSelected());
         assertFalse(manager.applyPowerUp(board, pos));
         assertEquals(board, initial);
 
-        assertTrue(manager.selectPowerUp(VAPORIZER));
+        assertTrue(manager.selectPowerUp(PowerUpNumber.TYPE.ordinal()));
         assertTrue(manager.isPowerUpSelected());
         assertTrue(manager.applyPowerUp(board, pos));
         assertFalse(manager.applyPowerUp(board, pos));
