@@ -9,7 +9,6 @@ import it.unibo.javacrush.common.GameState;
 import it.unibo.javacrush.controller.api.GameController;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.GameMatchContext;
-import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.api.MatchManager;
 import it.unibo.javacrush.model.api.MoveEngine;
@@ -22,11 +21,10 @@ import it.unibo.javacrush.view.api.GameView;
 /**
  * Implementation of the {@link GameController} interface.
  */
-public final class GameControllerImpl implements GameController {
+public class GameControllerImpl implements GameController {
 
     private final GameView view;
     private final Map<CellType, Integer> goals;
-    private final GravityEngine gravity;
     private final Board board;
     private final PhysicsHandler physics;
     private final StallEngine stallEngine;
@@ -50,15 +48,11 @@ public final class GameControllerImpl implements GameController {
         this.board = gameContext.getBoard();
         this.goals = gameContext.getLevelConfig().goals();
         this.session = gameContext.getSession();
-        this.gravity = gameContext.getLevelConfig().gravity();
         this.physics = gameContext.getPhysicsHandler();
         this.stallEngine = gameContext.getStallEngine();
         this.moveEngine = gameContext.getMoveEngine();
         this.matchManager = gameContext.getMatchManager();
         this.powerUpManager = gameContext.getLevelConfig().powerUpManager();
-
-        // Inizialize board
-        this.physics.initializeBoard(this.board);
     }
 
     /**
@@ -180,7 +174,6 @@ public final class GameControllerImpl implements GameController {
             this.lastClickedPosition = null;
             if (canSwap) {
                 this.session.decreaseMoves();
-                this.setGravity();
                 this.matches = this.matchManager.findAllMatches(this.board);
             }
 
@@ -198,7 +191,6 @@ public final class GameControllerImpl implements GameController {
         final boolean applyPowerUp = this.powerUpManager.applyPowerUp(this.board, pos);
 
         if (applyPowerUp) {
-            this.setGravity();
             this.powerUpManager.resetPowerUpSelection();
             this.view.updateView();
         }
@@ -219,13 +211,6 @@ public final class GameControllerImpl implements GameController {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Set the gravity for the move.
-     */
-    private void setGravity() {
-        this.physics.setGravity(this.gravity);
     }
 
 }

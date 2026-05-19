@@ -18,7 +18,6 @@ import it.unibo.javacrush.common.GameEvent;
 import it.unibo.javacrush.controller.impl.AppControllerImpl;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.GameMatchContext;
-import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.api.LevelConfig;
 import it.unibo.javacrush.model.api.LevelManager;
 import it.unibo.javacrush.model.api.MatchManager;
@@ -30,7 +29,7 @@ import it.unibo.javacrush.powerup.api.PowerUpManager;
 import it.unibo.javacrush.view.api.SceneManager;
 
 /**
- * Test class for the {@link AppControllerImpl} class.
+ * Test class for {@link it.unibo.javacrush.controller.impl.AppControllerImpl}.
  */
 @ExtendWith(MockitoExtension.class)
 class AppControllerTest {
@@ -123,7 +122,6 @@ class AppControllerTest {
         when(mockContext.getStallEngine()).thenReturn(mock(StallEngine.class));
         when(mockContext.getMoveEngine()).thenReturn(mock(MoveEngine.class));
         when(mockContext.getMatchManager()).thenReturn(mock(MatchManager.class));
-        when(mockConfig.gravity()).thenReturn(mock(GravityEngine.class));
         when(mockConfig.powerUpManager()).thenReturn(mock(PowerUpManager.class));
         when(mockConfig.goals()).thenReturn(java.util.Map.of());
 

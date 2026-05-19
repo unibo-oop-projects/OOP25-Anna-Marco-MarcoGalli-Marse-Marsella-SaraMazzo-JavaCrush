@@ -21,7 +21,7 @@ import it.unibo.javacrush.view.api.SceneManager;
 /**
  * Implementation of the {@link AppController} interface.
  */
-public final class AppControllerImpl implements AppController {
+public class AppControllerImpl implements AppController {
 
     private final SceneManager sceneManager;
     private final Map<AppEventType, Function<Event, Command>> commands = new EnumMap<>(AppEventType.class);

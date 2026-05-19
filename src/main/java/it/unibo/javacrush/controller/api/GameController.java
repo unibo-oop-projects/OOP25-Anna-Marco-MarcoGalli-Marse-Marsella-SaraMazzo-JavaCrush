@@ -61,7 +61,7 @@ public interface GameController {
     /**
      * Get the remaining moves.
      * 
-     * @return the numeber of remaining moves
+     * @return the number of remaining moves
      */
     int getMovesLeft();
 

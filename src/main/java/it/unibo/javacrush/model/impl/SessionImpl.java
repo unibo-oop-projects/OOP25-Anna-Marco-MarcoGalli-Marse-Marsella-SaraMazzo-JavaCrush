@@ -14,7 +14,7 @@ import it.unibo.javacrush.model.api.Session;
 /** 
  * Implementation of the {@link Session} interface.
  */
-public final class SessionImpl implements Session {
+public class SessionImpl implements Session {
 
     private int movesLeft;
     private final List<Goal> goals = new ArrayList<>();

@@ -2,7 +2,6 @@ package it.unibo.javacrush.controller;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,7 +18,6 @@ import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.controller.impl.GameControllerImpl;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.GameMatchContext;
-import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.api.LevelConfig;
 import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.api.MatchManager;
@@ -31,7 +29,7 @@ import it.unibo.javacrush.powerup.api.PowerUpManager;
 import it.unibo.javacrush.view.api.GameView;
 
 /**
- * Test class for the {@link GameControllerImpl} class.
+ * Test class for {@link it.unibo.javacrush.controller.impl.GameControllerImpl}.
  */
 @ExtendWith(MockitoExtension.class)
 class GameControllerTest {
@@ -69,7 +67,6 @@ class GameControllerTest {
         when(gameContext.getMatchManager()).thenReturn(matchManager);
 
         when(levelConfig.goals()).thenReturn(java.util.Map.of());
-        when(levelConfig.gravity()).thenReturn(mock(GravityEngine.class));
         when(levelConfig.powerUpManager()).thenReturn(powerUpManager);
 
         this.gameController = new GameControllerImpl(this.gameContext, this.view);
@@ -95,7 +92,6 @@ class GameControllerTest {
         verify(this.moveEngine).canSwap(this.board, pos1, pos2);
         verify(this.board).swapCells(pos1, pos2);
         verify(this.session).decreaseMoves();
-        verify(this.physics).setGravity(any());
     }
 
     /**
