@@ -1,6 +1,10 @@
 package it.unibo.javacrush.view.impl;
 
-import it.unibo.javacrush.controller.api.MockMenuController;
+import java.util.Optional;
+
+import it.unibo.javacrush.common.AppEventType;
+import it.unibo.javacrush.controller.api.AppController;
+import it.unibo.javacrush.controller.api.Event;
 import it.unibo.javacrush.view.api.MenuView;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -12,29 +16,54 @@ public class MenuViewImpl implements MenuView{
     
     private final VBox root;
 
-    public MenuViewImpl(MockMenuController controller) {
-        // 1. Creiamo il contenitore principale (VBox con spazio di 30px tra elementi)
+    public MenuViewImpl(AppController controller) {
+
         this.root = new VBox(30);
         this.root.setAlignment(Pos.CENTER); // Centra tutto!
 
-        // 2. Creiamo il Titolo (come nel tuo disegno)
         Label title = new Label("JAVACRUSH");
-        title.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #2800ef;"); // Un po' di stile per il titolo
-
-        // 3. Creiamo i Bottoni
+        title.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #2800ef;");
+        
         Button playButton = new Button("Play");
         Button guideButton = new Button("How to play");
 
-        // Diamo un po' di stile ai bottoni per farli somigliare al disegno
         playButton.setPrefWidth(200);
         guideButton.setPrefWidth(200);
 
-        // 4. Aggiungiamo tutto al VBox
         this.root.getChildren().addAll(title, playButton, guideButton);
         
-        // Per ora facciamo solo un print per vedere se funzionano
-        playButton.setOnAction(e -> controller.playButton());
-        guideButton.setOnAction(e -> controller.howToPlayButton());
+        playButton.setOnAction(e -> {
+            // Creiamo l'evento per andare alla selezione livelli
+            final Event goToLevelsEvent = new Event() {
+                @Override
+                public AppEventType type() {
+                    return AppEventType.GO_TO_LEVELS;
+                }
+
+                @Override
+                public Optional<Integer> id() {
+                    return Optional.empty(); // Nel menu non serve l'id del livello
+                }
+            };
+            // Notifichiamo il controller ufficiale
+            controller.notifyEvent(goToLevelsEvent);
+        });
+        guideButton.setOnAction(e -> {
+            final Event goToInstructionsEvent = new Event() {
+
+                @Override
+                public AppEventType type() {
+                    return AppEventType.SHOW_INSTRUCTIONS;
+                }
+
+                @Override
+                public Optional<Integer> id() {
+                    return Optional.empty();
+                }
+                
+            };
+            controller.notifyEvent(goToInstructionsEvent);
+        });
     }
 
     @Override
