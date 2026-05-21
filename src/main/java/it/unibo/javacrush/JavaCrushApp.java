@@ -6,10 +6,12 @@ import it.unibo.javacrush.controller.impl.AppControllerImpl;
 import it.unibo.javacrush.model.api.LevelManager;
 import it.unibo.javacrush.model.impl.LevelManagerImpl;
 import it.unibo.javacrush.view.api.GameView;
+import it.unibo.javacrush.view.api.InstructionsView;
 import it.unibo.javacrush.view.api.LevelsView;
 import it.unibo.javacrush.view.api.MenuView;
 import it.unibo.javacrush.view.api.SceneManager;
 import it.unibo.javacrush.view.impl.GameViewImpl;
+import it.unibo.javacrush.view.impl.InstructionsViewImpl;
 import it.unibo.javacrush.view.impl.LevelsViewImpl;
 import it.unibo.javacrush.view.impl.MenuViewImpl;
 import javafx.application.Application;
@@ -18,47 +20,50 @@ import javafx.stage.Stage;
 
 public class JavaCrushApp extends Application implements SceneManager{
 
+    AppController appController;
     private final LevelManager levelManager = new LevelManagerImpl();
-    private Scene menuScene;
-    private Scene levelsScene;
+    private MenuView menuView;
+    private LevelsView levelsView;
+    private InstructionsView instructionsView;
+    private GameView gameView;
+    private Scene scene;
     private Stage stage;
 
 	@Override
 	public void start(Stage stage) throws Exception {
         
         this.stage = stage;
-        this.stage.setWidth(800);
+        this.stage.setWidth(1000);
         this.stage.setHeight(600);
 
-        AppController appController = new AppControllerImpl(this, this.levelManager);
-        MenuView menuView = new MenuViewImpl(appController);
-        menuScene = new Scene(menuView.getView(), this.stage.getWidth(), this.stage.getHeight());
+        this.appController = new AppControllerImpl(this, this.levelManager);
 
-        LevelsView levelsView = new LevelsViewImpl(appController, this.levelManager);
-        levelsScene = new Scene(levelsView.getView(), this.stage.getWidth(), this.stage.getHeight());
+        this.menuView = new MenuViewImpl(this.appController);
+        this.levelsView = new LevelsViewImpl(this.appController, this.levelManager);
+        this.instructionsView = new InstructionsViewImpl(this.appController);
+        this.gameView = new GameViewImpl();
 
+        this.scene = new Scene(this.menuView.getView(), this.stage.getWidth(), this.stage.getHeight());
 		this.stage.setTitle("JavaCrush");
-        this.stage.setScene(menuScene);
+        this.stage.setScene(this.scene);
         this.stage.show();
 
 	}
 
     @Override
     public void showMenu() {
-        this.stage.setScene(this.menuScene);
+        this.scene.setRoot(menuView.getView());
     }
 
     @Override
     public void showLevels() {
-        this.stage.setScene(this.levelsScene);
+        this.scene.setRoot(levelsView.getView());
     }
 
     @Override
     public void showGame(GameController gameController) {
-        GameView gameview = new GameViewImpl();
-        gameview.setController(gameController);
-        Scene gameScene = new Scene(gameview.getView(),this.stage.getWidth(), this.stage.getHeight());
-        this.stage.setScene(gameScene);
+        gameView.setController(gameController, this.appController);
+        this.scene.setRoot(gameView.getView());
     }
 
     @Override
@@ -68,14 +73,12 @@ public class JavaCrushApp extends Application implements SceneManager{
 
     @Override
     public void showInstructions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'showInstructions'");
+        this.scene.setRoot(instructionsView.getView());
     }
 
     @Override
     public GameView getGameView() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGameView'");
+        return this.gameView;
     }
 }
 

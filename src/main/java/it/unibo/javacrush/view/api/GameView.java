@@ -1,5 +1,6 @@
 package it.unibo.javacrush.view.api;
 
+import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.GameController;
 import javafx.scene.Parent;
 
@@ -20,6 +21,6 @@ public interface GameView {
 
     Parent getView();
 
-    void setController(GameController controller);
+    void setController(GameController controller, AppController appController);
     
 }
