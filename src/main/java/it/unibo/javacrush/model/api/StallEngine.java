@@ -1,6 +1,9 @@
 package it.unibo.javacrush.model.api;
 
+import java.util.List;
 import java.util.Set;
+
+import it.unibo.javacrush.common.Position;
 
 /**
  * Interface representing the engine that detects a deadlock (stall) with no possible moves
@@ -30,6 +33,14 @@ public interface StallEngine {
      * @param board the board where to find the possible matches.
      * @return a Set with all the possible matches or an empty Set.
      */
-    Set<Match> possibleMatches(Board board);
+    List<Match> possibleMatches(Board board);
+
+    /**
+     * Get a Set with all the positions of the cells of a random possible match.
+     * 
+     * @param board the board that contains the positions of the cells.
+     * @return a Set of Position with all the positions of the cells of a random possible match on the given board.
+     */
+    Set<Position> getHint(Board board);
 
 }

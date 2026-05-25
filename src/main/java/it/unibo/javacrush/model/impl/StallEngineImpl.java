@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 
 import it.unibo.javacrush.model.api.Cell;
@@ -20,16 +21,15 @@ import it.unibo.javacrush.model.api.MatchManager;
  */
 public class StallEngineImpl implements StallEngine {
 
-    private final MatchManager detector = new MatchManagerImpl();
+    private final MatchManager manager = new MatchManagerImpl();
+    private final Random ran = new Random();
 
     /**
      * {@inheritDoc}
      */
     @Override
     public boolean isStall(final Board board) {
-
         return this.possibleMatches(board).isEmpty();
-
     }
 
     /**
@@ -41,7 +41,7 @@ public class StallEngineImpl implements StallEngine {
         final List<Cell> tmp = new ArrayList<>();
         int index;
 
-        while (this.isStall(board) || !detector.findAllMatches(board).isEmpty()) {
+        while (this.isStall(board) || !manager.findAllMatches(board).isEmpty()) {
 
             tmp.clear();
             for (int y = 0; y < board.getCols(); y++) {
@@ -66,10 +66,10 @@ public class StallEngineImpl implements StallEngine {
      * {@inheritDoc}
      */
     @Override
-    public Set<Match> possibleMatches(final Board board) {
+    public List<Match> possibleMatches(final Board board) {
 
         final Board tmp = new BoardImpl(board.getRows(), board.getCols());
-        final Set<Match> resultSet = new HashSet<>();
+        final List<Match> resultList = new ArrayList<>();
 
         Position p;
         for (int y = 0; y < board.getCols(); y++) {
@@ -86,15 +86,57 @@ public class StallEngineImpl implements StallEngine {
             for (int x = 0; x < tmp.getRows() - 2; x++) {
 
                 p = new Position(x, y);
-                if (detector.findMatchesAt(this.swapRight(tmp, p), p) != null) {
-                    resultSet.add(detector.findMatchesAt(tmp, p));
+                if (manager.findMatchesAt(this.swapRight(tmp, p), p) != null) {
+                    resultList.add(manager.findMatchesAt(tmp, p));
                 }
                 this.swapRight(tmp, p);
 
-                if (detector.findMatchesAt(this.swapDown(tmp, p), p) != null) {
-                    resultSet.add(detector.findMatchesAt(tmp, p));
+                if (manager.findMatchesAt(this.swapDown(tmp, p), p) != null) {
+                    resultList.add(manager.findMatchesAt(tmp, p));
                 }
                 this.swapDown(tmp, p);
+            }
+        }
+
+        return resultList;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Position> getHint(final Board board) {
+        final Set<Position> resultSet = new HashSet<>();
+        final Match currentMatch;
+
+        if (!this.isStall(board)) {
+            currentMatch = this.possibleMatches(board).get(this.ran.nextInt(this.possibleMatches(board).size()));
+
+            for (final var pos : currentMatch.getPositions()) {
+                if (board.getCellAt(pos).get().getType() != currentMatch.getType()) {
+
+                    if (manager.findMatchesAt(this.swapRight(board, pos), pos) != null) {
+                        resultSet.add(new Position(pos.x() + 1, pos.y()));
+                    }
+                    this.swapRight(board, pos);
+
+                    if (manager.findMatchesAt(this.swapLeft(board, pos), pos) != null) {
+                        resultSet.add(new Position(pos.x() - 1, pos.y()));
+                    }
+                    this.swapLeft(board, pos);
+
+                    if (manager.findMatchesAt(this.swapDown(board, pos), pos) != null) {
+                        resultSet.add(new Position(pos.x(), pos.y() + 1));
+                    }
+                    this.swapDown(board, pos);
+
+                    if (manager.findMatchesAt(this.swapUp(board, pos), pos) != null) {
+                        resultSet.add(new Position(pos.x(), pos.y() - 1));
+                    }
+                    this.swapUp(board, pos);
+                } else {
+                    resultSet.add(pos);
+                }
             }
         }
 
@@ -109,10 +151,26 @@ public class StallEngineImpl implements StallEngine {
         return tmp;
     }
 
+    private Board swapLeft(final Board tmp, final Position p) {
+
+        if (p.x() - 1 >= 0) {
+            tmp.swapCells(p, new Position(p.x() - 1, p.y()));
+        }
+        return tmp;
+    }
+
     private Board swapDown(final Board tmp, final Position p) {
 
         if (p.y() + 1 < tmp.getRows()) {
             tmp.swapCells(p, new Position(p.x(), p.y() + 1));
+        }
+        return tmp;
+    }
+
+    private Board swapUp(final Board tmp, final Position p) {
+
+        if (p.y() - 1 >= 0) {
+            tmp.swapCells(p, new Position(p.x(), p.y() - 1));
         }
         return tmp;
     }
