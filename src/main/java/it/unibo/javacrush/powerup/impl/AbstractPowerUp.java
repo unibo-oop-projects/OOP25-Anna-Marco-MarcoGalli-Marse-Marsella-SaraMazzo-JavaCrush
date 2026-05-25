@@ -1,12 +1,22 @@
 package it.unibo.javacrush.powerup.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
+import it.unibo.javacrush.model.api.Match;
 
 /**
  * This abstract class is used as base by all the PowerUps classes of the game.
  */
 public abstract class AbstractPowerUp {
+
+    Set<Match> matches;
+
+    public AbstractPowerUp() {
+        this.matches = new HashSet<>();
+    }
 
     /**
      * Check if a PowerUp can be applied on the given position of the given board.
@@ -20,6 +30,15 @@ public abstract class AbstractPowerUp {
     }
 
     /**
+     * Get all the Matches obtained by applying the PowerUp.
+     * 
+     * @return a Set of Matches.
+     */
+    public Set<Match> getMatches() {
+        return this.matches;
+    }
+
+    /**
      * Apply to the specified board the special power.
      * 
      * @param board the board where to apply the power.
@@ -27,4 +46,5 @@ public abstract class AbstractPowerUp {
      * @return false if the power wasn't applied to the board, true otherwise.
      */
     public abstract Boolean applyPowerUp(Board board, Position pos);
+
 }

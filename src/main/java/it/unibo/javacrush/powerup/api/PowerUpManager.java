@@ -1,7 +1,10 @@
 package it.unibo.javacrush.powerup.api;
 
+import java.util.Set;
+
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
+import it.unibo.javacrush.model.api.Match;
 
 /**
  * This interface PowerUpManager manages all the PowerUps of the game.
@@ -38,5 +41,12 @@ public interface PowerUpManager {
      * @return true if there wasn't any problem, false if something went wrong.
      */
     Boolean applyPowerUp(Board board, Position pos);
+
+    /**
+     * Get all the Matches obtained by applying the selected PowerUp.
+     * 
+     * @return a Set of Matches.
+     */
+    Set<Match> getMatches();
 
 }

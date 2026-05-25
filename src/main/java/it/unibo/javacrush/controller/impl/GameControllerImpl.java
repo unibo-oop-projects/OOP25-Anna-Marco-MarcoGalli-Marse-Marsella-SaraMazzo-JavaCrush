@@ -76,7 +76,7 @@ public class GameControllerImpl implements GameController {
                 this.session.updateGoals(match.getType(), match.getSize());
                 this.matchManager.removeMatch(this.board, match);
         });
-        this.matches = Set.of();
+        this.matches.clear();
 
         this.view.updateView();
     }
@@ -165,6 +165,10 @@ public class GameControllerImpl implements GameController {
         
         return progress;
     }
+
+    /**
+     * {@inerithDoc}
+     */
     @Override
     public void quitLevel() {
         this.view.quitLevel();
@@ -221,6 +225,7 @@ public class GameControllerImpl implements GameController {
         final boolean applyPowerUp = this.powerUpManager.applyPowerUp(this.board, pos);
 
         if (applyPowerUp) {
+            this.matches = this.powerUpManager.getMatches();
             this.powerUpManager.resetPowerUpSelection();
             this.view.updateView();
         }
