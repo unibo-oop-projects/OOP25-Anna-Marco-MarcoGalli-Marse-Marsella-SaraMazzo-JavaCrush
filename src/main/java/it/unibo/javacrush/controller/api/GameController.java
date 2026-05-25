@@ -73,6 +73,13 @@ public interface GameController {
     Map<CellType, Integer> getGoals();
 
     /**
+     * Get the current progress for each goal.
+     * 
+     * @return a map with the current collected amount for each cell type
+     */
+    Map<CellType, Integer> getGoalsProgress();
+
+    /**
      * Quit the level and go back to the main menu.
      */
     void quitLevel();

@@ -129,7 +129,11 @@ public class GameControllerImpl implements GameController {
      */
     @Override
     public CellType getCellTypeAtPos(final Position pos) {
-        return this.board.getCellAt(pos).get().getType();
+        var cell = this.board.getCellAt(pos);
+        if (cell.isPresent()) {
+            return cell.get().getType();
+        }
+        return null;
     }
 
     /**
@@ -151,6 +155,16 @@ public class GameControllerImpl implements GameController {
     /**
      * {@inheritDoc}
      */
+    @Override
+    public Map<CellType, Integer> getGoalsProgress() {
+        Map<CellType, Integer> progress = new java.util.HashMap<>();
+        
+        for (var goal : this.session.getGoals()) {
+            progress.put(goal.getTargetType(), goal.getCurrentAmount());
+        }
+        
+        return progress;
+    }
     @Override
     public void quitLevel() {
         this.view.quitLevel();

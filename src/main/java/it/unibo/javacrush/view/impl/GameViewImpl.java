@@ -8,14 +8,20 @@ import java.util.Optional;
 
 import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.common.CellType;
+import it.unibo.javacrush.common.GameState;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.Event;
 import it.unibo.javacrush.controller.api.GameController;
 import it.unibo.javacrush.view.api.GameView;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -24,20 +30,24 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class GameViewImpl implements GameView{
 
-    private GameController controller;
-    private AppController appController;
+    private final Map<CellType, Image> cellTypeImages = new EnumMap<>(CellType.class);
+    private final Map<Button,Position> gridMap = new HashMap<>();
     private final BorderPane root;
     private final GridPane grid;
-    private final Map<Button,Position> gridMap = new HashMap<>();
     private final VBox powerUpBox;
     private final VBox quitBox;
     private final HBox topBar;
+    private GameController controller;
+    private AppController appController;
     private Label movesLabel;
     private HBox goalsContainer;
-    private final Map<CellType, Image> cellTypeImages = new EnumMap<>(CellType.class);
+    private Button selectedCell = null;
+    private Button selectedPowerUp = null;
+    private boolean isAnimating = false;
 
     public GameViewImpl() {
         this.root = new BorderPane();
@@ -82,12 +92,14 @@ public class GameViewImpl implements GameView{
         this.movesLabel.setText("Moves left: " + this.controller.getMovesLeft());
         this.movesLabel.setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
         
+        this.goalsContainer.getChildren().clear();
         Map<CellType, Integer> goals = this.controller.getGoals();
         for (var goal : goals.entrySet()) {
             CellType type = goal.getKey();
             int amount = goal.getValue();
+            int currentAmount = this.controller.getGoalsProgress().getOrDefault(type, 0);
 
-            Label goalLabel = new Label(type.toString() + ": " + amount);
+            Label goalLabel = new Label(type.toString() + ": " + currentAmount + "/" + amount);
             goalLabel.setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
             this.goalsContainer.getChildren().add(goalLabel);
         }
@@ -104,6 +116,9 @@ public class GameViewImpl implements GameView{
                 img.setPreserveRatio(true);
 
                 bt.setGraphic(img);
+                bt.setStyle("-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1px;");
+            } else {
+                bt.setGraphic(null);
                 bt.setStyle("-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1px;");
             }
         }
@@ -164,12 +179,116 @@ public class GameViewImpl implements GameView{
                 bt.setMaxSize(40, 40);
                 this.grid.add(bt, j, i);
                 this.gridMap.put(bt, pos);
+
+                bt.setOnAction(e -> {
+                    if (this.isAnimating) {
+                        return;
+                    }
+
+                    boolean isActionValid = this.controller.hit(pos);
+
+                    if (this.selectedPowerUp != null) {
+                        this.selectedPowerUp.setStyle("");
+                        this.selectedPowerUp = null;
+                    } else {
+                        if (this.selectedCell == null) {
+                            bt.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                            this.selectedCell = bt;
+                        } else if (this.selectedCell == bt) {
+                            bt.setStyle("");
+                            this.selectedCell = null;
+                        } else {
+                            this.selectedCell.setStyle("");
+                            this.selectedCell = null;
+                        }
+
+                    }
+
+                    if (isActionValid) {
+                        this.isAnimating = true;
+
+                        this.updateView();
+                        this.controller.handleMatches();
+                        this.updateView();
+
+                        Timeline timeline = new Timeline();
+                        KeyFrame frame = new KeyFrame(Duration.seconds(0.5), event -> {
+                            
+                            boolean isFalling = this.controller.applyGravity();
+                            
+                            this.updateView();
+
+                            if (!isFalling) {
+                                timeline.stop();
+                                this.isAnimating = false;
+                                Platform.runLater(() -> this.checkStateGame());
+                            }
+                        });
+
+                        timeline.getKeyFrames().add(frame);
+                        timeline.setCycleCount(Timeline.INDEFINITE);
+                        timeline.play();
+
+
+                    this.updateView();
+                    }
+                
+                });
             }
         }
 
-        Button powerUp1 = new Button("PowerUp 1");
-        Button powerUp2 = new Button("PowerUp 2");
-        Button powerUp3 = new Button("PowerUp 3");
+        Button powerUp1 = new Button("Hammer");
+        powerUp1.setOnAction(e -> {
+            boolean isAvailable = this.controller.selectPowerUp(0);
+
+            if (isAvailable) {
+                if (this.selectedCell != null) {
+                    this.selectedCell.setStyle("");
+                    this.selectedCell = null;
+                }
+                if (this.selectedPowerUp != null) {
+                    this.selectedPowerUp.setStyle("");
+                    this.selectedPowerUp = null;
+                }
+                powerUp1.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                this.selectedPowerUp = powerUp1;
+            }
+        });
+
+        Button powerUp2 = new Button("Rocket");
+        powerUp2.setOnAction(e -> {
+            boolean isAvailable = this.controller.selectPowerUp(1);
+
+            if (isAvailable) {
+                if (this.selectedCell != null) {
+                    this.selectedCell.setStyle("");
+                    this.selectedCell = null;
+                }
+                if (this.selectedPowerUp != null) {
+                    this.selectedPowerUp.setStyle("");
+                    this.selectedPowerUp = null;
+                }
+                powerUp2.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                this.selectedPowerUp = powerUp2;
+            }
+        });
+        Button powerUp3 = new Button("Magic Bomb");
+        powerUp3.setOnAction(e -> {
+            boolean isAvailable = this.controller.selectPowerUp(2);
+
+            if (isAvailable) {
+                if (this.selectedCell != null) {
+                    this.selectedCell.setStyle("");
+                    this.selectedCell = null;
+                }
+                if (this.selectedPowerUp != null) {
+                    this.selectedPowerUp.setStyle("");
+                    this.selectedPowerUp = null;
+                }
+                powerUp3.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                this.selectedPowerUp = powerUp3;
+            }
+        });
         powerUp1.setPrefWidth(100);
         powerUp2.setPrefWidth(100);
         powerUp3.setPrefWidth(100);
@@ -185,6 +304,30 @@ public class GameViewImpl implements GameView{
         this.root.setLeft(quitBox);
 
         this.updateView();
+    }
+
+    private void checkStateGame() {
+        GameState state = this.controller.updateGameState();
+
+        if (state == GameState.WON) {
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("VICTORY!!");
+            alert.setContentText("Congratulations! You have won the game.");
+            alert.showAndWait();
+
+            this.quitLevel();
+
+        } else if (state == GameState.LOST) {
+
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("GAME OVER");
+            alert.setContentText("Sorry! You have lost the game.");
+            alert.showAndWait();
+
+            this.quitLevel();
+
+        }
     }
 
 }
