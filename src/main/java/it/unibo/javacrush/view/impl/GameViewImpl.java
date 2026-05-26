@@ -248,10 +248,12 @@ public class GameViewImpl implements GameView{
                 }
                 if (this.selectedPowerUp != null) {
                     this.selectedPowerUp.setStyle("");
+                    powerUp1.setStyle("");
                     this.selectedPowerUp = null;
+                } else {
+                    powerUp1.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                    this.selectedPowerUp = powerUp1;
                 }
-                powerUp1.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
-                this.selectedPowerUp = powerUp1;
             }
         });
 
@@ -266,10 +268,12 @@ public class GameViewImpl implements GameView{
                 }
                 if (this.selectedPowerUp != null) {
                     this.selectedPowerUp.setStyle("");
+                    powerUp2.setStyle("");
                     this.selectedPowerUp = null;
+                } else {
+                    powerUp2.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                    this.selectedPowerUp = powerUp2;
                 }
-                powerUp2.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
-                this.selectedPowerUp = powerUp2;
             }
         });
         Button powerUp3 = new Button("Magic Bomb");
@@ -283,10 +287,12 @@ public class GameViewImpl implements GameView{
                 }
                 if (this.selectedPowerUp != null) {
                     this.selectedPowerUp.setStyle("");
+                    powerUp3.setStyle("");
                     this.selectedPowerUp = null;
+                } else {
+                    powerUp3.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                    this.selectedPowerUp = powerUp3;
                 }
-                powerUp3.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
-                this.selectedPowerUp = powerUp3;
             }
         });
         powerUp1.setPrefWidth(100);
