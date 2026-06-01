@@ -80,11 +80,6 @@ public interface GameController {
     Map<CellType, Integer> getGoalsProgress();
 
     /**
-     * Quit the level and go back to the main menu.
-     */
-    void quitLevel();
-
-    /**
      * Get the number of columns of the board.
      * @return the number of columns of the board
      */
@@ -95,5 +90,10 @@ public interface GameController {
      * @return the number of rows of the board
      */
     int getBoardRows();
+
+    /**
+     * Quit the level and go back to the main menu.
+     */
+    void quitLevel();
 
 }

@@ -167,14 +167,6 @@ public class GameControllerImpl implements GameController {
     }
 
     /**
-     * {@inerithDoc}
-     */
-    @Override
-    public void quitLevel() {
-        this.view.quitLevel();
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -188,6 +180,14 @@ public class GameControllerImpl implements GameController {
     @Override
     public int getBoardRows() {
         return this.board.getRows();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void quitLevel() {
+        this.view.quitLevel();
     }
 
     /**
