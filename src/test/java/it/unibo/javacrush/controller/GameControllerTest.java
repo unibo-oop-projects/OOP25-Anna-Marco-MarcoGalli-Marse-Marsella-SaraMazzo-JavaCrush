@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -131,11 +132,13 @@ class GameControllerTest {
     @Test
     void testGravityWhenNewMatchesAreFound() {
         when(this.physics.update(this.board)).thenReturn(false);
-        when(this.matchManager.findAllMatches(this.board)).thenReturn(Set.of(mock(Match.class)));
+
+        final Set<Match> mutableSet = new HashSet<>(Set.of(mock(Match.class)));
+
+        when(this.matchManager.findAllMatches(this.board)).thenReturn(mutableSet);
 
         final boolean result = this.gameController.applyGravity();
-
-        assertTrue(result, "Dovrebbe tornare true perché sono stati trovati e gestiti dei match");
+        assertTrue(result, "Some matches have been found and handled");
         verify(this.view).updateView();
     }
 
