@@ -81,11 +81,6 @@ public interface GameController {
     Map<CellType, Integer> getGoalsProgress();
 
     /**
-     * Quit the level and go back to the main menu.
-     */
-    void quitLevel();
-
-    /**
      * Get the number of columns of the board.
      * @return the number of columns of the board
      */
@@ -110,5 +105,10 @@ public interface GameController {
      * @return a Set with the positions of the cells that could form a possible match.
      */
     Set<Position> getHint();
+
+    /**
+     * Quit the level and go back to the main menu.
+     */
+    void quitLevel();
 
 }
