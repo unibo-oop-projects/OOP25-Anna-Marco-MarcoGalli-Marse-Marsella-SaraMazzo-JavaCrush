@@ -45,6 +45,13 @@ public interface GameController {
     boolean selectPowerUp(int id);
 
     /**
+     * Reset the PowerUp selection.
+     * 
+     * @return true if the reset went well, false otherwise.
+     */
+    boolean resetPowerUpSelection();
+
+    /**
      * Update the game state.
      *
      * @return the updated game state

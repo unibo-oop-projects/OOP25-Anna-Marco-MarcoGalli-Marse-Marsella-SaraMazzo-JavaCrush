@@ -28,8 +28,8 @@ public class BoardImpl implements Board {
         this.rows = rows;
         this.cols = cols;
 
-        for (int j = 0; j < cols; j++) {
-            for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < rows; j++) {
+            for (int i = 0; i < cols; i++) {
                 //creiamo la griglia delle posizioni senza celle dentro
                 this.cells.put(new Position(i, j), Optional.empty());
             }

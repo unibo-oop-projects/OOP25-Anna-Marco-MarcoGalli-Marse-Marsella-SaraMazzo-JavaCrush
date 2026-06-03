@@ -29,7 +29,7 @@ public class RemoveType extends AbstractPowerUp {
                 for (int x = 0; x < board.getCols(); x++) {
                     current = new Position(x, y);
 
-                    if (board.getCellAt(current).isPresent() && board.getCellAt(current).get().equals(type)) {
+                    if (board.getCellAt(current).isPresent() && board.getCellAt(current).get().getType() == type.getType()) {
                         resultSet.clear();
                         resultSet.add(current);
                         this.matches.add(new MatchImpl(resultSet, type.getType()));

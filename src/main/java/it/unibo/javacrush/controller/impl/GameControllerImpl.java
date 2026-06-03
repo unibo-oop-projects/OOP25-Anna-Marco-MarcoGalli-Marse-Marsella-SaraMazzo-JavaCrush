@@ -119,6 +119,14 @@ public class GameControllerImpl implements GameController {
      * {@inheritDoc}
      */
     @Override
+    public boolean resetPowerUpSelection() {
+        return this.powerUpManager.resetPowerUpSelection();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public GameState updateGameState() {
         return this.session.getGameStatus();
     }

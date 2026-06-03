@@ -13,6 +13,7 @@ import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
 import it.unibo.javacrush.common.Position;
+import it.unibo.javacrush.common.PowerUpNumber;
 import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.Event;
 import it.unibo.javacrush.controller.api.GameController;
@@ -183,8 +184,8 @@ public class GameViewImpl implements GameView{
 
         this.topBar.getChildren().addAll(goalsContainer, movesLabel);
 
-        for (int i = 0; i < controller.getBoardRows(); i++) {
-            for (int j = 0; j < controller.getBoardCols(); j++) {
+        for (int i = 0; i < controller.getBoardCols(); i++) {
+            for (int j = 0; j < controller.getBoardRows(); j++) {
                 Position pos = new Position(i, j);
                 Button bt = new Button();
                 bt.setPrefSize(40, 40);
@@ -203,6 +204,7 @@ public class GameViewImpl implements GameView{
                     if (this.selectedPowerUp != null) {
                         this.selectedPowerUp.setStyle("");
                         this.selectedPowerUp = null;
+                        this.controller.resetPowerUpSelection();
                     } else {
                         if (this.selectedCell == null) {
                             bt.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
@@ -226,6 +228,14 @@ public class GameViewImpl implements GameView{
                         this.updateView();
 
                         Timeline timeline = new Timeline();
+
+                        KeyFrame stallAlertFrame = new KeyFrame(Duration.seconds(0.5), ev -> {
+
+                            if (this.controller.isStall()) {
+                                Platform.runLater(() -> this.stallAlert());
+                            }
+                        });
+
                         KeyFrame frame = new KeyFrame(Duration.seconds(0.5), event -> {
                             
                             boolean isFalling = this.controller.applyGravity();
@@ -240,15 +250,8 @@ public class GameViewImpl implements GameView{
                             }
                         });
 
-                        KeyFrame f2 = new KeyFrame(Duration.seconds(0.5), ev -> {
-
-                            if (this.controller.isStall()) {
-                                Platform.runLater(() -> this.stallAlert());
-                            }
-                        });
-
+                        timeline.getKeyFrames().add(stallAlertFrame);
                         timeline.getKeyFrames().add(frame);
-                        timeline.getKeyFrames().add(f2);
                         timeline.setCycleCount(Timeline.INDEFINITE);
                         timeline.play();
 
@@ -261,7 +264,7 @@ public class GameViewImpl implements GameView{
 
         Button powerUp1 = new Button("Hammer");
         powerUp1.setOnAction(e -> {
-            boolean isAvailable = this.controller.selectPowerUp(0);
+            boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.SINGLECELL.ordinal());
 
             if (isAvailable) {
                 if (this.selectedCell != null) {
@@ -272,6 +275,7 @@ public class GameViewImpl implements GameView{
                     this.selectedPowerUp.setStyle("");
                     powerUp1.setStyle("");
                     this.selectedPowerUp = null;
+                    this.controller.resetPowerUpSelection();
                 } else {
                     powerUp1.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
                     this.selectedPowerUp = powerUp1;
@@ -281,7 +285,7 @@ public class GameViewImpl implements GameView{
 
         Button powerUp2 = new Button("Rocket");
         powerUp2.setOnAction(e -> {
-            boolean isAvailable = this.controller.selectPowerUp(1);
+            boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.ROW.ordinal());
 
             if (isAvailable) {
                 if (this.selectedCell != null) {
@@ -292,6 +296,7 @@ public class GameViewImpl implements GameView{
                     this.selectedPowerUp.setStyle("");
                     powerUp2.setStyle("");
                     this.selectedPowerUp = null;
+                    this.controller.resetPowerUpSelection();
                 } else {
                     powerUp2.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
                     this.selectedPowerUp = powerUp2;
@@ -300,7 +305,7 @@ public class GameViewImpl implements GameView{
         });
         Button powerUp3 = new Button("Magic Bomb");
         powerUp3.setOnAction(e -> {
-            boolean isAvailable = this.controller.selectPowerUp(2);
+            boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.TYPE.ordinal());
 
             if (isAvailable) {
                 if (this.selectedCell != null) {
@@ -311,6 +316,7 @@ public class GameViewImpl implements GameView{
                     this.selectedPowerUp.setStyle("");
                     powerUp3.setStyle("");
                     this.selectedPowerUp = null;
+                    this.controller.resetPowerUpSelection();
                 } else {
                     powerUp3.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
                     this.selectedPowerUp = powerUp3;
@@ -362,7 +368,7 @@ public class GameViewImpl implements GameView{
 
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("STALL");
-        alert.setContentText("The board is in stall, click to refresh the cells.");
+        alert.setContentText("The board were in stall, the cells have been refreshed.");
         alert.showAndWait();
     }
 

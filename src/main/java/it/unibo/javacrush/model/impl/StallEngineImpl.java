@@ -43,16 +43,16 @@ public class StallEngineImpl implements StallEngine {
         while (this.isStall(board) || !manager.findAllMatches(board).isEmpty()) {
 
             tmp.clear();
-            for (int y = 0; y < board.getCols(); y++) {
-                for (int x = 0; x < board.getRows(); x++) {
+            for (int y = 0; y < board.getRows(); y++) {
+                for (int x = 0; x < board.getCols(); x++) {
                     tmp.add(board.getCellAt(new Position(x, y)).get());
                 }
             }
             Collections.shuffle(tmp);
             index = 0;
 
-            for (int j = 0; j < board.getCols(); j++) {
-                for (int i = 0; i < board.getRows(); i++) {
+            for (int j = 0; j < board.getRows(); j++) {
+                for (int i = 0; i < board.getCols(); i++) {
                     board.setCell(new Position(i, j), Optional.of(tmp.get(index)));
                     index++;
                 }
@@ -72,8 +72,8 @@ public class StallEngineImpl implements StallEngine {
 
         Position p;
 
-        for (int y = 0; y < board.getCols(); y++) {
-            for (int x = 0; x < board.getRows(); x++) {
+        for (int y = 0; y < board.getRows(); y++) {
+            for (int x = 0; x < board.getCols(); x++) {
                 p = new Position(x, y);
                 if (board.getCellAt(p).isEmpty()) {
                     resultList.add(new MatchImpl(Set.of(), null));
@@ -83,8 +83,8 @@ public class StallEngineImpl implements StallEngine {
             }
         }
 
-        for (int y = 0; y < tmp.getCols(); y++) {
-            for (int x = 0; x < tmp.getRows(); x++) {
+        for (int y = 0; y < tmp.getRows(); y++) {
+            for (int x = 0; x < tmp.getCols(); x++) {
 
                 p = new Position(x, y);
                 if (manager.findMatchesAt(this.swapRight(tmp, p), p) != null) {
