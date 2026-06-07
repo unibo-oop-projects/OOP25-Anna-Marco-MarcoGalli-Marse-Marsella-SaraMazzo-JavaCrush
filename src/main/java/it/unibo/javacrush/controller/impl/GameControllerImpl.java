@@ -120,6 +120,7 @@ public class GameControllerImpl implements GameController {
      */
     @Override
     public boolean resetPowerUpSelection() {
+        this.lastClickedPosition = null;
         return this.powerUpManager.resetPowerUpSelection();
     }
 

@@ -21,6 +21,8 @@ import it.unibo.javacrush.view.api.GameView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -53,6 +55,7 @@ public class GameViewImpl implements GameView{
     private Button selectedCell = null;
     private Button selectedPowerUp = null;
     private boolean isAnimating = false;
+    private Service<Integer> ser;
 
     public GameViewImpl() {
         this.root = new BorderPane();
@@ -90,6 +93,8 @@ public class GameViewImpl implements GameView{
                 System.out.println("Errore caricamento: " + path);
             }
         }
+
+        this.ser = this.setService();
     }
 
     @Override
@@ -110,10 +115,6 @@ public class GameViewImpl implements GameView{
             this.goalsContainer.getChildren().add(goalLabel);
         }
 
-        if (!this.controller.isStall()) {
-            this.hint = this.controller.getHint();
-        }
-
         for (var e : gridMap.entrySet()) {
             Button bt = e.getKey();
             Position pos = e.getValue();
@@ -130,6 +131,10 @@ public class GameViewImpl implements GameView{
             } else {
                 bt.setGraphic(null);
                 bt.setStyle("-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-width: 1px;");
+            }
+
+            if (bt.equals(this.selectedCell)) {
+                bt.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
             }
 
             if (this.hint.contains(pos)) {
@@ -226,6 +231,7 @@ public class GameViewImpl implements GameView{
                         this.updateView();
                         this.controller.handleMatches();
                         this.updateView();
+                        this.hint.clear();
 
                         Timeline timeline = new Timeline();
 
@@ -245,6 +251,7 @@ public class GameViewImpl implements GameView{
                             if (!isFalling) {
                                 timeline.stop();
                                 this.isAnimating = false;
+                                Platform.runLater(() -> this.timerTask());
                                 Platform.runLater(() -> this.checkStateGame());
                                 
                             }
@@ -257,7 +264,7 @@ public class GameViewImpl implements GameView{
 
                         this.updateView();
                     }
-                
+
                 });
             }
         }
@@ -337,6 +344,7 @@ public class GameViewImpl implements GameView{
         this.quitBox.getChildren().add(quit);
         this.root.setLeft(quitBox);
 
+        this.timerTask();
         this.updateView();
     }
 
@@ -370,6 +378,54 @@ public class GameViewImpl implements GameView{
         alert.setTitle("STALL");
         alert.setContentText("The board were in stall, the cells have been refreshed.");
         alert.showAndWait();
+    }
+
+    private Service<Integer> setService() {
+        return new Service<Integer>() {
+            @Override
+            protected Task<Integer> createTask() {
+                return new Task<Integer>() {
+                    @Override
+                    protected Integer call() throws Exception {
+                        int sec;
+                        for (sec = 0; sec < 10; sec++) {
+                            if (isCancelled()) {
+                                updateMessage("Cancelled");
+                                break;
+                            }
+                            updateMessage("Seconds " + sec);
+                            updateProgress(sec, 10);
+
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException interrupted) {
+                                if (isCancelled()) {
+                                    updateMessage("Cancelled");
+                                    break;
+                                }
+                            }
+                        }
+                        return sec;
+                    }
+                };
+            }
+        };
+    }
+
+    private void timerTask() {
+
+        if (!this.isAnimating) {
+            this.hint.clear();
+            this.ser.restart();
+        }
+
+        this.ser.setOnSucceeded(event -> {
+            if (!this.controller.isStall()) {
+                this.hint = this.controller.getHint();
+            }
+            this.updateView();
+        });
+
     }
 
 }
