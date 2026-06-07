@@ -167,7 +167,7 @@ public class GameControllerImpl implements GameController {
     public Map<CellType, Integer> getGoalsProgress() {
         final Map<CellType, Integer> progress = new java.util.HashMap<>();
         
-        for (var goal : this.session.getGoals()) {
+        for (final var goal : this.session.getGoals()) {
             progress.put(goal.getTargetType(), goal.getCurrentAmount());
         }
         

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -52,10 +53,10 @@ public class GameViewImpl implements GameView{
     private AppController appController;
     private Label movesLabel;
     private HBox goalsContainer;
-    private Button selectedCell = null;
-    private Button selectedPowerUp = null;
-    private boolean isAnimating = false;
-    private Service<Integer> ser;
+    private Button selectedCell;
+    private Button selectedPowerUp;
+    private boolean isAnimating;
+    private final Service<Integer> ser;
 
     public GameViewImpl() {
         this.root = new BorderPane();
@@ -80,10 +81,10 @@ public class GameViewImpl implements GameView{
         this.topBar.setPadding(new Insets(0, 0, 20, 0));
         this.root.setTop(this.topBar);
 
-        for (CellType type : CellType.values()) {
-            String path = "/" + type.toString().toLowerCase() + ".png";
+        for (final CellType type : CellType.values()) {
+            final String path = "/" + type.toString().toLowerCase(Locale.ROOT) + ".png";
             try {
-                URL imageUrl = getClass().getResource(path);
+                final URL imageUrl = getClass().getResource(path);
                 if (imageUrl != null) {
                     this.cellTypeImages.put(type, new Image(imageUrl.toExternalForm()));
                 } else {
@@ -94,7 +95,8 @@ public class GameViewImpl implements GameView{
             }
         }
 
-        this.ser = this.setService();
+        this.isAnimating = false;
+        this.ser = this.initService();
     }
 
     @Override
@@ -104,24 +106,24 @@ public class GameViewImpl implements GameView{
         this.movesLabel.setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
         
         this.goalsContainer.getChildren().clear();
-        Map<CellType, Integer> goals = this.controller.getGoals();
-        for (var goal : goals.entrySet()) {
-            CellType type = goal.getKey();
-            int amount = goal.getValue();
-            int currentAmount = this.controller.getGoalsProgress().getOrDefault(type, 0);
+        final Map<CellType, Integer> goals = this.controller.getGoals();
+        for (final var goal : goals.entrySet()) {
+            final CellType type = goal.getKey();
+            final int amount = goal.getValue();
+            final int currentAmount = this.controller.getGoalsProgress().getOrDefault(type, 0);
 
-            Label goalLabel = new Label(type.toString() + ": " + currentAmount + "/" + amount);
+            final Label goalLabel = new Label(type.toString() + ": " + currentAmount + "/" + amount);
             goalLabel.setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
             this.goalsContainer.getChildren().add(goalLabel);
         }
 
-        for (var e : gridMap.entrySet()) {
-            Button bt = e.getKey();
-            Position pos = e.getValue();
+        for (final var e : gridMap.entrySet()) {
+            final Button bt = e.getKey();
+            final Position pos = e.getValue();
 
-            CellType type = this.controller.getCellTypeAtPos(pos);
+            final CellType type = this.controller.getCellTypeAtPos(pos);
             if (type != null && this.cellTypeImages.containsKey(type)) {
-                ImageView img = new ImageView(this.cellTypeImages.get(type));
+                final ImageView img = new ImageView(this.cellTypeImages.get(type));
                 img.setFitWidth(30); 
                 img.setFitHeight(30);
                 img.setPreserveRatio(true);
@@ -168,7 +170,7 @@ public class GameViewImpl implements GameView{
     }
 
     @Override
-    public void setController(GameController controller, AppController appController) {
+    public void setController(final GameController controller, final AppController appController) {
         this.controller = controller;
         this.appController = appController;
         this.setUpGame();
@@ -191,8 +193,8 @@ public class GameViewImpl implements GameView{
 
         for (int i = 0; i < controller.getBoardCols(); i++) {
             for (int j = 0; j < controller.getBoardRows(); j++) {
-                Position pos = new Position(i, j);
-                Button bt = new Button();
+                final Position pos = new Position(i, j);
+                final Button bt = new Button();
                 bt.setPrefSize(40, 40);
                 bt.setMinSize(40, 40);
                 bt.setMaxSize(40, 40);
@@ -204,7 +206,7 @@ public class GameViewImpl implements GameView{
                         return;
                     }
 
-                    boolean isActionValid = this.controller.hit(pos);
+                    final boolean isActionValid = this.controller.hit(pos);
 
                     if (this.selectedPowerUp != null) {
                         this.selectedPowerUp.setStyle("");
@@ -214,7 +216,7 @@ public class GameViewImpl implements GameView{
                         if (this.selectedCell == null) {
                             bt.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
                             this.selectedCell = bt;
-                        } else if (this.selectedCell == bt) {
+                        } else if (this.selectedCell.equals(bt)) {
                             bt.setStyle("");
                             this.selectedCell = null;
                             this.updateView();
@@ -233,26 +235,26 @@ public class GameViewImpl implements GameView{
                         this.updateView();
                         this.hint.clear();
 
-                        Timeline timeline = new Timeline();
+                        final Timeline timeline = new Timeline();
 
-                        KeyFrame stallAlertFrame = new KeyFrame(Duration.seconds(0.5), ev -> {
+                        final KeyFrame stallAlertFrame = new KeyFrame(Duration.seconds(0.5), ev -> {
 
                             if (this.controller.isStall()) {
-                                Platform.runLater(() -> this.stallAlert());
+                                Platform.runLater(this::stallAlert);
                             }
                         });
 
-                        KeyFrame frame = new KeyFrame(Duration.seconds(0.5), event -> {
+                        final KeyFrame frame = new KeyFrame(Duration.seconds(0.5), event -> {
                             
-                            boolean isFalling = this.controller.applyGravity();
+                            final boolean isFalling = this.controller.applyGravity();
 
                             this.updateView();
 
                             if (!isFalling) {
                                 timeline.stop();
                                 this.isAnimating = false;
-                                Platform.runLater(() -> this.timerTask());
-                                Platform.runLater(() -> this.checkStateGame());
+                                Platform.runLater(this::timerTask);
+                                Platform.runLater(this::checkStateGame);
                                 
                             }
                         });
@@ -269,9 +271,9 @@ public class GameViewImpl implements GameView{
             }
         }
 
-        Button powerUp1 = new Button("Hammer");
+        final Button powerUp1 = new Button("Hammer");
         powerUp1.setOnAction(e -> {
-            boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.SINGLECELL.ordinal());
+            final boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.SINGLECELL.ordinal());
 
             if (isAvailable) {
                 if (this.selectedCell != null) {
@@ -290,9 +292,9 @@ public class GameViewImpl implements GameView{
             }
         });
 
-        Button powerUp2 = new Button("Rocket");
+        final Button powerUp2 = new Button("Rocket");
         powerUp2.setOnAction(e -> {
-            boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.ROW.ordinal());
+            final boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.ROW.ordinal());
 
             if (isAvailable) {
                 if (this.selectedCell != null) {
@@ -310,9 +312,9 @@ public class GameViewImpl implements GameView{
                 }
             }
         });
-        Button powerUp3 = new Button("Magic Bomb");
+        final Button powerUp3 = new Button("Magic Bomb");
         powerUp3.setOnAction(e -> {
-            boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.TYPE.ordinal());
+            final boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.TYPE.ordinal());
 
             if (isAvailable) {
                 if (this.selectedCell != null) {
@@ -337,7 +339,7 @@ public class GameViewImpl implements GameView{
         this.powerUpBox.getChildren().addAll(powerUp1, powerUp2, powerUp3);
         this.root.setRight(this.powerUpBox);
 
-        Button quit = new Button("Quit");
+        final Button quit = new Button("Quit");
         quit.setPrefWidth(80);
         quit.setOnAction(e -> this.controller.quitLevel());
 
@@ -349,11 +351,11 @@ public class GameViewImpl implements GameView{
     }
 
     private void checkStateGame() {
-        GameState state = this.controller.updateGameState();
+        final GameState state = this.controller.updateGameState();
 
         if (state == GameState.WON) {
 
-            Alert alert = new Alert(AlertType.INFORMATION);
+            final Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("VICTORY!!");
             alert.setContentText("Congratulations! You have won the game.");
             alert.showAndWait();
@@ -362,7 +364,7 @@ public class GameViewImpl implements GameView{
 
         } else if (state == GameState.LOST) {
 
-            Alert alert = new Alert(AlertType.ERROR);
+            final Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("GAME OVER");
             alert.setContentText("Sorry! You have lost the game.");
             alert.showAndWait();
@@ -374,17 +376,17 @@ public class GameViewImpl implements GameView{
 
     private void stallAlert() {
 
-        Alert alert = new Alert(AlertType.INFORMATION);
+        final Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("STALL");
         alert.setContentText("The board were in stall, the cells have been refreshed.");
         alert.showAndWait();
     }
 
-    private Service<Integer> setService() {
-        return new Service<Integer>() {
+    private Service<Integer> initService() {
+        return new Service<>() {
             @Override
             protected Task<Integer> createTask() {
-                return new Task<Integer>() {
+                return new Task<>() {
                     @Override
                     protected Integer call() throws Exception {
                         int sec;

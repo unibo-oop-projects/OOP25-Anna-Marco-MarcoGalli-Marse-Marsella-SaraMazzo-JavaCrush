@@ -30,7 +30,7 @@ public class JavaCrushApp extends Application implements SceneManager{
     private Stage stage;
 
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(final Stage stage) throws Exception {
         
         this.stage = stage;
         this.stage.setWidth(1000);
@@ -61,7 +61,7 @@ public class JavaCrushApp extends Application implements SceneManager{
     }
 
     @Override
-    public void showGame(GameController gameController) {
+    public void showGame(final GameController gameController) {
         gameView.setController(gameController, this.appController);
         this.scene.setRoot(gameView.getView());
     }
