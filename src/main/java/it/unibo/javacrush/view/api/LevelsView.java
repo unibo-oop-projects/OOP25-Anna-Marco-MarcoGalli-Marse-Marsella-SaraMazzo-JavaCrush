@@ -4,6 +4,6 @@ import javafx.scene.Parent;
 
 public interface LevelsView {
     
-    public Parent getView();
+    Parent getView();
 
 }

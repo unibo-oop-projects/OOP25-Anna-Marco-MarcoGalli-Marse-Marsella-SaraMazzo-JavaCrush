@@ -18,23 +18,28 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class JavaCrushApp extends Application implements SceneManager{
+/**
+ * This class represents the entry point of the application.
+ */
+public class JavaCrushApp extends Application implements SceneManager {
 
-    AppController appController;
+    private AppController appController;
     private final LevelManager levelManager = new LevelManagerImpl();
     private MenuView menuView;
     private LevelsView levelsView;
     private InstructionsView instructionsView;
     private GameView gameView;
     private Scene scene;
-    private Stage stage;
 
-	@Override
-	public void start(final Stage stage) throws Exception {
-        
-        this.stage = stage;
-        this.stage.setWidth(1000);
-        this.stage.setHeight(600);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	public void start(final Stage s) throws Exception {
+
+        final Stage stage = s;
+        stage.setWidth(1000);
+        stage.setHeight(600);
 
         this.appController = new AppControllerImpl(this, this.levelManager);
 
@@ -43,39 +48,57 @@ public class JavaCrushApp extends Application implements SceneManager{
         this.instructionsView = new InstructionsViewImpl(this.appController);
         this.gameView = new GameViewImpl();
 
-        this.scene = new Scene(this.menuView.getView(), this.stage.getWidth(), this.stage.getHeight());
-		this.stage.setTitle("JavaCrush");
-        this.stage.setScene(this.scene);
-        this.stage.show();
+        this.scene = new Scene(this.menuView.getView(), stage.getWidth(), stage.getHeight());
+		stage.setTitle("JavaCrush");
+        stage.setScene(this.scene);
+        stage.show();
 
 	}
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showMenu() {
         this.scene.setRoot(menuView.getView());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showLevels() {
         this.scene.setRoot(levelsView.getView());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showGame(final GameController gameController) {
         gameView.setController(gameController, this.appController);
         this.scene.setRoot(gameView.getView());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void quit() {
         this.showLevels();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showInstructions() {
         this.scene.setRoot(instructionsView.getView());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public GameView getGameView() {
         return this.gameView;

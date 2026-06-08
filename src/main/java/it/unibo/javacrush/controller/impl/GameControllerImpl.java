@@ -166,11 +166,11 @@ public class GameControllerImpl implements GameController {
     @Override
     public Map<CellType, Integer> getGoalsProgress() {
         final Map<CellType, Integer> progress = new java.util.HashMap<>();
-        
+
         for (final var goal : this.session.getGoals()) {
             progress.put(goal.getTargetType(), goal.getCurrentAmount());
         }
-        
+
         return progress;
     }
 

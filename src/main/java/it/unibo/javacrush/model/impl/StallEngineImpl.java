@@ -16,7 +16,7 @@ import it.unibo.javacrush.model.api.StallEngine;
 import it.unibo.javacrush.model.api.MatchManager;
 
 /**
- * This class implements the interface StallEngine and handle the stall state of the board.
+ * Implementation of the {@link StallEngine} interface.
  */
 public class StallEngineImpl implements StallEngine {
 
@@ -110,7 +110,7 @@ public class StallEngineImpl implements StallEngine {
         }
 
         return resultList.stream()
-                        .filter((a) -> a != null)
+                        .filter(a -> a != null)
                         .distinct()
                         .toList();
     }

@@ -12,8 +12,11 @@ import it.unibo.javacrush.model.api.Match;
  */
 public abstract class AbstractPowerUp {
 
-    Set<Match> matches;
+    private final Set<Match> matches;
 
+    /**
+     * Constructor of {@link AbstractPowerUp}.
+     */
     public AbstractPowerUp() {
         this.matches = new HashSet<>();
     }
@@ -36,6 +39,15 @@ public abstract class AbstractPowerUp {
      */
     public Set<Match> getMatches() {
         return this.matches;
+    }
+
+    /**
+     * Add the given match in the private field matches.
+     * 
+     * @param match the match to add in the Set of Matches.
+     */
+    public void addMatches(final Match match) {
+        this.matches.add(match);
     }
 
     /**

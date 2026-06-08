@@ -14,11 +14,11 @@ import it.unibo.javacrush.model.api.MatchManager;
 public class MatchManagerImpl implements MatchManager{
 
     @Override
-    public Match findMatchesAt(Board board, Position pos) {
+    public Match findMatchesAt(final Board board, final Position pos) {
 
-        Set<Position> matches = new HashSet<>();
-        Set<Position> horizontal = checkHorizontal(board, pos);
-        Set<Position> vertical = checkVertical(board, pos);
+        final Set<Position> matches = new HashSet<>();
+        final Set<Position> horizontal = checkHorizontal(board, pos);
+        final Set<Position> vertical = checkVertical(board, pos);
 
         if(!horizontal.isEmpty()) {
             matches.addAll(horizontal);
@@ -35,16 +35,16 @@ public class MatchManagerImpl implements MatchManager{
     }
 
     @Override
-    public Set<Match> findAllMatches(Board board) {
+    public Set<Match> findAllMatches(final Board board) {
 
-        Set<Match> matches = new HashSet<>();
+        final Set<Match> matches = new HashSet<>();
 
         for(int i = 0; i < board.getRows(); i++) {
             for(int j = 0; j < board.getCols(); j++) {
-                Position pos = new Position(j,i);
+                final Position pos = new Position(j,i);
                 if(!board.getCellAt(pos).isEmpty()) {
 
-                    var match = findMatchesAt(board, pos);
+                    final var match = findMatchesAt(board, pos);
                     if(match != null) {
                     matches.add(match);
                     }
@@ -57,24 +57,23 @@ public class MatchManagerImpl implements MatchManager{
     }
 
     @Override
-    public void removeMatch(Board board, Match match) {
-        for(Position pos : match.getPositions()) {
+    public void removeMatch(final Board board, final Match match) {
+        for(final Position pos : match.getPositions()) {
             board.removeCell(pos);
         }
     }
 
-    private boolean isInBounds(Board board, int col, int row) {
-        return (col >= 0 && col < board.getCols()) && 
-                (row >= 0 && row < board.getRows());
+    private boolean isInBounds(final Board board, final int col, final int row) {
+        return col >= 0 && col < board.getCols() && row >= 0 && row < board.getRows();
     }
 
-    private Set<Position> checkHorizontal(Board board, Position pos) {
+    private Set<Position> checkHorizontal(final Board board, final Position pos) {
         
-        Set<Position> matches = new HashSet<>();
+        final Set<Position> matches = new HashSet<>();
         matches.add(pos);
-        CellType matchType = board.getCellAt(pos).get().getType();
+        final CellType matchType = board.getCellAt(pos).get().getType();
         
-        int y = pos.y();
+        final int y = pos.y();
         int x = pos.x() - 1;
         while(isInBounds(board,x,y) && 
                 board.getCellAt(new Position(x,y))
@@ -100,13 +99,13 @@ public class MatchManagerImpl implements MatchManager{
         return matches.size()>=3 ? matches : Collections.emptySet();
     }
 
-    private Set<Position> checkVertical(Board board, Position pos) {
+    private Set<Position> checkVertical(final Board board, final Position pos) {
         
-        Set<Position> matches = new HashSet<>();
+        final Set<Position> matches = new HashSet<>();
         matches.add(pos);
-        CellType matchType = board.getCellAt(pos).get().getType();
+        final CellType matchType = board.getCellAt(pos).get().getType();
         
-        int x = pos.x();
+        final int x = pos.x();
         int y = pos.y() - 1;
         while(isInBounds(board,x,y) && 
                 board.getCellAt(new Position(x,y))

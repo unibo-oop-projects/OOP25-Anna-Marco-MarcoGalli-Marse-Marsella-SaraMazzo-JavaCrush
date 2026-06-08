@@ -12,26 +12,34 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class MenuViewImpl implements MenuView{
-    
+/**
+ * Implementation of the {@link MenuView} interface.
+ */
+public class MenuViewImpl implements MenuView {
+
     private final VBox root;
 
-    public MenuViewImpl(AppController controller) {
+    /**
+     * Constructor of {@link MenuViewImpl}.
+     * 
+     * @param controller TODO
+     */
+    public MenuViewImpl(final AppController controller) {
 
         this.root = new VBox(30);
         this.root.setAlignment(Pos.CENTER); // Centra tutto!
 
-        Label title = new Label("JAVACRUSH");
+        final Label title = new Label("JAVACRUSH");
         title.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #2800ef;");
-        
-        Button playButton = new Button("Play");
-        Button guideButton = new Button("How to play");
+
+        final Button playButton = new Button("Play");
+        final Button guideButton = new Button("How to play");
 
         playButton.setPrefWidth(200);
         guideButton.setPrefWidth(200);
 
         this.root.getChildren().addAll(title, playButton, guideButton);
-        
+
         playButton.setOnAction(e -> {
             // Creiamo l'evento per andare alla selezione livelli
             final Event goToLevelsEvent = new Event() {
@@ -60,12 +68,15 @@ public class MenuViewImpl implements MenuView{
                 public Optional<Integer> id() {
                     return Optional.empty();
                 }
-                
+
             };
             controller.notifyEvent(goToInstructionsEvent);
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getView() {
         return this.root;

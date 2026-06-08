@@ -15,9 +15,9 @@ public class MoveEngineImpl implements MoveEngine{
     private final Set<Match> matches = new HashSet<>();
 
     @Override
-    public boolean canSwap(Board board, Position pos1, Position pos2) {
+    public boolean canSwap(final Board board, final Position pos1, final Position pos2) {
 
-        Set<Match> currentMatches = new HashSet<>();
+        final Set<Match> currentMatches = new HashSet<>();
         matches.clear();
         
         if(!isAdjacent(pos1, pos2)) {
@@ -25,8 +25,8 @@ public class MoveEngineImpl implements MoveEngine{
         }
 
         board.swapCells(pos1,pos2);
-        Match matches1 = detector.findMatchesAt(board, pos1);
-        Match matches2 = detector.findMatchesAt(board, pos2);
+        final Match matches1 = detector.findMatchesAt(board, pos1);
+        final Match matches2 = detector.findMatchesAt(board, pos2);
         
         if(matches1 != null) {
             currentMatches.add(matches1);
@@ -43,7 +43,7 @@ public class MoveEngineImpl implements MoveEngine{
     }
 
 
-    private boolean isAdjacent(Position pos1, Position pos2) {
+    private boolean isAdjacent(final Position pos1, final Position pos2) {
         return (Math.abs(pos1.x()-pos2.x()) == 1 && pos1.y() == pos2.y()) ||
                 (Math.abs(pos1.y()-pos2.y()) == 1 && pos1.x() == pos2.x());
     }

@@ -17,6 +17,7 @@ public class CellImpl implements Cell{
         return this.type;
     }
 
+    @Override
     public String toString() {
            return "Cell[" + this.type + "]";
     }
@@ -30,16 +31,17 @@ public class CellImpl implements Cell{
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        CellImpl other = (CellImpl) obj;
-        if (type != other.type)
-            return false;
-        return true;
+        }
+        final CellImpl other = (CellImpl) obj;
+        return type == other.type;
     }
 }

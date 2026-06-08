@@ -15,8 +15,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
-public class LevelsViewImpl implements LevelsView{
+/**
+ * Implementation of the {@link LevelsView} interface.
+ */
+public class LevelsViewImpl implements LevelsView {
 
     private static final int LEVEL_1 = 1;
     private static final int LEVEL_2 = 2;
@@ -25,27 +27,33 @@ public class LevelsViewImpl implements LevelsView{
     private static final int LEVEL_5 = 5;
     private final BorderPane root;
 
-    public LevelsViewImpl(AppController appController, LevelManager levelManager) {
+    /**
+     * Constructor of {@link LevelsViewImpl}.
+     * 
+     * @param appController TODO
+     * @param levelManager TODO
+     */
+    public LevelsViewImpl(final AppController appController, final LevelManager levelManager) {
         // 1. Creiamo il contenitore principale (VBox con spazio di 30px tra elementi)
-        VBox levels = new VBox(30);
+        final VBox levels = new VBox(30);
         levels.setAlignment(Pos.CENTER); // Centra tutto!
 
-        HBox back = new HBox(30);
+        final HBox back = new HBox(30);
         back.setAlignment(Pos.CENTER_LEFT);
 
-        Button easy = new Button("Easy");
+        final Button easy = new Button("Easy");
         easy.setPrefWidth(200);
-        Button medium = new Button("Medium");
+        final Button medium = new Button("Medium");
         medium.setPrefWidth(200);
-        Button hard = new Button("Hard");
+        final Button hard = new Button("Hard");
         hard.setPrefWidth(200);
-        Button expert = new Button("Expert");
+        final Button expert = new Button("Expert");
         expert.setPrefWidth(200);
-        Button crazyGravity = new Button("Crazy Gravity");
+        final Button crazyGravity = new Button("Crazy Gravity");
         crazyGravity.setPrefWidth(200);
         levels.getChildren().addAll(easy, medium, hard, expert, crazyGravity);
 
-        Button menu = new Button("Menù");
+        final Button menu = new Button("Menù");
         menu.setPrefWidth(100);
         back.getChildren().add(menu);
 
@@ -66,7 +74,7 @@ public class LevelsViewImpl implements LevelsView{
                 public Optional<Integer> id() {
                     return Optional.empty();
                 }
-                
+
             };
             appController.notifyEvent(goToMenuEvent);
         });
@@ -79,12 +87,15 @@ public class LevelsViewImpl implements LevelsView{
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getView() {
         return this.root;
     }
 
-    private void startLevelEvent(AppController appController, int levelID) {
+    private void startLevelEvent(final AppController appController, final int levelID) {
         final Event startLevelEvent = new Event() {
 
             @Override
@@ -96,7 +107,7 @@ public class LevelsViewImpl implements LevelsView{
             public Optional<Integer> id() {
                 return Optional.of(levelID);
             }
-            
+
         };
         appController.notifyEvent(startLevelEvent);
     }

@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-
 import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
@@ -39,10 +38,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-public class GameViewImpl implements GameView{
+/**
+ * Implementation of the {@link GameView} interface.
+ */
+public class GameViewImpl implements GameView {
+
+    private static final String SELECT_STYLE = "-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;";
 
     private final Map<CellType, Image> cellTypeImages = new EnumMap<>(CellType.class);
-    private final Map<Button,Position> gridMap = new HashMap<>();
+    private final Map<Button, Position> gridMap = new HashMap<>();
     private Set<Position> hint = new HashSet<>();
     private final BorderPane root;
     private final GridPane grid;
@@ -58,6 +62,9 @@ public class GameViewImpl implements GameView{
     private boolean isAnimating;
     private final Service<Integer> ser;
 
+    /**
+     * Constructor of {@link GameViewImpl}.
+     */
     public GameViewImpl() {
         this.root = new BorderPane();
         this.root.setPadding(new Insets(20));
@@ -70,7 +77,6 @@ public class GameViewImpl implements GameView{
         this.powerUpBox = new VBox(10);
         this.powerUpBox.setAlignment(Pos.CENTER_RIGHT);
         this.powerUpBox.setPadding(new Insets(0, 10, 0, 10));
-
 
         this.quitBox = new VBox(40);
         this.quitBox.setAlignment(Pos.BOTTOM_LEFT);
@@ -90,7 +96,7 @@ public class GameViewImpl implements GameView{
                 } else {
                     System.out.println("Attenzione, immagine non trovata: " + path);
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 System.out.println("Errore caricamento: " + path);
             }
         }
@@ -99,12 +105,16 @@ public class GameViewImpl implements GameView{
         this.ser = this.initService();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateView() {
 
         this.movesLabel.setText("Moves left: " + this.controller.getMovesLeft());
-        this.movesLabel.setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
-        
+        this.movesLabel
+        .setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
+
         this.goalsContainer.getChildren().clear();
         final Map<CellType, Integer> goals = this.controller.getGoals();
         for (final var goal : goals.entrySet()) {
@@ -113,7 +123,8 @@ public class GameViewImpl implements GameView{
             final int currentAmount = this.controller.getGoalsProgress().getOrDefault(type, 0);
 
             final Label goalLabel = new Label(type.toString() + ": " + currentAmount + "/" + amount);
-            goalLabel.setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
+            goalLabel
+            .setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
             this.goalsContainer.getChildren().add(goalLabel);
         }
 
@@ -136,7 +147,7 @@ public class GameViewImpl implements GameView{
             }
 
             if (bt.equals(this.selectedCell)) {
-                bt.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                bt.setStyle(SELECT_STYLE);
             }
 
             if (this.hint.contains(pos)) {
@@ -146,6 +157,9 @@ public class GameViewImpl implements GameView{
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void quitLevel() {
         final Event quitEvent = new Event() {
@@ -159,20 +173,26 @@ public class GameViewImpl implements GameView{
                 public Optional<Integer> id() {
                     return Optional.empty();
                 }
-                
+
             };
             this.appController.notifyEvent(quitEvent);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Parent getView() {
         return this.root;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setController(final GameController controller, final AppController appController) {
-        this.controller = controller;
-        this.appController = appController;
+    public void setController(final GameController cont, final AppController appCont) {
+        this.controller = cont;
+        this.appController = appCont;
         this.setUpGame();
     }
 
@@ -214,7 +234,7 @@ public class GameViewImpl implements GameView{
                         this.controller.resetPowerUpSelection();
                     } else {
                         if (this.selectedCell == null) {
-                            bt.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                            bt.setStyle(SELECT_STYLE);
                             this.selectedCell = bt;
                         } else if (this.selectedCell.equals(bt)) {
                             bt.setStyle("");
@@ -245,7 +265,7 @@ public class GameViewImpl implements GameView{
                         });
 
                         final KeyFrame frame = new KeyFrame(Duration.seconds(0.5), event -> {
-                            
+
                             final boolean isFalling = this.controller.applyGravity();
 
                             this.updateView();
@@ -255,7 +275,7 @@ public class GameViewImpl implements GameView{
                                 this.isAnimating = false;
                                 Platform.runLater(this::timerTask);
                                 Platform.runLater(this::checkStateGame);
-                                
+
                             }
                         });
 
@@ -286,7 +306,7 @@ public class GameViewImpl implements GameView{
                     this.selectedPowerUp = null;
                     this.controller.resetPowerUpSelection();
                 } else {
-                    powerUp1.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                    powerUp1.setStyle(SELECT_STYLE);
                     this.selectedPowerUp = powerUp1;
                 }
             }
@@ -307,7 +327,7 @@ public class GameViewImpl implements GameView{
                     this.selectedPowerUp = null;
                     this.controller.resetPowerUpSelection();
                 } else {
-                    powerUp2.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                    powerUp2.setStyle(SELECT_STYLE);
                     this.selectedPowerUp = powerUp2;
                 }
             }
@@ -327,7 +347,7 @@ public class GameViewImpl implements GameView{
                     this.selectedPowerUp = null;
                     this.controller.resetPowerUpSelection();
                 } else {
-                    powerUp3.setStyle("-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;");
+                    powerUp3.setStyle(SELECT_STYLE);
                     this.selectedPowerUp = powerUp3;
                 }
             }
@@ -400,7 +420,7 @@ public class GameViewImpl implements GameView{
 
                             try {
                                 Thread.sleep(1000);
-                            } catch (InterruptedException interrupted) {
+                            } catch (final InterruptedException interrupted) {
                                 if (isCancelled()) {
                                     updateMessage("Cancelled");
                                     break;

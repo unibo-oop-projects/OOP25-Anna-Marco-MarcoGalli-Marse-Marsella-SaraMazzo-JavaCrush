@@ -22,5 +22,5 @@ public interface GameView {
     Parent getView();
 
     void setController(GameController controller, AppController appController);
-    
+
 }

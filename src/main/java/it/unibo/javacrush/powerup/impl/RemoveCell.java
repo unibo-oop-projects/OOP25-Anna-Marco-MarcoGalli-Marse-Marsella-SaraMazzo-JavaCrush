@@ -21,7 +21,7 @@ public class RemoveCell extends AbstractPowerUp {
         if (this.isAppliable(board, pos)) {
             resultSet.clear();
             resultSet.add(pos);
-            this.matches.add(new MatchImpl(resultSet, board.getCellAt(pos).get().getType()));
+            this.addMatches(new MatchImpl(resultSet, board.getCellAt(pos).get().getType()));
             return true;
         }
 
