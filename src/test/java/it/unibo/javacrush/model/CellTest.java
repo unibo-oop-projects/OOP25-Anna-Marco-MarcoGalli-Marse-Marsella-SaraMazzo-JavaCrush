@@ -13,8 +13,8 @@ class CellTest {
 
     @Test
     void testCellCreation() {
-        CellType expectedType = CellType.COFFEE_BEAN;    
-        Cell cell = new CellImpl(expectedType);
+        final CellType expectedType = CellType.COFFEE_BEAN;
+        final Cell cell = new CellImpl(expectedType);
 
         // verify that the cell returns the correct type
         assertEquals(expectedType, cell.getType(), "Cell type should match the expected type");
@@ -29,11 +29,11 @@ class CellTest {
 
     @Test
     void testToString() {
-        Cell randomTypeCell = new CellImpl(CellType.getRandomType());
-        var expectedString = "Cell[" + randomTypeCell.getType() + "]";
+        final Cell randomTypeCell = new CellImpl(CellType.getRandomType());
+        final String expectedString = "Cell[" + randomTypeCell.getType() + "]";
         assertEquals(expectedString, randomTypeCell.toString(), "toString should return the correct format");
 
-        Cell cell = new CellImpl(CellType.SUGAR);
+        final Cell cell = new CellImpl(CellType.SUGAR);
         assertEquals("Cell[SUGAR]", cell.toString(), "toString should return the correct format");
     }
 

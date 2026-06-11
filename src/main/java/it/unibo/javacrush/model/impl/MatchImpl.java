@@ -7,11 +7,21 @@ import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Match;
 
-public class MatchImpl implements Match {
+/**
+ * Implementation of the Match interface representing a match of cells in the game grid.
+ * A match consists of a set of positions (at least three) and a cell type that defines the type of cells.
+ */
+public final class MatchImpl implements Match {
 
     private final Set<Position> positions = new HashSet<>();
     private final CellType type;
 
+    /**
+     * Constructs a MatchImpl with the specified positions and cell type.
+     * 
+     * @param positions the set of positions that form the match
+     * @param type the cell type of the match
+     */
     public MatchImpl(final Set<Position> positions, final CellType type) {
         this.positions.addAll(positions);
         this.type = type;

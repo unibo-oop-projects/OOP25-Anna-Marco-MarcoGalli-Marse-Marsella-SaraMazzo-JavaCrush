@@ -11,7 +11,11 @@ import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.api.MatchManager;
 
-public class MatchManagerImpl implements MatchManager{
+/**
+ * Implementation of the MatchManager interface,
+ * responsible for finding and removing matches on the board.
+ */
+public final class MatchManagerImpl implements MatchManager {
 
     @Override
     public Match findMatchesAt(final Board board, final Position pos) {
@@ -20,10 +24,10 @@ public class MatchManagerImpl implements MatchManager{
         final Set<Position> horizontal = checkHorizontal(board, pos);
         final Set<Position> vertical = checkVertical(board, pos);
 
-        if(!horizontal.isEmpty()) {
+        if (!horizontal.isEmpty()) {
             matches.addAll(horizontal);
         }
-        if(!vertical.isEmpty()) {
+        if (!vertical.isEmpty()) {
             matches.addAll(vertical);
         }
 
@@ -39,13 +43,13 @@ public class MatchManagerImpl implements MatchManager{
 
         final Set<Match> matches = new HashSet<>();
 
-        for(int i = 0; i < board.getRows(); i++) {
-            for(int j = 0; j < board.getCols(); j++) {
-                final Position pos = new Position(j,i);
-                if(!board.getCellAt(pos).isEmpty()) {
+        for (int i = 0; i < board.getRows(); i++) {
+            for (int j = 0; j < board.getCols(); j++) {
+                final Position pos = new Position(j, i);
+                if (!board.getCellAt(pos).isEmpty()) {
 
                     final var match = findMatchesAt(board, pos);
-                    if(match != null) {
+                    if (match != null) {
                     matches.add(match);
                     }
 
@@ -58,7 +62,7 @@ public class MatchManagerImpl implements MatchManager{
 
     @Override
     public void removeMatch(final Board board, final Match match) {
-        for(final Position pos : match.getPositions()) {
+        for (final Position pos : match.getPositions()) {
             board.removeCell(pos);
         }
     }
@@ -68,69 +72,67 @@ public class MatchManagerImpl implements MatchManager{
     }
 
     private Set<Position> checkHorizontal(final Board board, final Position pos) {
-        
+
         final Set<Position> matches = new HashSet<>();
         matches.add(pos);
         final CellType matchType = board.getCellAt(pos).get().getType();
-        
+
         final int y = pos.y();
         int x = pos.x() - 1;
-        while(isInBounds(board,x,y) && 
-                board.getCellAt(new Position(x,y))
-                    .map(Cell::getType)
-                    .filter(type -> type == matchType)
-                    .isPresent()) {
+        while (isInBounds(board, x, y) 
+                && board.getCellAt(new Position(x, y))
+                        .map(Cell::getType)
+                        .filter(type -> type == matchType)
+                        .isPresent()) {
 
-            matches.add(new Position(x,y));
+            matches.add(new Position(x, y));
             x--;
         }
 
         x = pos.x() + 1;
-        while(isInBounds(board,x,y) && 
-                board.getCellAt(new Position(x,y))
-                    .map(Cell::getType)
-                    .filter(type -> type == matchType)
-                    .isPresent()) {
+        while (isInBounds(board, x, y) 
+                && board.getCellAt(new Position(x, y))
+                        .map(Cell::getType)
+                        .filter(type -> type == matchType)
+                        .isPresent()) {
 
-            matches.add(new Position(x,y));
+            matches.add(new Position(x, y));
             x++;
         }
 
-        return matches.size()>=3 ? matches : Collections.emptySet();
+        return matches.size() >= 3 ? matches : Collections.emptySet();
     }
 
     private Set<Position> checkVertical(final Board board, final Position pos) {
-        
+
         final Set<Position> matches = new HashSet<>();
         matches.add(pos);
         final CellType matchType = board.getCellAt(pos).get().getType();
-        
+
         final int x = pos.x();
         int y = pos.y() - 1;
-        while(isInBounds(board,x,y) && 
-                board.getCellAt(new Position(x,y))
-                    .map(Cell::getType)
-                    .filter(type -> type == matchType)
-                    .isPresent()) {
+        while (isInBounds(board, x, y) 
+                && board.getCellAt(new Position(x, y))
+                        .map(Cell::getType)
+                        .filter(type -> type == matchType)
+                        .isPresent()) {
 
-            matches.add(new Position(x,y));
+            matches.add(new Position(x, y));
             y--;
         }
 
         y = pos.y() + 1;
-        while(isInBounds(board,x,y) && 
-                board.getCellAt(new Position(x,y))
-                    .map(Cell::getType)
-                    .filter(type -> type == matchType)
-                    .isPresent()) {
-    
-            matches.add(new Position(x,y));
+        while (isInBounds(board, x, y) 
+                && board.getCellAt(new Position(x, y))
+                        .map(Cell::getType)
+                        .filter(type -> type == matchType)
+                        .isPresent()) {
+
+            matches.add(new Position(x, y));
             y++;
         }
 
-        return matches.size()>= 3 ? matches : Collections.emptySet();
+        return matches.size() >= 3 ? matches : Collections.emptySet();
     }
-
-    
 
 }

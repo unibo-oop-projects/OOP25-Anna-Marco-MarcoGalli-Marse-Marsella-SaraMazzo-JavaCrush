@@ -44,6 +44,11 @@ import javafx.util.Duration;
 public class GameViewImpl implements GameView {
 
     private static final String SELECT_STYLE = "-fx-border-color: red; -fx-border-width: 3px; -fx-border-radius: 5;";
+    private static final int CELL_SIZE = 40;
+    private static final int CELL_IMG_SIZE = 30;
+    private static final int PADDING_SIZE = 20;
+    private static final int GOAL_IMG_SIZE = 25;
+    private static final int QUIT_BUTTON_WIDTH = 80;
 
     private final Map<CellType, Image> cellTypeImages = new EnumMap<>(CellType.class);
     private final Map<Button, Position> gridMap = new HashMap<>();
@@ -63,28 +68,28 @@ public class GameViewImpl implements GameView {
     private final Service<Integer> ser;
 
     /**
-     * Constructor of {@link GameViewImpl}.
+     * Constructor of the class.
      */
     public GameViewImpl() {
         this.root = new BorderPane();
-        this.root.setPadding(new Insets(20));
+        this.root.setPadding(new Insets(PADDING_SIZE));
 
         this.grid = new GridPane();
         this.grid.setAlignment(Pos.BOTTOM_CENTER);
 
         this.root.setCenter(this.grid);
 
-        this.powerUpBox = new VBox(10);
+        this.powerUpBox = new VBox(PADDING_SIZE / 2);
         this.powerUpBox.setAlignment(Pos.CENTER_RIGHT);
-        this.powerUpBox.setPadding(new Insets(0, 10, 0, 10));
+        this.powerUpBox.setPadding(new Insets(0, PADDING_SIZE / 2, 0, PADDING_SIZE / 2));
 
-        this.quitBox = new VBox(40);
+        this.quitBox = new VBox(PADDING_SIZE * 2);
         this.quitBox.setAlignment(Pos.BOTTOM_LEFT);
-        this.quitBox.setPadding(new Insets(0, 10, 0, 10));
+        this.quitBox.setPadding(new Insets(0, PADDING_SIZE, 0, PADDING_SIZE));
 
-        this.topBar = new HBox(10);
+        this.topBar = new HBox(PADDING_SIZE / 2);
         this.topBar.setAlignment(Pos.CENTER);
-        this.topBar.setPadding(new Insets(0, 0, 20, 0));
+        this.topBar.setPadding(new Insets(0, 0, PADDING_SIZE, 0));
         this.root.setTop(this.topBar);
 
         for (final CellType type : CellType.values()) {
@@ -94,10 +99,10 @@ public class GameViewImpl implements GameView {
                 if (imageUrl != null) {
                     this.cellTypeImages.put(type, new Image(imageUrl.toExternalForm()));
                 } else {
-                    System.out.println("Attenzione, immagine non trovata: " + path);
+                    throw new IllegalStateException("Attenzione, immagine non trovata: " + path);
                 }
-            } catch (final Exception e) {
-                System.out.println("Errore caricamento: " + path);
+            } catch (final IllegalArgumentException e) {
+                throw new IllegalStateException("Errore caricamento immagine: " + path, e);
             }
         }
 
@@ -127,8 +132,8 @@ public class GameViewImpl implements GameView {
             .setStyle("-fx-font-size: 16px; -fx-background-color: #f0f0f0; -fx-padding: 5 10 5 10; -fx-background-radius: 5;");
             if (type != null && this.cellTypeImages.containsKey(type)) {
                 final ImageView goalImg = new ImageView(this.cellTypeImages.get(type));
-                goalImg.setFitWidth(25);
-                goalImg.setFitHeight(25);
+                goalImg.setFitWidth(GOAL_IMG_SIZE);
+                goalImg.setFitHeight(GOAL_IMG_SIZE);
                 goalImg.setPreserveRatio(true);
                 goalLabel.setGraphic(goalImg);
             }
@@ -142,8 +147,8 @@ public class GameViewImpl implements GameView {
             final CellType type = this.controller.getCellTypeAtPos(pos);
             if (type != null && this.cellTypeImages.containsKey(type)) {
                 final ImageView img = new ImageView(this.cellTypeImages.get(type));
-                img.setFitWidth(30); 
-                img.setFitHeight(30);
+                img.setFitWidth(CELL_IMG_SIZE); 
+                img.setFitHeight(CELL_IMG_SIZE);
                 img.setPreserveRatio(true);
 
                 bt.setGraphic(img);
@@ -213,7 +218,7 @@ public class GameViewImpl implements GameView {
 
         this.movesLabel = new Label();
 
-        this.goalsContainer = new HBox(15);
+        this.goalsContainer = new HBox(PADDING_SIZE);
         this.goalsContainer.setAlignment(Pos.CENTER);
 
         this.topBar.getChildren().addAll(goalsContainer, movesLabel);
@@ -222,9 +227,9 @@ public class GameViewImpl implements GameView {
             for (int j = 0; j < controller.getBoardRows(); j++) {
                 final Position pos = new Position(i, j);
                 final Button bt = new Button();
-                bt.setPrefSize(40, 40);
-                bt.setMinSize(40, 40);
-                bt.setMaxSize(40, 40);
+                bt.setPrefSize(CELL_SIZE, CELL_SIZE);
+                bt.setMinSize(CELL_SIZE, CELL_SIZE);
+                bt.setMaxSize(CELL_SIZE, CELL_SIZE);
                 this.grid.add(bt, i, j);
                 this.gridMap.put(bt, pos);
 
@@ -367,7 +372,7 @@ public class GameViewImpl implements GameView {
         this.root.setRight(this.powerUpBox);
 
         final Button quit = new Button("Quit");
-        quit.setPrefWidth(80);
+        quit.setPrefWidth(QUIT_BUTTON_WIDTH);
         quit.setOnAction(e -> this.controller.quitLevel());
 
         this.quitBox.getChildren().add(quit);

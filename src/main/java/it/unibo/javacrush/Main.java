@@ -7,8 +7,8 @@ import javafx.application.Application;
  */
 public final class Main {
 
-	/**
-	 * This private constructor prevents istantiation.
+    /**
+     * This private constructor prevents istantiation.
 	 */
 	private Main() {
 

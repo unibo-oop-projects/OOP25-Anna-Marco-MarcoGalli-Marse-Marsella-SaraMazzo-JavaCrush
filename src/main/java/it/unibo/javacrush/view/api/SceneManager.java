@@ -2,9 +2,26 @@ package it.unibo.javacrush.view.api;
 
 import it.unibo.javacrush.controller.api.GameController;
 
+/**
+ * Interface for managing the scene transitions.
+ */
 public interface SceneManager {
+
+    /**
+     * Show the menu scene.
+     */
     void showMenu();
+
+    /**
+     * Show the levels scene.
+     */
     void showLevels();
+
+    /**
+     * Show the game scene.
+     * 
+     * @param gameController the game controller
+     */
     void showGame(GameController gameController); // Puoi passare parametri!
 
     /**
@@ -14,6 +31,13 @@ public interface SceneManager {
      */
     GameView getGameView();
 
-    void showInstructions(); // UNDERSTAND IF WE WANT IT
-    void quit(); // UNDERSTAND IF WE WANT IT
+    /**
+     * Show the instructions scene.
+     */
+    void showInstructions(); 
+
+    /**
+     * Quit the application.
+     */
+    void quit();
 }

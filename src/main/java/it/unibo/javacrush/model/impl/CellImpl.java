@@ -4,10 +4,19 @@ import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.model.api.Cell;
 import java.util.Objects;
 
-public class CellImpl implements Cell{
+/**
+ * Implementation of the Cell interface representing a cell in the game grid.
+ * Each cell has a specific type defined by the CellType enum.
+ */
+public final class CellImpl implements Cell {
 
     private final CellType type;
 
+    /**
+     * Creates a CellImpl with the specified CellType.
+     * 
+     * @param type the type of the cell
+     */
     public CellImpl(final CellType type) {
         this.type = Objects.requireNonNull(type, "Cell type cannot be null");
     }

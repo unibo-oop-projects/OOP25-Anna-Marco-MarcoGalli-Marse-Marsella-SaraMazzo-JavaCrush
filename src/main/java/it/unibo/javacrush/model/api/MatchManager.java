@@ -4,6 +4,9 @@ import java.util.Set;
 
 import it.unibo.javacrush.common.Position;
 
+/**
+ * Represents a manager for finding and removing matches on the game board.
+ */
 public interface MatchManager {
 
     /**
@@ -12,7 +15,7 @@ public interface MatchManager {
      * @param board the board to check for matches
      * @param pos the position to check for matches
      * @return the match found at the given position, which could be empty if no match is found.
-    */
+     */
     Match findMatchesAt(Board board, Position pos);
 
     /**
