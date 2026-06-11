@@ -5,7 +5,7 @@ import it.unibo.javacrush.controller.api.GameController;
 import javafx.scene.Parent;
 
 /**
- * Temporary interface, TO CHANGE
+ * Interface for the game view.
  */
 public interface GameView {
 
@@ -19,8 +19,19 @@ public interface GameView {
      */
     void quitLevel();
 
+    /**
+     * Get the view.
+     * 
+     * @return the view
+     */
     Parent getView();
 
+    /**
+     * Set the controller for the view.
+     * 
+     * @param controller the game controller
+     * @param appController the app controller
+     */
     void setController(GameController controller, AppController appController);
 
 }

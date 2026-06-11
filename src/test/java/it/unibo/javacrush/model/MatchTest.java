@@ -15,9 +15,9 @@ class MatchTest {
 
     @Test
     void testMatchCreation() {
-        Set<Position> positions = Set.of(new Position(0, 0), new Position(1, 0), new Position(2, 0));
-        CellType expectedtype = CellType.COFFEE_BEAN;
-        Match match = new MatchImpl(positions, expectedtype);
+        final Set<Position> positions = Set.of(new Position(0, 0), new Position(1, 0), new Position(2, 0));
+        final CellType expectedtype = CellType.COFFEE_BEAN;
+        final Match match = new MatchImpl(positions, expectedtype);
 
         assertEquals(3, match.getSize());
         assertEquals(positions, match.getPositions());
@@ -26,9 +26,9 @@ class MatchTest {
 
     @Test
     void testEmptyMatch() {
-        Set<Position> positions = Set.of();
-        CellType type = CellType.MILK;
-        Match match = new MatchImpl(positions, type);
+        final Set<Position> positions = Set.of();
+        final CellType type = CellType.MILK;
+        final Match match = new MatchImpl(positions, type);
 
         assertTrue(match.isEmpty());
         assertEquals(0, match.getSize());

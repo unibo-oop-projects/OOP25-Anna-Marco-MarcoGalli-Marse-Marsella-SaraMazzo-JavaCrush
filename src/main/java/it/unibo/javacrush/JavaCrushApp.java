@@ -23,6 +23,8 @@ import javafx.stage.Stage;
  */
 public class JavaCrushApp extends Application implements SceneManager {
 
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = 600;
     private AppController appController;
     private final LevelManager levelManager = new LevelManagerImpl();
     private MenuView menuView;
@@ -35,11 +37,11 @@ public class JavaCrushApp extends Application implements SceneManager {
      * {@inheritDoc}
      */
     @Override
-	public void start(final Stage s) throws Exception {
+    public void start(final Stage s) throws Exception {
 
         final Stage stage = s;
-        stage.setWidth(1000);
-        stage.setHeight(600);
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
 
         this.appController = new AppControllerImpl(this, this.levelManager);
 
@@ -49,7 +51,7 @@ public class JavaCrushApp extends Application implements SceneManager {
         this.gameView = new GameViewImpl();
 
         this.scene = new Scene(this.menuView.getView(), stage.getWidth(), stage.getHeight());
-		stage.setTitle("JavaCrush");
+        stage.setTitle("JavaCrush");
         stage.setScene(this.scene);
         stage.show();
 

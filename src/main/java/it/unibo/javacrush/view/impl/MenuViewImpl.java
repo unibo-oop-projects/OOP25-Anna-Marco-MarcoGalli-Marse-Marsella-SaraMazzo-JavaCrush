@@ -17,17 +17,19 @@ import javafx.scene.layout.VBox;
  */
 public class MenuViewImpl implements MenuView {
 
+    private static final int SPACING = 30;
+    private static final int WIDTH = 200;
     private final VBox root;
 
     /**
      * Constructor of {@link MenuViewImpl}.
      * 
-     * @param controller TODO
+     * @param controller the controller to notify when buttons are pressed
      */
     public MenuViewImpl(final AppController controller) {
 
-        this.root = new VBox(30);
-        this.root.setAlignment(Pos.CENTER); // Centra tutto!
+        this.root = new VBox(SPACING);
+        this.root.setAlignment(Pos.CENTER);
 
         final Label title = new Label("JAVACRUSH");
         title.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #2800ef;");
@@ -35,13 +37,13 @@ public class MenuViewImpl implements MenuView {
         final Button playButton = new Button("Play");
         final Button guideButton = new Button("How to play");
 
-        playButton.setPrefWidth(200);
-        guideButton.setPrefWidth(200);
+        playButton.setPrefWidth(WIDTH);
+        guideButton.setPrefWidth(WIDTH);
 
         this.root.getChildren().addAll(title, playButton, guideButton);
 
         playButton.setOnAction(e -> {
-            // Creiamo l'evento per andare alla selezione livelli
+
             final Event goToLevelsEvent = new Event() {
                 @Override
                 public AppEventType type() {
@@ -50,10 +52,10 @@ public class MenuViewImpl implements MenuView {
 
                 @Override
                 public Optional<Integer> id() {
-                    return Optional.empty(); // Nel menu non serve l'id del livello
+                    return Optional.empty(); 
                 }
             };
-            // Notifichiamo il controller ufficiale
+
             controller.notifyEvent(goToLevelsEvent);
         });
         guideButton.setOnAction(e -> {

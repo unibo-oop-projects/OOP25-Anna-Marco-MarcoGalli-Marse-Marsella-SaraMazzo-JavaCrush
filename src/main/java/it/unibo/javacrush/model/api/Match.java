@@ -5,6 +5,11 @@ import java.util.Set;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.Position;
 
+/**
+ * Represents a match of cells in the game.
+ * A match consists of a set of positions (at least three) that all contain the same type of cell,
+ * and a cell type that defines the type of cells.
+ */
 public interface Match {
 
     /**
@@ -29,7 +34,7 @@ public interface Match {
     int getSize();
 
     /**
-     * Return wheter the Match is empy or not.
+     * Return whether the Match is empty or not.
      * 
      * @return true if the Match is empy, false otherwise.
      */

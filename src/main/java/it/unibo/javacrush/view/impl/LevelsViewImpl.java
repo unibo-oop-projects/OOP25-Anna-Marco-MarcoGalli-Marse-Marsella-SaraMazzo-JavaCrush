@@ -25,41 +25,44 @@ public class LevelsViewImpl implements LevelsView {
     private static final int LEVEL_3 = 3;
     private static final int LEVEL_4 = 4;
     private static final int LEVEL_5 = 5;
+    private static final int SPACING = 30;
+    private static final int PADDING = 20;
+    private static final int WIDTH = 200;
     private final BorderPane root;
 
     /**
      * Constructor of {@link LevelsViewImpl}.
      * 
-     * @param appController TODO
-     * @param levelManager TODO
+     * @param appController the controller to notify when buttons are pressed
+     * @param levelManager the level manager to handle level logic
      */
     public LevelsViewImpl(final AppController appController, final LevelManager levelManager) {
         // 1. Creiamo il contenitore principale (VBox con spazio di 30px tra elementi)
-        final VBox levels = new VBox(30);
+        final VBox levels = new VBox(SPACING);
         levels.setAlignment(Pos.CENTER); // Centra tutto!
 
-        final HBox back = new HBox(30);
+        final HBox back = new HBox(SPACING);
         back.setAlignment(Pos.CENTER_LEFT);
 
         final Button easy = new Button("Easy");
-        easy.setPrefWidth(200);
+        easy.setPrefWidth(WIDTH);
         final Button medium = new Button("Medium");
-        medium.setPrefWidth(200);
+        medium.setPrefWidth(WIDTH);
         final Button hard = new Button("Hard");
-        hard.setPrefWidth(200);
+        hard.setPrefWidth(WIDTH);
         final Button expert = new Button("Expert");
-        expert.setPrefWidth(200);
+        expert.setPrefWidth(WIDTH);
         final Button crazyGravity = new Button("Crazy Gravity");
-        crazyGravity.setPrefWidth(200);
+        crazyGravity.setPrefWidth(WIDTH);
         levels.getChildren().addAll(easy, medium, hard, expert, crazyGravity);
 
         final Button menu = new Button("Menù");
-        menu.setPrefWidth(100);
+        menu.setPrefWidth(WIDTH / 2);
         back.getChildren().add(menu);
 
         this.root = new BorderPane();
-        this.root.setPadding(new Insets(20)); // Aggiungiamo un po' di padding intorno
-        this.root.setCenter(levels); // I livelli vanno al centro
+        this.root.setPadding(new Insets(PADDING));
+        this.root.setCenter(levels);
         this.root.setBottom(back);
 
         menu.setOnAction(e -> {

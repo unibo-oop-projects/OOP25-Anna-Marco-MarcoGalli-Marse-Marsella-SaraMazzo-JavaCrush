@@ -19,19 +19,24 @@ import javafx.scene.text.Text;
 /**
  * Implementation of the {@link InstructionsView} interface.
  */
-public class InstructionsViewImpl implements InstructionsView {
+public final class InstructionsViewImpl implements InstructionsView {
 
     private static final String STYLE = "-fx-font-size: 16px; -fx-font-weight: bold;";
+    private static final int PADDING_SIZE = 20;
+    private static final int MAX_WIDTH = 550;
 
     private final BorderPane root;
 
+    /**
+     * Constructor of the class.
+     */
     public InstructionsViewImpl(final AppController appController) {
         this.root = new BorderPane();
-        this.root.setPadding(new Insets(20));
+        this.root.setPadding(new Insets(PADDING_SIZE));
 
         final VBox instructionsBox = new VBox();
         instructionsBox.setAlignment(Pos.CENTER);
-        instructionsBox.setPadding(new Insets(10));
+        instructionsBox.setPadding(new Insets(PADDING_SIZE / 2));
 
         final Text mainTitle = new Text("How To Play JavaCrush");
         mainTitle.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
@@ -39,59 +44,66 @@ public class InstructionsViewImpl implements InstructionsView {
 
         final Text challengeTitle = new Text("Choose Your Challenge");
         challengeTitle.setStyle(STYLE);
-        final Label challengeBody = new Label("The Levels Menu features a variety of stages with different difficulties and unique gravity mechanics. Choose one to start your game!");
+        final Label challengeBody = new Label("The Levels Menu features a variety of stages with "
+                + " different difficulties and unique gravity mechanics. Choose one to start your game!");
         challengeBody.setWrapText(true);
-        challengeBody.setMaxWidth(550);
+        challengeBody.setMaxWidth(MAX_WIDTH);
 
         instructionsBox.getChildren().addAll(challengeTitle, challengeBody);
 
         final Text goalsTitle = new Text("The Goals");
         goalsTitle.setStyle(STYLE);
-        final Label goalsBody = new Label("Your main objective is to complete the goals displayed above the grid (collecting a specific number of elements of a certain type) before running out of moves.");
+        final Label goalsBody = new Label("Your main objective is to complete the goals "
+                + "displayed above the grid (collecting a specific number of elements of a certain type) "
+                + "before running out of moves.");
         goalsBody.setWrapText(true);
-        goalsBody.setMaxWidth(550);
+        goalsBody.setMaxWidth(MAX_WIDTH);
 
         instructionsBox.getChildren().addAll(goalsTitle, goalsBody);
 
         final Text matchesTitle = new Text("Make a Match");
         matchesTitle.setStyle(STYLE);
-        final Label matchesBody = new Label("Swap two adjacent cells to create matches of three or more identical elements. Each element from a valid match is collected and counts towards your objectives.");
+        final Label matchesBody = new Label("Swap two adjacent cells to create matches of three or more identical elements."
+                + " Each element from a valid match is collected and counts towards your objectives.");
         matchesBody.setWrapText(true);
-        matchesBody.setMaxWidth(550);
+        matchesBody.setMaxWidth(MAX_WIDTH);
 
         instructionsBox.getChildren().addAll(matchesTitle, matchesBody);
 
         final Text powerupsTitle = new Text("Unleash Power-Ups");
         powerupsTitle.setStyle(STYLE);
-        final Label powerusBody = new Label("Power-Ups can pave your way to victory by clearing specific cells. To use one, click the Power-Up button and then select your target cell on the grid. Use them wisely, as each Power-Up can only be activated once per game!");
+        final Label powerusBody = new Label("""
+                Power-Ups can pave your way to victory by clearing \
+                specific cells. To use one, click the Power-Up button and then select your \
+                target cell on the grid. Use them wisely, as each Power-Up can only be \
+                activated once per game!
+
+                Here are the available Power-Ups:
+                - Hammer: Clears 1 cell.
+                - Rocket: Clears 1 line.
+                - Magic Bomb: Clears every cell with the same type as the selected one.""");
         powerusBody.setWrapText(true);
-        powerusBody.setMaxWidth(550);
+        powerusBody.setMaxWidth(MAX_WIDTH);
 
         instructionsBox.getChildren().addAll(powerupsTitle, powerusBody);
 
         final Text shuffleTitle = new Text("Stalemate Shuffle");
         shuffleTitle.setStyle(STYLE);
-        final Label shuffleBody = new Label("If the board reaches a state where no valid matches are possible, all the cells on the grid will be automatically shuffled to create new opportunities.");
+        final Label shuffleBody = new Label("If the board reaches a state where no valid matches are possible, "
+                + "all the cells on the grid will be automatically shuffled to create new opportunities.");
         shuffleBody.setWrapText(true);
-        shuffleBody.setMaxWidth(550);
+        shuffleBody.setMaxWidth(MAX_WIDTH);
 
         instructionsBox.getChildren().addAll(shuffleTitle, shuffleBody);
 
         final Text movesTitle = new Text("Watch Your Moves");
         movesTitle.setStyle(STYLE);
-        final Label movesBody = new Label("Keep a close eye on your remaining moves: if they hit zero before you reach your objectives, it's Game Over!");
+        final Label movesBody = new Label("Keep a close eye on your remaining moves: "
+                + "if they hit zero before you reach your objectives, it's Game Over!");
         movesBody.setWrapText(true);
-        movesBody.setMaxWidth(550);
+        movesBody.setMaxWidth(MAX_WIDTH);
 
         instructionsBox.getChildren().addAll(movesTitle, movesBody);
-
-        final Text starsTitle = new Text("Earn Your Stars");
-        starsTitle.setStyle(STYLE);
-        final Label starsBody = new Label("When you complete a level, you will be rewarded with stars. The fewer moves you use to win, the greater your star rating will be!");
-        starsBody.setWrapText(true);
-        starsBody.setMaxWidth(550);
-
-        instructionsBox.getChildren().addAll(starsTitle, starsBody);
 
         final ScrollPane scrollPane = new ScrollPane(instructionsBox);
         scrollPane.setFitToWidth(true);
@@ -113,7 +125,7 @@ public class InstructionsViewImpl implements InstructionsView {
                 public Optional<Integer> id() {
                     return Optional.empty();
                 }
-                
+
             };
             appController.notifyEvent(goToMenuEvent);
         });

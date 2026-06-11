@@ -4,8 +4,10 @@ import java.util.Set;
 
 import it.unibo.javacrush.common.Position;
 
-
-
+/**
+ * Represents the engine responsible for checking if two positions can be swapped on the board,
+ * and for finding the matches resulting from the swap.
+ */
 public interface MoveEngine {
 
     /**
@@ -16,7 +18,7 @@ public interface MoveEngine {
      * @param pos2 the second position to swap.
      * @return true if the positions can be swapped, false otherwise.
      */
-    boolean canSwap(Board board,Position pos1, Position pos2);
+    boolean canSwap(Board board, Position pos1, Position pos2);
 
     /**
      * Get the matches found during the last swap check.
