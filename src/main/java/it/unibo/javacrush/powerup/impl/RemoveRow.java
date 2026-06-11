@@ -22,8 +22,8 @@ public class RemoveRow extends AbstractPowerUp {
             final Set<Position> resultSet = new HashSet<>();
             Position current;
 
-            for (int y = 0; y < board.getRows(); y++) {
-                current = new Position(pos.x(), y);
+            for (int x = 0; x < board.getCols(); x++) {
+                current = new Position(x, pos.y());
                 resultSet.clear();
                 resultSet.add(current);
                 this.addMatches(new MatchImpl(resultSet, board.getCellAt(current).get().getType()));
