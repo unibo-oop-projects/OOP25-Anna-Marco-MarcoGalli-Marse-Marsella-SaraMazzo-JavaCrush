@@ -1,7 +1,5 @@
 package it.unibo.javacrush.model;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,12 +29,6 @@ class BoardTest {
      */
     @BeforeEach
     void init() {
-        final Map<Position, Optional<Cell>> testMap = new HashMap<>();
-        for (int y = 0; y < DIMENSION; y++) {
-            for (int x = 0; x < DIMENSION; x++) {
-                testMap.put(new Position(x, y), Optional.empty());
-            }
-        }
         board = new BoardImpl(DIMENSION, DIMENSION);
     }
 

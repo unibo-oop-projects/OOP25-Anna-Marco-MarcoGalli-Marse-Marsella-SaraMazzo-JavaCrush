@@ -38,7 +38,7 @@ public abstract class AbstractPowerUp {
      * @return a Set of Matches.
      */
     public Set<Match> getMatches() {
-        return this.matches;
+        return Set.copyOf(this.matches);
     }
 
     /**

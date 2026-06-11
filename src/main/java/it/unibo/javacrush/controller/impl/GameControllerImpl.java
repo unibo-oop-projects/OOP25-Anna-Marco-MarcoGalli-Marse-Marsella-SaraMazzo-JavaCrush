@@ -76,7 +76,7 @@ public class GameControllerImpl implements GameController {
                 this.session.updateGoals(match.getType(), match.getSize());
                 this.matchManager.removeMatch(this.board, match);
         });
-        this.matches.clear();
+        this.matches = Set.of();
 
         this.view.updateView();
     }

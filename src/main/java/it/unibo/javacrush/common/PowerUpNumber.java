@@ -10,22 +10,22 @@ import it.unibo.javacrush.powerup.impl.RemoveType;
  */
 public enum PowerUpNumber {
 
-    SINGLECELL(new RemoveCell()),
-    ROW(new RemoveRow()),
-    TYPE(new RemoveType());
-
-    private final AbstractPowerUp power;
-
-    PowerUpNumber(final AbstractPowerUp pow) {
-        this.power = pow;
-    }
+    SINGLECELL,
+    ROW,
+    TYPE;
 
     /**
-     * Get the PowerUp Object stored in the enum members.
+     * Creates and returns an AbstractPowerUp.
      * 
-     * @return the PowerUp Object of the selected powerup of the enum.
+     * @param i the index of the AbstractPowerUp to be created.
+     * @return an AbstractPowerUp.
      */
-    public AbstractPowerUp getPowerUp() {
-        return this.power;
+    public static AbstractPowerUp getPowerUp(final int i) {
+        return switch (i) {
+            case 0 -> new RemoveCell();
+            case 1 -> new RemoveRow();
+            case 2 -> new RemoveType();
+            default -> null;
+        };
     }
 }

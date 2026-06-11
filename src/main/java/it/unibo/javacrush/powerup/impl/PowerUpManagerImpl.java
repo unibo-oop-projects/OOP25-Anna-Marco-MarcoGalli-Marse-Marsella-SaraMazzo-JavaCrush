@@ -48,7 +48,7 @@ public class PowerUpManagerImpl implements PowerUpManager {
     public Boolean selectPowerUp(final int num) {
         if (this.permission.size() > num && num >= 0 && this.permission.get(num)) {
             this.selectedInt = num;
-            this.currentPow = PowerUpNumber.values()[this.selectedInt].getPowerUp();
+            this.currentPow = PowerUpNumber.getPowerUp(this.selectedInt);
         }
         return this.isPowerUpSelected();
     }
