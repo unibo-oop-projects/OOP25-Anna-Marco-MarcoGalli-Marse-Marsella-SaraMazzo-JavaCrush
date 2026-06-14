@@ -22,10 +22,12 @@ public final class LevelFactory {
     private static final int ROWS_EASY = 12;
     private static final int ROWS_MEDIUM = 10;
     private static final int ROWS_HARD = 8;
+    private static final int ROWS_VERY_HARD = 4;
 
     private static final int COLS_EASY = 12;
     private static final int COLS_MEDIUM = 10;
     private static final int COLS_HARD = 8;
+    private static final int COLS_VERY_HARD = 4;
 
     private static final int MOVES_EASY = 20;
     private static final int MOVES_MEDIUM = 15;
@@ -69,32 +71,32 @@ public final class LevelFactory {
     public static LevelConfig createLevel(final int levelNumber) {
         return switch (levelNumber) {
             case LEVEL_1 -> new LevelConfig(COLS_EASY, ROWS_EASY, MOVES_EASY,
-                Map.of(CellType.MILK, GOAL_EASY),
+                Map.of(CellType.getRandomType(), GOAL_EASY),
                 new DownwardGravity(),
                 new PowerUpManagerImpl());
 
             case LEVEL_2 -> new LevelConfig(COLS_EASY, ROWS_EASY, MOVES_MEDIUM,
-                Map.of(CellType.MOKA, GOAL_EASY),
+                Map.of(CellType.getRandomType(), GOAL_EASY),
                 new DownwardGravity(),
                 new PowerUpManagerImpl());
 
             case LEVEL_3 -> new LevelConfig(COLS_MEDIUM, ROWS_MEDIUM, MOVES_HARD,
-                Map.of(CellType.CUP, GOAL_MEDIUM),
+                Map.of(CellType.getRandomType(), GOAL_MEDIUM),
                 new DownwardGravity(),
                 new PowerUpManagerImpl());
 
-            case LEVEL_4 -> new LevelConfig(COLS_HARD, ROWS_HARD, MOVES_MEDIUM,
-                Map.of(CellType.SPOON, GOAL_HARD), 
+            case LEVEL_4 -> new LevelConfig(COLS_VERY_HARD, ROWS_VERY_HARD, MOVES_EASY,
+                Map.of(CellType.getRandomType(), GOAL_EASY), 
                 new DownwardGravity(),
                 new PowerUpManagerImpl());
 
             case LEVEL_5 -> new LevelConfig(COLS_HARD, ROWS_HARD, MOVES_HARD,
-                Map.of(CellType.SUGAR, GOAL_HARD),
+                Map.of(CellType.getRandomType(), GOAL_HARD),
                 new CrazyGravity(allGravities()),
                 new PowerUpManagerImpl());
 
             default -> new LevelConfig(COLS_EASY, ROWS_EASY, MOVES_EASY,
-                Map.of(CellType.COFFEE_BEAN, GOAL_EASY),
+                Map.of(CellType.getRandomType(), GOAL_EASY),
                 new DownwardGravity(),
                 new PowerUpManagerImpl());
         };
