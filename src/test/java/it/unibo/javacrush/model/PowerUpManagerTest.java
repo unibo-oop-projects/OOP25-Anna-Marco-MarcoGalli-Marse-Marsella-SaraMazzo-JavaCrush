@@ -90,6 +90,7 @@ class PowerUpManagerTest {
 
     @Test
     void testApplyRemoveRowPowerUp() {
+        final Set<Position> tmp = new HashSet<>();
 
         assertFalse(manager.isPowerUpSelected());
         assertFalse(manager.applyPowerUp(board, pos));
@@ -105,9 +106,18 @@ class PowerUpManagerTest {
         assertTrue(manager.selectPowerUp(PowerUpNumber.ROW.ordinal()));
         assertFalse(manager.applyPowerUp(board, pos));
 
-        for (int y = 0; y < board.getRows(); y++) {
-            this.matchSet.add(new MatchImpl(Set.of(new Position(pos.x(), y)),
-                                                    board.getCellAt(new Position(pos.x(), y)).get().getType()));
+        for (int x = 0; x < board.getRows(); x++) {
+            tmp.add(new Position(x, pos.y()));
+        }
+
+        for (final var tp : CellType.values()) {
+            final var s = tmp.stream()
+                                .filter(p -> board.getCellAt(p).get().getType() == tp)
+                                .toList();
+
+            if (!s.isEmpty()) {
+                this.matchSet.add(new MatchImpl(Set.copyOf(s), tp));
+            }
         }
 
         assertEquals(this.matchSet, this.manager.getMatches());
@@ -121,7 +131,8 @@ class PowerUpManagerTest {
     @Test
     void testApplyRemoveTypePowerUp() {
 
-        Position tmp;
+        Position current;
+        final Set<Position> tmp = new HashSet<>();
         this.board.setCell(new Position(DIM - 1, DIM - 1), Optional.of(new CellImpl(CellType.CUP)));
 
         assertFalse(manager.isPowerUpSelected());
@@ -141,13 +152,14 @@ class PowerUpManagerTest {
         for (int y = 0; y < board.getRows(); y++) {
             for (int x = 0; x < board.getCols(); x++) {
 
-                tmp = new Position(x, y);
-                if (board.getCellAt(pos).get().getType() == board.getCellAt(tmp).get().getType()) {
-                    this.matchSet.add(new MatchImpl(Set.of(tmp), board.getCellAt(tmp).get().getType()));
+                current = new Position(x, y);
+                if (board.getCellAt(pos).get().getType() == board.getCellAt(current).get().getType()) {
+                    tmp.add(current);
                 }
             }
         }
 
+        this.matchSet.add(new MatchImpl(tmp, board.getCellAt(pos).get().getType()));
         assertEquals(this.matchSet, this.manager.getMatches());
 
         assertTrue(manager.resetPowerUpSelection());
