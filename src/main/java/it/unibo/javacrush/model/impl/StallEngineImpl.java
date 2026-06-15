@@ -14,13 +14,17 @@ import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.StallEngine;
 import it.unibo.javacrush.model.api.MatchManager;
+import it.unibo.javacrush.model.api.RefillEngine;
 
 /**
  * Implementation of the {@link StallEngine} interface.
  */
 public class StallEngineImpl implements StallEngine {
 
+    private static final int MAX_ITERATIONS = 500;
+
     private final MatchManager manager = new MatchManagerImpl();
+    private final RefillEngine refill = new AdaptiveRefill(null);
     private final Random ran = new Random();
 
     /**
@@ -39,8 +43,11 @@ public class StallEngineImpl implements StallEngine {
 
         final List<Cell> tmp = new ArrayList<>();
         int index;
+        int count;
 
-        while (this.isStall(board) || !manager.findAllMatches(board).isEmpty()) {
+        count = 0;
+
+        while (this.isStall(board) || !manager.findAllMatches(board).isEmpty() && count < MAX_ITERATIONS) {
 
             tmp.clear();
             for (int y = 0; y < board.getRows(); y++) {
@@ -57,6 +64,12 @@ public class StallEngineImpl implements StallEngine {
                     index++;
                 }
             }
+
+            count++;
+        }
+
+        if (count >= MAX_ITERATIONS) {
+            this.resolveIrreversibleStall(board);
         }
 
     }
@@ -133,8 +146,7 @@ public class StallEngineImpl implements StallEngine {
 
                     if (manager.findMatchesAt(this.swapRight(board, pos), pos) != null
                         && manager.findMatchesAt(board, pos).getType() == currentMatch.getType()
-                        && manager.findMatchesAt(board, pos).equals(currentMatch)
-                        && !found) {
+                        && manager.findMatchesAt(board, pos).equals(currentMatch)) {
                         resultSet.add(new Position(pos.x() + 1, pos.y()));
                         found = true;
                     }
@@ -206,6 +218,16 @@ public class StallEngineImpl implements StallEngine {
             tmp.swapCells(p, new Position(p.x(), p.y() - 1));
         }
         return tmp;
+    }
+
+    private void resolveIrreversibleStall(final Board board) {
+        for (int j = 0; j < board.getRows(); j++) {
+            for (int i = 0; i < board.getCols(); i++) {
+                board.removeCell(new Position(i, j));
+            }
+        }
+
+        this.refill.refillAll(board);
     }
 
 }
