@@ -20,7 +20,6 @@ public final class Main {
 	 * @param args ignored.
 	 */
 	public static void main(final String[] args) {
-	    // App è la classe definita nella slide precedente
 	    Application.launch(JavaCrushApp.class, args);
 	}
 }
