@@ -19,17 +19,4 @@ public interface LevelManager {
      */
     GameMatchContext startMatch(int level);
 
-    /**
-     * Updates the number of stars for a specific level.
-     * @param level the level number
-     * @param stars the number of stars to set for the level
-     */
-    void updateStars(int level, int stars);
-
-    /**
-     * Gets the number of stars for a specific level.
-     * @param level the level number
-     * @return the number of stars for the specified level
-     */
-    int getStarsForLevel(int level);
 }

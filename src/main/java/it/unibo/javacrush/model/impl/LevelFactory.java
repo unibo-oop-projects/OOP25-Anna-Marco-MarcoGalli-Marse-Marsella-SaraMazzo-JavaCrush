@@ -47,6 +47,12 @@ public final class LevelFactory {
         // Prevent instantiation
     }
 
+    /**
+     * Creates a GameMatchContext based on the provided level number.
+     * 
+     * @param levelNumber the number of the level
+     * @return a GameMatchContext object for the specified level
+     */
     public static GameMatchContext createGameMatchContext(final int levelNumber) {
         final var levelConfig = createLevel(levelNumber);
         final var board = new BoardImpl(levelConfig.rows(), levelConfig.cols());
@@ -54,7 +60,7 @@ public final class LevelFactory {
         final var moveEngine = new MoveEngineImpl();
         final var matchManager = new MatchManagerImpl();
         final var stallEngine = new StallEngineImpl();
-        
+
         final var session = new SessionImpl(levelConfig.moves(), levelConfig.goals(), new GoalFactoryImpl());
 
         physicsHandler.initializeBoard(board);
@@ -96,7 +102,7 @@ public final class LevelFactory {
                 new PowerUpManagerImpl());
 
             default -> new LevelConfig(COLS_EASY, ROWS_EASY, MOVES_EASY,
-                Map.of(CellType.getRandomType(), GOAL_EASY),
+                Map.of(CellType.getRandomType(), GOAL_MEDIUM),
                 new DownwardGravity(),
                 new PowerUpManagerImpl());
         };

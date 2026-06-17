@@ -4,12 +4,21 @@ import it.unibo.javacrush.common.Direction;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 
+/**
+ * A gravity engine that applies gravity leftward.
+ */
 public class LeftwardGravity extends AbstractGravity {
 
+    /**
+     * Constructs a LeftwardGravity instance.
+     */
     public LeftwardGravity() {
         super(Direction.LEFT);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Boolean applyGravity(final Board board) {
         boolean moved = false;
