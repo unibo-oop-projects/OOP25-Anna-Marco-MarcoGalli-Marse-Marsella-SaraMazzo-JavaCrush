@@ -27,8 +27,7 @@ public class LevelsViewImpl implements LevelsView {
     private static final int LEVEL_5 = 5;
     private static final int SPACING = 30;
     private static final int PADDING = 20;
-    private static final int BT_WIDTH = 200;
-    private static final int BT_HEIGHT = 40;
+    private static final int WIDTH = 200;
     private final BorderPane root;
 
     /**
@@ -38,7 +37,7 @@ public class LevelsViewImpl implements LevelsView {
      * @param levelManager the level manager to handle level logic
      */
     public LevelsViewImpl(final AppController appController, final LevelManager levelManager) {
-
+        // 1. Creiamo il contenitore principale (VBox con spazio di 30px tra elementi)
         final VBox levels = new VBox(SPACING);
         levels.setAlignment(Pos.CENTER); // Centra tutto!
 
@@ -46,35 +45,22 @@ public class LevelsViewImpl implements LevelsView {
         back.setAlignment(Pos.CENTER_LEFT);
 
         final Button easy = new Button("Easy");
-        easy.setPrefWidth(BT_WIDTH);
-        easy.setPrefHeight(BT_HEIGHT);
+        easy.setPrefWidth(WIDTH);
         final Button medium = new Button("Medium");
-        medium.setPrefWidth(BT_WIDTH);
-        medium.setPrefHeight(BT_HEIGHT);
+        medium.setPrefWidth(WIDTH);
         final Button hard = new Button("Hard");
-        hard.setPrefWidth(BT_WIDTH);
-        hard.setPrefHeight(BT_HEIGHT);
+        hard.setPrefWidth(WIDTH);
         final Button expert = new Button("Expert");
-        expert.setPrefWidth(BT_WIDTH);
-        expert.setPrefHeight(BT_HEIGHT);
+        expert.setPrefWidth(WIDTH);
         final Button crazyGravity = new Button("Crazy Gravity");
-        crazyGravity.setPrefWidth(BT_WIDTH);
-        crazyGravity.setPrefHeight(BT_HEIGHT);
+        crazyGravity.setPrefWidth(WIDTH);
         levels.getChildren().addAll(easy, medium, hard, expert, crazyGravity);
 
-        final Button menu = new Button("Menu");
-        menu.setPrefWidth(BT_WIDTH / 2);
-        menu.setPrefHeight(BT_HEIGHT);
+        final Button menu = new Button("Menù");
+        menu.setPrefWidth(WIDTH / 2);
         back.getChildren().add(menu);
 
         this.root = new BorderPane();
-
-        final String path = getClass().getResource("/gameBackground.png").toExternalForm();
-        this.root.setStyle("-fx-background-image: url('" + path + "'); "
-                 + "-fx-background-size: cover; "
-                 + "-fx-background-position: center; "
-                 + "-fx-background-repeat: no-repeat;");
-                 
         this.root.setPadding(new Insets(PADDING));
         this.root.setCenter(levels);
         this.root.setBottom(back);

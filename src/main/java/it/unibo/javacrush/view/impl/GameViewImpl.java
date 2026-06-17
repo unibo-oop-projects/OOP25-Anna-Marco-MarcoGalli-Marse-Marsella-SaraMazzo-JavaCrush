@@ -49,8 +49,6 @@ public class GameViewImpl implements GameView {
     private static final int PADDING_SIZE = 20;
     private static final int GOAL_IMG_SIZE = 25;
     private static final int QUIT_BUTTON_WIDTH = 80;
-    private static final int PU_WIDTH = 200;
-    private static final int PU_HEIGHT = 40;
 
     private final Map<CellType, Image> cellTypeImages = new EnumMap<>(CellType.class);
     private final Map<Button, Position> gridMap = new HashMap<>();
@@ -76,18 +74,8 @@ public class GameViewImpl implements GameView {
         this.root = new BorderPane();
         this.root.setPadding(new Insets(PADDING_SIZE));
 
-        final String bgpath = getClass().getResource("/gameBackground.png").toExternalForm();
-        this.root.setStyle("-fx-background-image: url('" + bgpath + "'); "
-                 + "-fx-background-size: cover; "
-                 + "-fx-background-position: center; "
-                 + "-fx-background-repeat: no-repeat;");
-
         this.grid = new GridPane();
-        this.grid.setAlignment(Pos.CENTER);
-        this.grid.setMaxSize(GridPane.USE_PREF_SIZE, GridPane.USE_PREF_SIZE);
-        this.grid.setStyle("-fx-background-color: white; " 
-            + "-fx-background-radius: 10; " 
-            + "-fx-padding: 5;");
+        this.grid.setAlignment(Pos.BOTTOM_CENTER);
 
         this.root.setCenter(this.grid);
 
@@ -316,7 +304,6 @@ public class GameViewImpl implements GameView {
         }
 
         final Button powerUp1 = new Button("Hammer");
-        powerUp1.setPrefSize(PU_WIDTH, PU_HEIGHT);
         powerUp1.setOnAction(e -> {
             final boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.SINGLECELL.ordinal());
 
@@ -338,7 +325,6 @@ public class GameViewImpl implements GameView {
         });
 
         final Button powerUp2 = new Button("Rocket");
-        powerUp2.setPrefSize(PU_WIDTH, PU_HEIGHT);
         powerUp2.setOnAction(e -> {
             final boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.ROW.ordinal());
 
@@ -359,7 +345,6 @@ public class GameViewImpl implements GameView {
             }
         });
         final Button powerUp3 = new Button("Magic Bomb");
-        powerUp3.setPrefSize(PU_WIDTH, PU_HEIGHT);
         powerUp3.setOnAction(e -> {
             final boolean isAvailable = this.controller.selectPowerUp(PowerUpNumber.TYPE.ordinal());
 
@@ -379,13 +364,15 @@ public class GameViewImpl implements GameView {
                 }
             }
         });
+        powerUp1.setPrefWidth(100);
+        powerUp2.setPrefWidth(100);
+        powerUp3.setPrefWidth(100);
 
         this.powerUpBox.getChildren().addAll(powerUp1, powerUp2, powerUp3);
         this.root.setRight(this.powerUpBox);
 
         final Button quit = new Button("Quit");
         quit.setPrefWidth(QUIT_BUTTON_WIDTH);
-        quit.setPrefHeight(PU_HEIGHT);
         quit.setOnAction(e -> this.controller.quitLevel());
 
         this.quitBox.getChildren().add(quit);

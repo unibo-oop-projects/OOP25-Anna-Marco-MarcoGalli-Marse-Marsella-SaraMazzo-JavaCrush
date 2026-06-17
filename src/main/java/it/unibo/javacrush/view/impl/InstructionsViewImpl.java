@@ -24,10 +24,6 @@ public final class InstructionsViewImpl implements InstructionsView {
     private static final String STYLE = "-fx-font-size: 16px; -fx-font-weight: bold;";
     private static final int PADDING_SIZE = 20;
     private static final int MAX_WIDTH = 550;
-    private static final int BT_WIDTH = 100;
-    private static final int BT_HEIGHT = 40;
-    private static final int SCROLL_WD = 800;
-    private static final int SCROLL_HT = 400;
 
     private final BorderPane root;
 
@@ -37,12 +33,6 @@ public final class InstructionsViewImpl implements InstructionsView {
     public InstructionsViewImpl(final AppController appController) {
         this.root = new BorderPane();
         this.root.setPadding(new Insets(PADDING_SIZE));
-
-        final String path = getClass().getResource("/gameBackground.png").toExternalForm();
-        this.root.setStyle("-fx-background-image: url('" + path + "'); "
-                 + "-fx-background-size: cover; "
-                 + "-fx-background-position: center; "
-                 + "-fx-background-repeat: no-repeat;");
 
         final VBox instructionsBox = new VBox();
         instructionsBox.setAlignment(Pos.CENTER);
@@ -61,7 +51,7 @@ public final class InstructionsViewImpl implements InstructionsView {
 
         instructionsBox.getChildren().addAll(challengeTitle, challengeBody);
 
-        final Text goalsTitle = new Text("\nThe Goals");
+        final Text goalsTitle = new Text("The Goals");
         goalsTitle.setStyle(STYLE);
         final Label goalsBody = new Label("Your main objective is to complete the goals "
                 + "displayed above the grid (collecting a specific number of elements of a certain type) "
@@ -71,7 +61,7 @@ public final class InstructionsViewImpl implements InstructionsView {
 
         instructionsBox.getChildren().addAll(goalsTitle, goalsBody);
 
-        final Text matchesTitle = new Text("\nMake a Match");
+        final Text matchesTitle = new Text("Make a Match");
         matchesTitle.setStyle(STYLE);
         final Label matchesBody = new Label("Swap two adjacent cells to create matches of three or more identical elements."
                 + " Each element from a valid match is collected and counts towards your objectives.");
@@ -80,7 +70,7 @@ public final class InstructionsViewImpl implements InstructionsView {
 
         instructionsBox.getChildren().addAll(matchesTitle, matchesBody);
 
-        final Text powerupsTitle = new Text("\nUnleash Power-Ups");
+        final Text powerupsTitle = new Text("Unleash Power-Ups");
         powerupsTitle.setStyle(STYLE);
         final Label powerusBody = new Label("""
                 Power-Ups can pave your way to victory by clearing \
@@ -97,7 +87,7 @@ public final class InstructionsViewImpl implements InstructionsView {
 
         instructionsBox.getChildren().addAll(powerupsTitle, powerusBody);
 
-        final Text shuffleTitle = new Text("\nStalemate Shuffle");
+        final Text shuffleTitle = new Text("Stalemate Shuffle");
         shuffleTitle.setStyle(STYLE);
         final Label shuffleBody = new Label("If the board reaches a state where no valid matches are possible, "
                 + "all the cells on the grid will be automatically shuffled to create new opportunities.");
@@ -106,7 +96,7 @@ public final class InstructionsViewImpl implements InstructionsView {
 
         instructionsBox.getChildren().addAll(shuffleTitle, shuffleBody);
 
-        final Text movesTitle = new Text("\nWatch Your Moves");
+        final Text movesTitle = new Text("Watch Your Moves");
         movesTitle.setStyle(STYLE);
         final Label movesBody = new Label("Keep a close eye on your remaining moves: "
                 + "if they hit zero before you reach your objectives, it's Game Over!");
@@ -117,13 +107,11 @@ public final class InstructionsViewImpl implements InstructionsView {
 
         final ScrollPane scrollPane = new ScrollPane(instructionsBox);
         scrollPane.setFitToWidth(true);
-        scrollPane.setMaxSize(SCROLL_WD, SCROLL_HT);
 
         this.root.setCenter(scrollPane);
 
-        final Button menu = new Button("Menu");
-        menu.setPrefWidth(BT_WIDTH);
-        menu.setPrefHeight(BT_HEIGHT);
+        final Button menu = new Button("Menù");
+        menu.setPrefWidth(100);
 
         menu.setOnAction(e -> {
             final Event goToMenuEvent = new Event() {

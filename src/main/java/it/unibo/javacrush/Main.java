@@ -7,19 +7,16 @@ import javafx.application.Application;
  */
 public final class Main {
 
-	/**
-     * This private constructor prevents istantiation.
-	 */
     private Main() {
 
     }
 
-	/**
-	 * Main method.
-	 * 
-	 * @param args ignored.
-	 */
-	public static void main(final String[] args) {
-	    Application.launch(JavaCrushApp.class, args);
-	}
+    /**
+     * Main method.
+     * 
+     * @param args ignored.
+     */
+    public static void main(final String[] args) {
+        Application.launch(JavaCrushApp.class, args);
+    }
 }
