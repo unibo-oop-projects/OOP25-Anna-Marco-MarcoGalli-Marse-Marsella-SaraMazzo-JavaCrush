@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 public class JavaCrushApp extends Application implements SceneManager {
 
     private static final int WIDTH = 1000;
-    private static final int HEIGHT = 600;
+    private static final int HEIGHT = 620;
     private AppController appController;
     private final LevelManager levelManager = new LevelManagerImpl();
     private MenuView menuView;
