@@ -37,7 +37,6 @@ public class MenuViewImpl implements MenuView {
                  + "-fx-background-position: center; "
                  + "-fx-background-repeat: no-repeat;");
 
-
         final Button playButton = new Button("Play");
         playButton.setPrefSize(BT_WIDTH, BT_HEIGHT);
         final Button guideButton = new Button("How to play");

@@ -74,7 +74,7 @@ public class LevelsViewImpl implements LevelsView {
                  + "-fx-background-size: cover; "
                  + "-fx-background-position: center; "
                  + "-fx-background-repeat: no-repeat;");
-                 
+
         this.root.setPadding(new Insets(PADDING));
         this.root.setCenter(levels);
         this.root.setBottom(back);

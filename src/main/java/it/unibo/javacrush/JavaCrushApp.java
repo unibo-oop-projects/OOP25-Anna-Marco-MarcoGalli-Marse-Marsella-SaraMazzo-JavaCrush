@@ -55,7 +55,7 @@ public class JavaCrushApp extends Application implements SceneManager {
         stage.setScene(this.scene);
         stage.show();
 
-	}
+    }
 
     /**
      * {@inheritDoc}
