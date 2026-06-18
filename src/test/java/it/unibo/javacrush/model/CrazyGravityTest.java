@@ -1,6 +1,9 @@
 package it.unibo.javacrush.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,16 +17,20 @@ import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.impl.BoardImpl;
 import it.unibo.javacrush.model.impl.CellImpl;
-import it.unibo.javacrush.model.impl.gravity.*;
-
+import it.unibo.javacrush.model.impl.gravity.CrazyGravity;
+import it.unibo.javacrush.model.impl.gravity.DownwardGravity;
+import it.unibo.javacrush.model.impl.gravity.UpwardGravity;
 
 class CrazyGravityTest {
+
+    private static final int TEST_ITERATIONS = 50;
 
     @Test
     void testEmpryListThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> new CrazyGravity(List.of()),
             "CrazyGravity should throw an exception if initialized with an empty strategy list");
     }
+
     @Test
     void testGravityChangesWhenStable() {
 
@@ -33,17 +40,17 @@ class CrazyGravityTest {
 
         final Direction firstDir = crazyGravity.getDirection();
         assertNotNull(firstDir, "CrazyGravity should return a non-null direction");
-        
+
         crazyGravity.applyGravity(board);
 
         boolean changed = false;
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < TEST_ITERATIONS; i++) {
             crazyGravity.applyGravity(board);
                 if (crazyGravity.getDirection() != firstDir) {
                     changed = true;
                     break;
 
-                }  
+                }
         }
         assertTrue(changed, "CrazyGravity should change direction when board is stable");
     }
@@ -60,9 +67,9 @@ class CrazyGravityTest {
         board.setCell(new Position(0, startY), Optional.of(new CellImpl(CellType.MOKA)));
 
         final boolean moved = crazyGravity.applyGravity(board);
-        
+
         assertTrue(moved, "Il pezzo avrebbe dovuto muoversi");
         assertEquals(initialDir, crazyGravity.getDirection(), 
-            "La gravità NON deve cambiare se c'è stato movimento (moved = true)");    
+            "La gravità NON deve cambiare se c'è stato movimento (moved = true)");
     }
 }

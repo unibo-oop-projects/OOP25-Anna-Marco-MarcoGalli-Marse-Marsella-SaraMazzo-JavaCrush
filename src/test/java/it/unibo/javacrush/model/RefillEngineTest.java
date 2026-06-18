@@ -11,13 +11,17 @@ import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.GravityEngine;
 import it.unibo.javacrush.model.api.RefillEngine;
 import it.unibo.javacrush.model.impl.BoardImpl;
-import it.unibo.javacrush.model.impl.gravity.*;
+import it.unibo.javacrush.model.impl.gravity.DownwardGravity;
+import it.unibo.javacrush.model.impl.gravity.LeftwardGravity;
+import it.unibo.javacrush.model.impl.gravity.RightwardGravity;
+import it.unibo.javacrush.model.impl.gravity.UpwardGravity;
 import it.unibo.javacrush.model.impl.AdaptiveRefill;
 
 class RefillEngineTest {
-    private Board board;
+
     private static final int ROWS = 3;
     private static final int COLS = 3;
+    private Board board;
 
     @BeforeEach
     void setUp() {
@@ -86,7 +90,7 @@ class RefillEngineTest {
     @Test
     void testRefillNoChange() {
         final RefillEngine refillEngine = new AdaptiveRefill(new DownwardGravity());
-        
+
         refillEngine.refill(board);
         final boolean changed = refillEngine.refill(board);
         assertFalse(changed, "The refill method should return false if the board was already full");
@@ -96,7 +100,7 @@ class RefillEngineTest {
     void testRefillAll() {
         final RefillEngine refillEngine = new AdaptiveRefill(new DownwardGravity());
         refillEngine.refillAll(board);
-        
+
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 assertTrue(board.getCellAt(new Position(col, row)).isPresent(), 

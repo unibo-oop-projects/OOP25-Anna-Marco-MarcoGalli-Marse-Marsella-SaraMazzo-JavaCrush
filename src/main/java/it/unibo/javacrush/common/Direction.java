@@ -20,10 +20,20 @@ public enum Direction {
         this.dy = dy;
     }
 
+    /**
+     * Gets the x-component of the direction vector.
+     *
+     * @return the x-component of the direction vector
+     */
     public int getDx() {
         return dx;
     }
 
+    /**
+     * Gets the y-component of the direction vector.
+     *
+     * @return the y-component of the direction vector
+     */
     public int getDy() {
         return dy;
     }
@@ -31,7 +41,8 @@ public enum Direction {
     /**
      * Calculates the fixed coordinate (row or column) of the edge where 
      * new pieces must enter.
-     * * @param rows the total number of rows in the board
+     * 
+     * @param rows the total number of rows in the board
      * @param cols the total number of columns in the board
      * @return the index (0 or max-1) of the entry row/column
      */

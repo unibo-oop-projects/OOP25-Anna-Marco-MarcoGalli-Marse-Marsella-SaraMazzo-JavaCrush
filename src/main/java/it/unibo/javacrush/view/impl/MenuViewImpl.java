@@ -9,7 +9,6 @@ import it.unibo.javacrush.view.api.MenuView;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
@@ -18,7 +17,8 @@ import javafx.scene.layout.VBox;
 public class MenuViewImpl implements MenuView {
 
     private static final int SPACING = 30;
-    private static final int WIDTH = 200;
+    private static final int BT_WIDTH = 200;
+    private static final int BT_HEIGHT = 40;
     private final VBox root;
 
     /**
@@ -28,19 +28,22 @@ public class MenuViewImpl implements MenuView {
      */
     public MenuViewImpl(final AppController controller) {
 
+        final String path = getClass().getResource("/menuBackground.png").toExternalForm();
+
         this.root = new VBox(SPACING);
         this.root.setAlignment(Pos.CENTER);
+        this.root.setStyle("-fx-background-image: url('" + path + "'); "
+                 + "-fx-background-size: cover; "
+                 + "-fx-background-position: center; "
+                 + "-fx-background-repeat: no-repeat;");
 
-        final Label title = new Label("JAVACRUSH");
-        title.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #2800ef;");
 
         final Button playButton = new Button("Play");
+        playButton.setPrefSize(BT_WIDTH, BT_HEIGHT);
         final Button guideButton = new Button("How to play");
+        guideButton.setPrefSize(BT_WIDTH, BT_HEIGHT);
 
-        playButton.setPrefWidth(WIDTH);
-        guideButton.setPrefWidth(WIDTH);
-
-        this.root.getChildren().addAll(title, playButton, guideButton);
+        this.root.getChildren().addAll(playButton, guideButton);
 
         playButton.setOnAction(e -> {
 

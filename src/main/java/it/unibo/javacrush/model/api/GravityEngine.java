@@ -18,6 +18,7 @@ public interface GravityEngine {
 
     /**
      * Get the current gravity direction.
+     * 
      * @return the current gravity direction
      */
     Direction getDirection();

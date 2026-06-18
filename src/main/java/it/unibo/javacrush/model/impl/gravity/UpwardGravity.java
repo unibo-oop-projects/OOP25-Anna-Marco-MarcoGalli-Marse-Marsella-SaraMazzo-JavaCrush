@@ -4,12 +4,21 @@ import it.unibo.javacrush.common.Direction;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 
+/**
+ * A gravity engine that applies gravity upward.
+ */
 public class UpwardGravity extends AbstractGravity {
 
+    /**
+     * Constructs a UpwardGravity instance.
+     */
     public UpwardGravity() {
         super(Direction.UP);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Boolean applyGravity(final Board board) {
         boolean moved = false;

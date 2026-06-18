@@ -9,14 +9,25 @@ import it.unibo.javacrush.model.api.RefillEngine;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+/**
+ * Implementation of the {@link RefillEngine} interface that adapts to the gravity direction.
+ */
 public class AdaptiveRefill implements RefillEngine {
 
         private final GravityEngine gravity;
 
+        /**
+         * Constructs a new {@link AdaptiveRefill} instance with the specified gravity engine.
+         *
+         * @param gravity the gravity engine
+         */
         public AdaptiveRefill(final GravityEngine gravity) {
             this.gravity = gravity;
         }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Boolean refill(final Board board) {
         final Direction dir = gravity.getDirection();
@@ -34,11 +45,10 @@ public class AdaptiveRefill implements RefillEngine {
 
         return addedCount > 0;
     } 
-    
-    private Position createEntryPoint(final int index, final int fixed, final Direction dir) {
-        return dir.isVertical() ? new Position(index, fixed) : new Position(fixed, index);
-    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void refillAll(final Board board) {
         for (int r = 0; r < board.getRows(); r++) {
@@ -49,6 +59,10 @@ public class AdaptiveRefill implements RefillEngine {
                 }
             }
         }
+    }
+
+    private Position createEntryPoint(final int index, final int fixed, final Direction dir) {
+        return dir.isVertical() ? new Position(index, fixed) : new Position(fixed, index);
     }
 
 }

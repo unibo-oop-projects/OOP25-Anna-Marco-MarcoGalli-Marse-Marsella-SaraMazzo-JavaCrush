@@ -4,12 +4,21 @@ import it.unibo.javacrush.common.Direction;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 
+/**
+ * A gravity engine that applies gravity rightward.
+ */
 public class RightwardGravity extends AbstractGravity {
 
+    /**
+     * Constructs a RightwardGravity instance.
+     */
     public RightwardGravity() {
         super(Direction.RIGHT);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Boolean applyGravity(final Board board) {
         boolean moved = false;
