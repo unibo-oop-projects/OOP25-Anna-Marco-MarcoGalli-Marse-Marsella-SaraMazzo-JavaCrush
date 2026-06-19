@@ -9,9 +9,15 @@ import it.unibo.javacrush.model.api.PhysicsHandler;
 import it.unibo.javacrush.model.api.Session;
 import it.unibo.javacrush.model.api.StallEngine;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Implementation of the {@link GameMatchContext} interface.
  */
+@SuppressFBWarnings(
+    value = "EI_EXPOSE_REP", 
+    justification = "Shared state is intentional for MVC"
+)
 public class GameMatchContextImpl implements GameMatchContext {
 
     private final Board board;

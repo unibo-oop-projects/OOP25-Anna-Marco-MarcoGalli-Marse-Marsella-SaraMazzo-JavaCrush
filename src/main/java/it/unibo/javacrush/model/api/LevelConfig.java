@@ -5,6 +5,8 @@ import java.util.Map;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.powerup.api.PowerUpManager;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Represents the configuration for a game level.
  * 
@@ -15,6 +17,10 @@ import it.unibo.javacrush.powerup.api.PowerUpManager;
  * @param gravity the gravity engine to be used in the level
  * @param powerUpManager the manager for power-ups in the level
  */
+@SuppressFBWarnings(
+    value = "EI_EXPOSE_REP", 
+    justification = "Shared state is intentional for MVC"
+)
 public record LevelConfig(
     int rows,
     int cols,

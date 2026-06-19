@@ -103,7 +103,7 @@ public class JavaCrushApp extends Application implements SceneManager {
      * {@inheritDoc}
      */
     @SuppressFBWarnings(
-        value ="EI_EXPOSE_REP", 
+        value = "EI_EXPOSE_REP", 
         justification = "The view component must be exposed to allow the controller to manage the UI."
     )
     @Override
