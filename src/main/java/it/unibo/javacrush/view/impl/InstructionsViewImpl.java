@@ -2,6 +2,7 @@ package it.unibo.javacrush.view.impl;
 
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.Event;
@@ -33,12 +34,14 @@ public final class InstructionsViewImpl implements InstructionsView {
 
     /**
      * Constructor of the class.
+     * 
+     * @param appController the controller to notify when buttons are pressed
      */
     public InstructionsViewImpl(final AppController appController) {
         this.root = new BorderPane();
         this.root.setPadding(new Insets(PADDING_SIZE));
 
-        final String path = getClass().getResource("/gameBackground.png").toExternalForm();
+        final String path = InstructionsViewImpl.class.getResource("/gameBackground.png").toExternalForm();
         this.root.setStyle("-fx-background-image: url('" + path + "'); "
                  + "-fx-background-size: cover; "
                  + "-fx-background-position: center; "
@@ -146,6 +149,14 @@ public final class InstructionsViewImpl implements InstructionsView {
         BorderPane.setAlignment(menu, Pos.BOTTOM_LEFT);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP", 
+        justification = "JavaFX requires returning the actual Node instance to attach it to the Scene graph."
+        + " Defensive copying is not applicable for UI components."
+    )
     @Override
     public Parent getView() {
         return this.root;

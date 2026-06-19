@@ -73,7 +73,7 @@ tasks.withType<Test>().configureEach {
     }
 }
 
-val main = "Main"
+val main = "it.unibo.javacrush.Main"
 
 application {
     // Define the main class for the application

@@ -2,6 +2,7 @@ package it.unibo.javacrush.view.impl;
 
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.Event;
@@ -69,7 +70,7 @@ public class LevelsViewImpl implements LevelsView {
 
         this.root = new BorderPane();
 
-        final String path = getClass().getResource("/gameBackground.png").toExternalForm();
+        final String path = LevelsViewImpl.class.getResource("/gameBackground.png").toExternalForm();
         this.root.setStyle("-fx-background-image: url('" + path + "'); "
                  + "-fx-background-size: cover; "
                  + "-fx-background-position: center; "
@@ -107,6 +108,11 @@ public class LevelsViewImpl implements LevelsView {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP", 
+        justification = "JavaFX requires returning the actual Node instance to attach it to the Scene graph."
+        + " Defensive copying is not applicable for UI components."
+    )
     @Override
     public Parent getView() {
         return this.root;

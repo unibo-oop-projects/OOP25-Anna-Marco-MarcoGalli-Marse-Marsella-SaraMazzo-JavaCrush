@@ -1,5 +1,6 @@
 package it.unibo.javacrush;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.GameController;
 import it.unibo.javacrush.controller.impl.AppControllerImpl;
@@ -101,6 +102,10 @@ public class JavaCrushApp extends Application implements SceneManager {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value ="EI_EXPOSE_REP", 
+        justification = "The view component must be exposed to allow the controller to manage the UI."
+    )
     @Override
     public GameView getGameView() {
         return this.gameView;
