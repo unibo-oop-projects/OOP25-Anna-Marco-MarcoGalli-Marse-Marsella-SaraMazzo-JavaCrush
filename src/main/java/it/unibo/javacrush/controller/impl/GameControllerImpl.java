@@ -1,8 +1,10 @@
 package it.unibo.javacrush.controller.impl;
 
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
 import it.unibo.javacrush.common.Position;
@@ -43,6 +45,10 @@ public class GameControllerImpl implements GameController {
      *      information for the controller
      * @param view the view for the game
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2", 
+        justification = "The controller strictly needs the view reference to make updates"
+    )
     public GameControllerImpl(final GameMatchContext gameContext, final GameView view) {
         this.view = view;
         this.board = gameContext.getBoard();
@@ -165,7 +171,7 @@ public class GameControllerImpl implements GameController {
      */
     @Override
     public Map<CellType, Integer> getGoalsProgress() {
-        final Map<CellType, Integer> progress = new java.util.HashMap<>();
+        final var progress = new EnumMap<CellType, Integer>(CellType.class);
 
         for (final var goal : this.session.getGoals()) {
             progress.put(goal.getTargetType(), goal.getCurrentAmount());
@@ -215,8 +221,10 @@ public class GameControllerImpl implements GameController {
     }
 
     /**
-     * Handle the hit in the normal way, it will select the cell and then deselect 
-     * it if it's already selected.
+     * Handle the hit in the normal gameplay conditions. If it is the first cell clicked, 
+     * it saves its position. If it is the second, it attempts to swap it with the 
+     * previously selected cell, decreasing the remaining moves and searching for 
+     * matches if the swap is successful.
      *
      * @param pos the position of the cell clicked
      * @return true if the cells are swapped, false otherwise

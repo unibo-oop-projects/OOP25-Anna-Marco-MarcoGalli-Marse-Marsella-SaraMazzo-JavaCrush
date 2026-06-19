@@ -16,7 +16,7 @@ import it.unibo.javacrush.model.api.GoalFactory;
 import it.unibo.javacrush.model.impl.GoalFactoryImpl;
 
 /**
- * Test for {@link it.unibo.javacrush.model.api.Goal}.
+ * Test for {@link Goal}.
  */
 class GoalTest {
 

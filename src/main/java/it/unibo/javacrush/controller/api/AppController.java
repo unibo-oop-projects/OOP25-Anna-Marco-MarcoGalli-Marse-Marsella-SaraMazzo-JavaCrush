@@ -16,9 +16,10 @@ public interface AppController {
     void notifyEvent(Event event);
 
     /**
-     * Get the current GameController, if present.
+     * Gets the current GameController, if present.
      * 
-     * @return an Optional containing the current GameController, or an empty Optional if there is no active game
+     * @return an Optional containing the current GameController, or an 
+     *      empty Optional if there is no active game
      */
     Optional<GameController> getCurrentGameController();
 

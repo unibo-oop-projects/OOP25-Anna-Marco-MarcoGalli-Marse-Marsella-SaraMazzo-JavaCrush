@@ -21,7 +21,7 @@ import it.unibo.javacrush.model.impl.GoalFactoryImpl;
 import it.unibo.javacrush.model.impl.SessionImpl;
 
 /**
- * Test for {@link it.unibo.javacrush.model.api.Session}.
+ * Test for {@link Session}.
  */
 class SessionTest {
 

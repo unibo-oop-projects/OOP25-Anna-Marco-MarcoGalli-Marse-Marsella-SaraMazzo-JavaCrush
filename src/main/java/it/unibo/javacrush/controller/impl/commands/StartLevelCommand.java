@@ -2,6 +2,7 @@ package it.unibo.javacrush.controller.impl.commands;
 
 import java.util.function.Consumer;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.javacrush.controller.api.Command;
 import it.unibo.javacrush.controller.api.GameController;
 import it.unibo.javacrush.controller.impl.GameControllerImpl;
@@ -30,6 +31,10 @@ public final class StartLevelCommand implements Command {
      *      used to set the current game controller in the AppController
      * @param gameView the game view used to display the game screen
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2", 
+        justification = "The controller strictly needs the view reference to make updates"
+    )
     public StartLevelCommand(
         final SceneManager sceneManager,
         final LevelManager levelManager,

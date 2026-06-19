@@ -29,7 +29,7 @@ import it.unibo.javacrush.powerup.api.PowerUpManager;
 import it.unibo.javacrush.view.api.SceneManager;
 
 /**
- * Test class for {@link it.unibo.javacrush.controller.impl.AppControllerImpl}.
+ * Test class for {@link AppControllerImpl}.
  */
 @ExtendWith(MockitoExtension.class)
 class AppControllerTest {
@@ -130,8 +130,8 @@ class AppControllerTest {
 
         appController.notifyEvent(startLevelEvent);
 
-        verify(sceneManager).showGame(appController.getCurrentGameController().get());
         assertTrue(appController.getCurrentGameController().isPresent());
+        verify(sceneManager).showGame(appController.getCurrentGameController().get());
     }
 
 }

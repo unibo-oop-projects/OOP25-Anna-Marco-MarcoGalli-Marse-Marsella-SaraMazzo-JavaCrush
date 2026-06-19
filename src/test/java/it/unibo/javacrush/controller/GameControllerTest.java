@@ -30,7 +30,7 @@ import it.unibo.javacrush.powerup.api.PowerUpManager;
 import it.unibo.javacrush.view.api.GameView;
 
 /**
- * Test class for {@link it.unibo.javacrush.controller.impl.GameControllerImpl}.
+ * Test class for {@link GameControllerImpl}.
  */
 @ExtendWith(MockitoExtension.class)
 class GameControllerTest {
