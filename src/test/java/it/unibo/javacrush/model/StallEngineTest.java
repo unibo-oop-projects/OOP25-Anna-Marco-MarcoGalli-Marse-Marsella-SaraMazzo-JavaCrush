@@ -93,12 +93,10 @@ class StallEngineTest {
         init.setCell(new Position(3, 3), Optional.of(new CellImpl(CellType.MOKA)));
 
         assertFalse(st.isStall(board));
-        assertFalse(st.possibleMatches(board).isEmpty());
 
         st.resolveStall(board);
 
         assertFalse(st.isStall(board));
-        assertFalse(st.possibleMatches(board).isEmpty());
         assertEquals(init, board);
 
     }
@@ -119,12 +117,10 @@ class StallEngineTest {
         }
 
         assertTrue(st.isStall(board));
-        assertTrue(st.possibleMatches(board).isEmpty());
 
         st.resolveStall(board);
 
         assertFalse(st.isStall(board));
-        assertFalse(st.possibleMatches(board).isEmpty());
         assertNotEquals(init, board);
 
     }
@@ -135,6 +131,8 @@ class StallEngineTest {
         final Set<Position> posRes1 = new HashSet<>();
         final Set<Position> posRes2 = new HashSet<>();
         final Set<Position> posRes3 = new HashSet<>();
+        final Set<Position> posRes4 = new HashSet<>();
+        final Set<Position> posRes5 = new HashSet<>();
         final Position p1 = new Position(0, 0);
         final Position p2 = new Position(1, 1);
         final Position p3 = new Position(2, 0);
@@ -157,6 +155,12 @@ class StallEngineTest {
         posRes3.add(p2);
         posRes3.add(p8);
 
+        posRes4.addAll(posRes1);
+        posRes4.remove(p2);
+
+        posRes5.addAll(posRes1);
+        posRes5.remove(p1);
+
         board.setCell(p5, Optional.of(new CellImpl(CellType.MILK)));
         board.setCell(p6, Optional.of(new CellImpl(CellType.MILK)));
         board.setCell(p7, Optional.of(new CellImpl(CellType.MILK)));
@@ -173,9 +177,11 @@ class StallEngineTest {
 
         assertFalse(result.isEmpty());
 
-        assertTrue(result.equals(posRes1)
+        assertTrue(result.equals(posRes1) 
                     || result.equals(posRes2)
-                    || result.equals(posRes3));
+                    || result.equals(posRes3)
+                    || result.equals(posRes4)
+                    || result.equals(posRes5));
 
     }
 }

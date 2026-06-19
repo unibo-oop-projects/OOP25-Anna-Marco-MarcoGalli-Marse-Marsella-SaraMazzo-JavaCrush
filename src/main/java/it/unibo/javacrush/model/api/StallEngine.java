@@ -1,6 +1,5 @@
 package it.unibo.javacrush.model.api;
 
-import java.util.List;
 import java.util.Set;
 
 import it.unibo.javacrush.common.Position;
@@ -26,14 +25,6 @@ public interface StallEngine {
      * @param board the board where to resolve the stall.
      */
     void resolveStall(Board board);
-
-    /**
-     * Finds all possible matches on the given board.
-     * 
-     * @param board the board where to find the possible matches.
-     * @return a Set with all the possible matches or an empty Set.
-     */
-    List<Match> possibleMatches(Board board);
 
     /**
      * Get a Set with all the positions of the cells of a random possible match.

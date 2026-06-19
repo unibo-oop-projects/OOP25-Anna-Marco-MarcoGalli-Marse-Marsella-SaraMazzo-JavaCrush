@@ -78,61 +78,6 @@ public class StallEngineImpl implements StallEngine {
      * {@inheritDoc}
      */
     @Override
-    public List<Match> possibleMatches(final Board board) {
-
-        final Board tmp = new BoardImpl(board.getRows(), board.getCols());
-        final List<Match> resultList = new ArrayList<>();
-
-        Position p;
-
-        for (int y = 0; y < board.getRows(); y++) {
-            for (int x = 0; x < board.getCols(); x++) {
-                p = new Position(x, y);
-                if (board.getCellAt(p).isEmpty()) {
-                    resultList.add(new MatchImpl(Set.of(), null));
-                    return resultList;
-                }
-                tmp.setCell(p, board.getCellAt(p));
-            }
-        }
-
-        for (int y = 0; y < tmp.getRows(); y++) {
-            for (int x = 0; x < tmp.getCols(); x++) {
-
-                p = new Position(x, y);
-                if (manager.findMatchesAt(this.swapRight(tmp, p), p) != null) {
-                    resultList.add(manager.findMatchesAt(tmp, p));
-                }
-                this.swapRight(tmp, p);
-
-                if (manager.findMatchesAt(this.swapDown(tmp, p), p) != null) {
-                    resultList.add(manager.findMatchesAt(tmp, p));
-                }
-                this.swapDown(tmp, p);
-
-                if (manager.findMatchesAt(this.swapLeft(tmp, p), p) != null) {
-                    resultList.add(manager.findMatchesAt(tmp, p));
-                }
-                this.swapLeft(tmp, p);
-
-                if (manager.findMatchesAt(this.swapUp(tmp, p), p) != null) {
-                    resultList.add(manager.findMatchesAt(tmp, p));
-                }
-                this.swapUp(tmp, p);
-
-            }
-        }
-
-        return resultList.stream()
-                        .filter(a -> a != null)
-                        .distinct()
-                        .toList();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Set<Position> getHint(final Board board) {
         final Set<Position> resultSet = new HashSet<>();
         final Match currentMatch;
@@ -218,6 +163,57 @@ public class StallEngineImpl implements StallEngine {
             tmp.swapCells(p, new Position(p.x(), p.y() - 1));
         }
         return tmp;
+    }
+
+    private List<Match> possibleMatches(final Board board) {
+
+        final Board tmp = new BoardImpl(board.getRows(), board.getCols());
+        final List<Match> resultList = new ArrayList<>();
+
+        Position p;
+
+        for (int y = 0; y < board.getRows(); y++) {
+            for (int x = 0; x < board.getCols(); x++) {
+                p = new Position(x, y);
+                if (board.getCellAt(p).isEmpty()) {
+                    resultList.add(new MatchImpl(Set.of(), null));
+                    return resultList;
+                }
+                tmp.setCell(p, board.getCellAt(p));
+            }
+        }
+
+        for (int y = 0; y < tmp.getRows(); y++) {
+            for (int x = 0; x < tmp.getCols(); x++) {
+
+                p = new Position(x, y);
+                if (manager.findMatchesAt(this.swapRight(tmp, p), p) != null) {
+                    resultList.add(manager.findMatchesAt(tmp, p));
+                }
+                this.swapRight(tmp, p);
+
+                if (manager.findMatchesAt(this.swapDown(tmp, p), p) != null) {
+                    resultList.add(manager.findMatchesAt(tmp, p));
+                }
+                this.swapDown(tmp, p);
+
+                if (manager.findMatchesAt(this.swapLeft(tmp, p), p) != null) {
+                    resultList.add(manager.findMatchesAt(tmp, p));
+                }
+                this.swapLeft(tmp, p);
+
+                if (manager.findMatchesAt(this.swapUp(tmp, p), p) != null) {
+                    resultList.add(manager.findMatchesAt(tmp, p));
+                }
+                this.swapUp(tmp, p);
+
+            }
+        }
+
+        return resultList.stream()
+                        .filter(a -> a != null)
+                        .distinct()
+                        .toList();
     }
 
     private void resolveIrreversibleStall(final Board board) {
