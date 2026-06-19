@@ -1,4 +1,4 @@
-![JavaCrush Gameplay](resources/gameBackground.png)
+![JavaCrush Gameplay](src/main/resources/gameBackground.png)
 
 # JavaCrush
 
