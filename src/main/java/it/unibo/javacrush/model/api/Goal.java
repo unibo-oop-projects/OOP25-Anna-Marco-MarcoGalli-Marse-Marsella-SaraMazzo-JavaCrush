@@ -36,7 +36,7 @@ public interface Goal {
     void addProgress(int count);
 
     /**
-     * Whether the goal is reached or not.
+     * Return whether the goal is reached or not.
      * 
      * @return true if the goal is reached, false otherwise
      */

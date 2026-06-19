@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AppController {
 
     /**
-     * Handles a specific event and executes the corresponding command.
+     * Handle a specific event and executes the corresponding command.
      * 
      * @param event the event to handle
      */
@@ -18,7 +18,8 @@ public interface AppController {
     /**
      * Get the current GameController, if present.
      * 
-     * @return an Optional containing the current GameController, or an empty Optional if there is no active game
+     * @return an Optional containing the current GameController, or an 
+     *      empty Optional if there is no active game
      */
     Optional<GameController> getCurrentGameController();
 

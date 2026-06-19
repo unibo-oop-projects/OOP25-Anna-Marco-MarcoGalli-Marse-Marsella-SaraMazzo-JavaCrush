@@ -2,6 +2,7 @@ package it.unibo.javacrush.view.impl;
 
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.controller.api.AppController;
 import it.unibo.javacrush.controller.api.Event;
@@ -28,7 +29,7 @@ public class MenuViewImpl implements MenuView {
      */
     public MenuViewImpl(final AppController controller) {
 
-        final String path = getClass().getResource("/menuBackground.png").toExternalForm();
+        final String path = MenuViewImpl.class.getResource("/menuBackground.png").toExternalForm();
 
         this.root = new VBox(SPACING);
         this.root.setAlignment(Pos.CENTER);
@@ -81,6 +82,11 @@ public class MenuViewImpl implements MenuView {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP", 
+        justification = "JavaFX requires returning the actual Node instance to attach it to the Scene graph."
+        + " Defensive copying is not applicable for UI components."
+    )
     @Override
     public Parent getView() {
         return this.root;

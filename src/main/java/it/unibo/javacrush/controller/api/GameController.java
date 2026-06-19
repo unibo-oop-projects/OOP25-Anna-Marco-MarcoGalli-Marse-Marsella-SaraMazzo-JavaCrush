@@ -16,10 +16,10 @@ public interface GameController {
     /**
      * Handle the click on the board.
      *  - normally it will select the cell and then deselect it if it's already selected
-     *  - if a powerUp was selected, it apply that on the clicked cell
+     *  - if a powerUp was selected, it applies that on the clicked cell
      *
      * @param pos the position of the cell clicked
-     * @return true if the cells are swapped, false otherwise
+     * @return true if the cells are swapped or the powerUp was applied, false otherwise
      */
     boolean hit(Position pos);
 
@@ -29,10 +29,10 @@ public interface GameController {
     void handleMatches();
 
     /**
-     * Apply the gravity to the board, updating eventual matches
+     * Apply the gravity to the board, updating eventual matches,
      * and solve the eventual stall.
      * 
-     * @return if the board was changed (previous time)
+     * @return true if the board state changed, false if it is stable
      */
     boolean applyGravity();
 
@@ -40,14 +40,14 @@ public interface GameController {
      * Select a powerUp based on its id.
      * 
      * @param id id of the powerUp
-     * @return false if the specified PowerUp doesn't exist, true otherwise
+     * @return true if the specified powerUp exists, false otherwise
      */
     boolean selectPowerUp(int id);
 
     /**
      * Reset the PowerUp selection.
      * 
-     * @return true if the reset went well, false otherwise.
+     * @return true if the reset went well, false otherwise
      */
     boolean resetPowerUpSelection();
 
@@ -104,14 +104,15 @@ public interface GameController {
     /**
      * Check if there is stall in the current board.
      * 
-     * @return true if there is stall, false otherwise.
+     * @return true if there is stall, false otherwise
      */
     boolean isStall();
 
     /**
      * Get a Set of Position of the cells of a possible match.
      * 
-     * @return a Set with the positions of the cells that could form a possible match.
+     * @return a Set with the positions of the cells that could 
+     *      form a possible match
      */
     Set<Position> getHint();
 

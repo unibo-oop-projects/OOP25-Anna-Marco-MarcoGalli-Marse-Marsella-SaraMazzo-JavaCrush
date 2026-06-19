@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.javacrush.common.AppEventType;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.GameState;
@@ -76,7 +77,7 @@ public class GameViewImpl implements GameView {
         this.root = new BorderPane();
         this.root.setPadding(new Insets(PADDING_SIZE));
 
-        final String bgpath = getClass().getResource("/gameBackground.png").toExternalForm();
+        final String bgpath = GameViewImpl.class.getResource("/gameBackground.png").toExternalForm();
         this.root.setStyle("-fx-background-image: url('" + bgpath + "'); "
                  + "-fx-background-size: cover; "
                  + "-fx-background-position: center; "
@@ -107,7 +108,7 @@ public class GameViewImpl implements GameView {
         for (final CellType type : CellType.values()) {
             final String path = "/" + type.toString().toLowerCase(Locale.ROOT) + ".png";
             try {
-                final URL imageUrl = getClass().getResource(path);
+                final URL imageUrl = GameViewImpl.class.getResource(path);
                 if (imageUrl != null) {
                     this.cellTypeImages.put(type, new Image(imageUrl.toExternalForm()));
                 } else {
@@ -205,6 +206,11 @@ public class GameViewImpl implements GameView {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP", 
+        justification = "JavaFX requires returning the actual Node instance to attach it to the Scene graph."
+        + " Defensive copying is not applicable for UI components."
+    )
     @Override
     public Parent getView() {
         return this.root;

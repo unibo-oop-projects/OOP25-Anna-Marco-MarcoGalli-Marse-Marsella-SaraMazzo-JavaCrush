@@ -61,6 +61,10 @@ dependencies {
 tasks.withType<Test>().configureEach {
     // Enables JUnit 5 Jupiter module
     useJUnitPlatform()
+
+    // Enable dynamic agent loading for Mockito to work properly
+    jvmArgs("-XX:+EnableDynamicAgentLoading", "-Xshare:off")
+
     testLogging {
         // Display all events
         events(*org.gradle.api.tasks.testing.logging.TestLogEvent.entries.toTypedArray())
@@ -69,7 +73,7 @@ tasks.withType<Test>().configureEach {
     }
 }
 
-val main = "Main"
+val main = "it.unibo.javacrush.Main"
 
 application {
     // Define the main class for the application

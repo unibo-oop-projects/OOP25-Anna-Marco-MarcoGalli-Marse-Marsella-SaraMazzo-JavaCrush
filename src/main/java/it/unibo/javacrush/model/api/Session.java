@@ -38,7 +38,8 @@ public interface Session {
     void updateGoals(CellType type, int count);
 
     /**
-     * The state of the game, whether if it is won, lost, or in progress.
+     * Return the state of the game, whether if it is won, lost,
+     * or in progress.
      * 
      * @return the game state
      */
