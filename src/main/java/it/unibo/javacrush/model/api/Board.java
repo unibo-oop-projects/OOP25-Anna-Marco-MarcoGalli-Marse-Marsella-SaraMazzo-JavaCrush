@@ -13,22 +13,30 @@ import it.unibo.javacrush.common.Position;
 public interface Board {
 
     /**
+     * Returns the number of rows in the board.
+     * 
      * @return the number of rows in the board.
      */
     int getRows();
 
     /**
+     * Returns the number of columns in the board.
+     * 
      * @return the number of columns in the board.
      */
     int getCols();
 
     /**
+     * Returns the cell at the specified position.
+     * 
      * @param pos the position of the cell to retrieve.
      * @return the cell at the specified position.
      */
     Optional<Cell> getCellAt(Position pos);
 
     /**
+     * Returns a Map containing all the cells in the board, mapped to their respective positions.
+     * 
      * @return the Map with all the cells mapped to all their positions.
      */
     Map<Position, Optional<Cell>> getGrid();
