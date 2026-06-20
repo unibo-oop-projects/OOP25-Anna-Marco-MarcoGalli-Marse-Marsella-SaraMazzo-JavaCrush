@@ -52,6 +52,7 @@ public class GameViewImpl implements GameView {
     private static final int QUIT_BUTTON_WIDTH = 80;
     private static final int PU_WIDTH = 200;
     private static final int PU_HEIGHT = 40;
+    private static final int DURATION = 10;
 
     private final Map<CellType, Image> cellTypeImages = new EnumMap<>(CellType.class);
     private final Map<Button, Position> gridMap = new HashMap<>();
@@ -446,13 +447,13 @@ public class GameViewImpl implements GameView {
                     @Override
                     protected Integer call() throws Exception {
                         int sec;
-                        for (sec = 0; sec < 10; sec++) {
+                        for (sec = 0; sec < DURATION; sec++) {
                             if (isCancelled()) {
                                 updateMessage("Cancelled");
                                 break;
                             }
                             updateMessage("Seconds " + sec);
-                            updateProgress(sec, 10);
+                            updateProgress(sec, DURATION);
 
                             try {
                                 Thread.sleep(1000);
