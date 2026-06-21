@@ -8,21 +8,21 @@ import it.unibo.javacrush.common.CellType;
 public interface Goal {
 
     /**
-     * The type of the goal (type of cells that need to be collected).
+     * Return the type of the goal (type of cells that need to be collected).
      * 
      * @return the type of the goal
      */
     CellType getTargetType();
 
     /**
-     * The amount of cells that need to be collected to achieve the goal.
+     * Return the amount of cells that need to be collected to achieve the goal.
      * 
      * @return the target amount of the goal
      */
     int getTargetAmount();
 
     /**
-     * The number of cells already collected for this specific goal.
+     * Return the number of cells already collected for this specific goal.
      * 
      * @return the number of cells already collected
      */
