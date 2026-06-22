@@ -43,6 +43,6 @@ public interface Session {
      * 
      * @return the game state
      */
-    GameState getGameStatus();
+    GameState getGameState();
 
 }

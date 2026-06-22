@@ -103,7 +103,7 @@ class SessionTest {
      */
     @Test
     void testGamePlaying() {
-        assertEquals(GameState.PLAYING, this.session.getGameStatus());
+        assertEquals(GameState.PLAYING, this.session.getGameState());
     }
 
     /**
@@ -147,7 +147,7 @@ class SessionTest {
         });
 
         assertTrue(this.session.getMovesLeft() > 0);
-        assertEquals(GameState.WON, this.session.getGameStatus());
+        assertEquals(GameState.WON, this.session.getGameState());
     }
 
     /**
@@ -166,6 +166,6 @@ class SessionTest {
 
         assertFalse(goalCompleted);
 
-        assertEquals(GameState.LOST, this.session.getGameStatus());
+        assertEquals(GameState.LOST, this.session.getGameState());
     }
 }
