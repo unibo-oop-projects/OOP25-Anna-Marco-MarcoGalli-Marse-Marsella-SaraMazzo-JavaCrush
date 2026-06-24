@@ -72,8 +72,7 @@ public class PowerUpManagerImpl implements PowerUpManager {
             && this.permission.get(this.selectedInt)
             && this.currentPow.applyPowerUp(board, pos)) {
 
-                this.permission.remove(this.selectedInt);
-                this.permission.add(this.selectedInt, false);
+                this.permission.set(this.selectedInt, false);
                 return true;
         }
 

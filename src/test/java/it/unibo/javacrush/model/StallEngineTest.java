@@ -49,16 +49,17 @@ class StallEngineTest {
     }
 
     /**
-     * Test that StallEngine throws ad Exception if the given board contains any null cell.
+     * Test that StallEngine does nothing if the given board contains any null cell.
      */
     @Test
     void testNoStallEmptyBoard() {
-        for (int y = 0; y < DIMENSION; y++) {
-            for (int x = 0; x < DIMENSION; x++) {
-                init.setCell(new Position(x, y), Optional.empty());
-                board.setCell(new Position(x, y), Optional.empty());
-            }
-        }
+        Position p = new Position(0, 0);
+
+        init.setCell(p, Optional.empty());
+        board.setCell(p, Optional.empty());
+
+        assertFalse(st.isStall(board));
+        assertEquals(init, board);
     }
 
     /**
