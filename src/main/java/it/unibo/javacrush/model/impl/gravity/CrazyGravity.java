@@ -60,13 +60,7 @@ public class CrazyGravity implements GravityEngine {
     }
 
     private GravityEngine getRandomStrategy() {
-        final List<GravityEngine> available = strategies.stream()
-                .filter(s -> s != currentStrategy)
-                .toList();
-        if (available.isEmpty()) {
-            return currentStrategy;
-        }
-        return available.get(random.nextInt(available.size()));
+        return strategies.get(random.nextInt(strategies.size()));
     }
 
     private boolean isBoardFull(final Board board) {
