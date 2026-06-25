@@ -135,7 +135,7 @@ public class GameControllerImpl implements GameController {
      */
     @Override
     public GameState updateGameState() {
-        return this.session.getGameStatus();
+        return this.session.getGameState();
     }
 
     /**

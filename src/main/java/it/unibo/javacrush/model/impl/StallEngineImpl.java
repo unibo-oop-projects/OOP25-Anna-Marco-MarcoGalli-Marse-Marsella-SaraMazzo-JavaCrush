@@ -224,6 +224,7 @@ public class StallEngineImpl implements StallEngine {
         }
 
         this.refill.refillAll(board);
+        this.resolveStall(board);
     }
 
 }

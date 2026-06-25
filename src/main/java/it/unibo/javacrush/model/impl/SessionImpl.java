@@ -78,7 +78,7 @@ public class SessionImpl implements Session {
      * {@inheritDoc}
      */
     @Override
-    public GameState getGameStatus() {
+    public GameState getGameState() {
         if (this.isGameWon()) {
             return GameState.WON;
         } else if (this.isGameLost()) {

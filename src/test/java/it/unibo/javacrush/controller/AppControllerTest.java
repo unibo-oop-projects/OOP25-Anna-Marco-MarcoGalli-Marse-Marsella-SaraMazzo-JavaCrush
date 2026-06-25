@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -123,7 +124,7 @@ class AppControllerTest {
         when(mockContext.getMoveEngine()).thenReturn(mock(MoveEngine.class));
         when(mockContext.getMatchManager()).thenReturn(mock(MatchManager.class));
         when(mockConfig.powerUpManager()).thenReturn(mock(PowerUpManager.class));
-        when(mockConfig.goals()).thenReturn(java.util.Map.of());
+        when(mockConfig.goals()).thenReturn(Map.of());
 
         when(levelManager.startMatch(LEVEL_NUMBER)).thenReturn(mockContext);
         final var startLevelEvent = new GameEvent(AppEventType.START_LEVEL, Optional.of(LEVEL_NUMBER));

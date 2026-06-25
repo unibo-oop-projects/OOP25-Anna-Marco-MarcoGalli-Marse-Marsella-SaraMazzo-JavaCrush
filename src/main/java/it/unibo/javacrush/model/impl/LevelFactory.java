@@ -22,12 +22,12 @@ public final class LevelFactory {
     private static final int ROWS_EASY = 12;
     private static final int ROWS_MEDIUM = 10;
     private static final int ROWS_HARD = 8;
-    private static final int ROWS_VERY_HARD = 4;
+    private static final int ROWS_VERY_HARD = 6;
 
     private static final int COLS_EASY = 12;
     private static final int COLS_MEDIUM = 10;
     private static final int COLS_HARD = 8;
-    private static final int COLS_VERY_HARD = 4;
+    private static final int COLS_VERY_HARD = 3;
 
     private static final int MOVES_EASY = 20;
     private static final int MOVES_MEDIUM = 15;

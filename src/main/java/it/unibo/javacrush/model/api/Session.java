@@ -11,7 +11,7 @@ import it.unibo.javacrush.common.GameState;
 public interface Session {
 
     /**
-     * The number of remaining moves.
+     * Return the number of remaining moves.
      * 
      * @return the number of moves
      */
@@ -23,7 +23,7 @@ public interface Session {
     void decreaseMoves();
 
     /**
-     * The updated goals of the game.
+     * Return the updated goals of the game.
      * 
      * @return an unmodifiable list with the updated goals of the game
      */
@@ -43,6 +43,6 @@ public interface Session {
      * 
      * @return the game state
      */
-    GameState getGameStatus();
+    GameState getGameState();
 
 }
