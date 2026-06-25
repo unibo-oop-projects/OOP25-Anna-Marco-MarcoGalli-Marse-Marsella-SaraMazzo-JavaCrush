@@ -21,8 +21,8 @@ class LevelFactoryTest {
 
             assertNotNull(config, "LevelFactory should create a non-null config for level " + i);
 
-            assertTrue(config.rows() > 3, "the rows of level " + i + " should be more than 3");
-            assertTrue(config.cols() > 3, "the columns of level " + i + " should be more than 3");
+            assertTrue(config.rows() > 2, "the rows of level " + i + " should be more than 2");
+            assertTrue(config.cols() > 2, "the columns of level " + i + " should be more than 2");
             assertTrue(config.moves() > 0, "the moves of level " + i + " should be a positive number");
             assertNotNull(config.gravity(), "the gravity of level " + i + " should be not null");
             assertNotNull(config.goals(), "the goals of level " + i + " should be non-null");

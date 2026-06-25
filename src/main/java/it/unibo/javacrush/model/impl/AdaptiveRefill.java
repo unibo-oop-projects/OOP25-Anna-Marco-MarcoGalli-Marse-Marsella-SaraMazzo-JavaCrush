@@ -14,22 +14,22 @@ import java.util.stream.IntStream;
  */
 public class AdaptiveRefill implements RefillEngine {
 
-        private final GravityEngine gravity;
+    private final GravityEngine gravity;
 
-        /**
-         * Constructs a new {@link AdaptiveRefill} instance with the specified gravity engine.
-         *
-         * @param gravity the gravity engine
-         */
-        public AdaptiveRefill(final GravityEngine gravity) {
-            this.gravity = gravity;
-        }
+    /**
+     * Constructs a new {@link AdaptiveRefill} instance with the specified gravity engine.
+     *
+     * @param gravity the gravity engine
+     */
+    public AdaptiveRefill(final GravityEngine gravity) {
+        this.gravity = gravity;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Boolean refill(final Board board) {
+    public boolean refill(final Board board) {
         final Direction dir = gravity.getDirection();
         final int rows = board.getRows();
         final int cols = board.getCols();

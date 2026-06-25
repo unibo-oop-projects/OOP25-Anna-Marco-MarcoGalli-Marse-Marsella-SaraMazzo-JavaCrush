@@ -20,7 +20,7 @@ public class UpwardGravity extends AbstractGravity {
      * {@inheritDoc}
      */
     @Override
-    public Boolean applyGravity(final Board board) {
+    public boolean applyGravity(final Board board) {
         boolean moved = false;
         for (int row = 1; row < board.getRows(); row++) {
             for (int col = 0; col < board.getCols(); col++) {

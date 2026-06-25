@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.javacrush.common.Direction;
+import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
 import it.unibo.javacrush.model.api.GravityEngine;
 
@@ -15,7 +16,7 @@ public class CrazyGravity implements GravityEngine {
     private GravityEngine currentStrategy;
     private final Random random = new Random();
     private final List<GravityEngine> strategies;
-    private boolean changeDirectionNext;
+    private boolean wasMovingInThisCascade;
 
     /**
      * Constructs a CrazyGravity instance with a list of gravity strategies.
@@ -35,13 +36,17 @@ public class CrazyGravity implements GravityEngine {
      * {@inheritDoc}
      */
     @Override
-    public Boolean applyGravity(final Board board) {
-        if (this.changeDirectionNext) {
-            this.currentStrategy = getRandomStrategy();
-        }
-
+    public boolean applyGravity(final Board board) {
         final boolean moved = currentStrategy.applyGravity(board);
-        this.changeDirectionNext = !moved;
+
+        if (moved) {
+            this.wasMovingInThisCascade = true;
+        } else {
+            if (isBoardFull(board) && this.wasMovingInThisCascade) {
+                this.currentStrategy = getRandomStrategy();
+                this.wasMovingInThisCascade = false;
+            }
+        }
 
         return moved;
     }
@@ -55,6 +60,23 @@ public class CrazyGravity implements GravityEngine {
     }
 
     private GravityEngine getRandomStrategy() {
-        return strategies.get(random.nextInt(strategies.size()));
+        final List<GravityEngine> available = strategies.stream()
+                .filter(s -> s != currentStrategy)
+                .toList();
+        if (available.isEmpty()) {
+            return currentStrategy;
+        }
+        return available.get(random.nextInt(available.size()));
+    }
+
+    private boolean isBoardFull(final Board board) {
+        for (int r = 0; r < board.getRows(); r++) {
+            for (int c = 0; c < board.getCols(); c++) {
+                if (board.getCellAt(new Position(c, r)).isEmpty()) {
+                    return false; // Trovato un buco, il refill sta ancora lavorando
+                }
+            }
+        }
+        return true; // La scacchiera è perfettamente piena
     }
 }

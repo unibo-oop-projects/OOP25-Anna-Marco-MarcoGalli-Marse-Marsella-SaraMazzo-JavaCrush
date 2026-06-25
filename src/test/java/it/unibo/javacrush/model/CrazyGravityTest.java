@@ -23,8 +23,6 @@ import it.unibo.javacrush.model.impl.gravity.UpwardGravity;
 
 class CrazyGravityTest {
 
-    private static final int TEST_ITERATIONS = 50;
-
     @Test
     void testEmpryListThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> new CrazyGravity(List.of()),
@@ -33,7 +31,6 @@ class CrazyGravityTest {
 
     @Test
     void testGravityChangesWhenStable() {
-
         final List<GravityEngine> strategies = List.of(new DownwardGravity(), new UpwardGravity());
         final CrazyGravity crazyGravity = new CrazyGravity(strategies);
         final Board board = new BoardImpl(8, 8);
@@ -41,18 +38,21 @@ class CrazyGravityTest {
         final Direction firstDir = crazyGravity.getDirection();
         assertNotNull(firstDir, "CrazyGravity should return a non-null direction");
 
+        board.setCell(new Position(4, 4), Optional.of(new CellImpl(CellType.getRandomType())));
         crazyGravity.applyGravity(board);
 
-        boolean changed = false;
-        for (int i = 0; i < TEST_ITERATIONS; i++) {
-            crazyGravity.applyGravity(board);
-                if (crazyGravity.getDirection() != firstDir) {
-                    changed = true;
-                    break;
-
+        for (int r = 0; r < board.getRows(); r++) {
+            for (int c = 0; c < board.getCols(); c++) {
+                if (board.getCellAt(new Position(c, r)).isEmpty()) {
+                    board.setCell(new Position(c, r), Optional.of(new CellImpl(CellType.getRandomType())));
                 }
+            }
         }
-        assertTrue(changed, "CrazyGravity should change direction when board is stable");
+
+        crazyGravity.applyGravity(board);
+
+        final boolean changed = crazyGravity.getDirection() != firstDir;
+        assertTrue(changed, "CrazyGravity should change direction when board is stable and full");
     }
 
     @Test

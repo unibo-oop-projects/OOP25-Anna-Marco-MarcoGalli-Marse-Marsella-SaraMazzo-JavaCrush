@@ -13,7 +13,7 @@ public interface RefillEngine {
      * @param board the board to refill
      * @return true if the board was changed, false otherwise
      */
-    Boolean refill(Board board);
+    boolean refill(Board board);
 
     /**
      * Refill the board, filling the empty cells with new random cells without checking for matches.

@@ -36,7 +36,7 @@ public abstract class AbstractGravity implements GravityEngine {
      * {@inheritDoc}
      */
     @Override
-    public abstract Boolean applyGravity(Board board);
+    public abstract boolean applyGravity(Board board);
 
     /**
      * Checks if the given position is within the bounds of the board.

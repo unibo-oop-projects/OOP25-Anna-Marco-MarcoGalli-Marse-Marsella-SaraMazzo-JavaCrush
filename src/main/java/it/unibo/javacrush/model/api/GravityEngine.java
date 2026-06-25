@@ -14,7 +14,7 @@ public interface GravityEngine {
      * 
      * @return true if any cell has moved, false otherwise
      */
-    Boolean applyGravity(Board board);
+    boolean applyGravity(Board board);
 
     /**
      * Get the current gravity direction.
