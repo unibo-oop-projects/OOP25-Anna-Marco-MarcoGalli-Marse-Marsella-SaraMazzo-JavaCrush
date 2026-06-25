@@ -53,7 +53,7 @@ class StallEngineTest {
      */
     @Test
     void testNoStallEmptyBoard() {
-        Position p = new Position(0, 0);
+        final Position p = new Position(0, 0);
 
         init.setCell(p, Optional.empty());
         board.setCell(p, Optional.empty());
