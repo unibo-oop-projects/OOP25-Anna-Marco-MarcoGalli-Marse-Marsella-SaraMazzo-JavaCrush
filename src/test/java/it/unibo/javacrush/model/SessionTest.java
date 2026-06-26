@@ -162,7 +162,7 @@ class SessionTest {
         assertEquals(0, this.session.getMovesLeft());
 
         final boolean goalCompleted = this.session.getGoals().stream()
-            .allMatch((goal -> goal != null && goal.isReached()));
+            .allMatch(goal -> goal != null && goal.isReached());
 
         assertFalse(goalCompleted);
 

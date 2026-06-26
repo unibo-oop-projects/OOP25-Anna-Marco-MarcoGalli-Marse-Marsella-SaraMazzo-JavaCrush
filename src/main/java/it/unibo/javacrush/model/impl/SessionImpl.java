@@ -94,7 +94,7 @@ public class SessionImpl implements Session {
      */
     private boolean isGameWon() {
         return this.goals.stream()
-            .allMatch((goal -> goal != null && goal.isReached()));
+            .allMatch(goal -> goal != null && goal.isReached());
     }
 
     /**
