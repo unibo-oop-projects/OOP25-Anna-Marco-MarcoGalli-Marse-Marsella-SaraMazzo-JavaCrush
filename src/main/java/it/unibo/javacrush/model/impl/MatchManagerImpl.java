@@ -7,7 +7,6 @@ import java.util.Set;
 import it.unibo.javacrush.common.CellType;
 import it.unibo.javacrush.common.Position;
 import it.unibo.javacrush.model.api.Board;
-import it.unibo.javacrush.model.api.Cell;
 import it.unibo.javacrush.model.api.Match;
 import it.unibo.javacrush.model.api.MatchManager;
 
@@ -81,7 +80,7 @@ public final class MatchManagerImpl implements MatchManager {
         int x = pos.x() - 1;
         while (isInBounds(board, x, y) 
                 && board.getCellAt(new Position(x, y))
-                        .map(Cell::getType)
+                        .map(cell -> cell != null ? cell.getType() : null)
                         .filter(type -> type == matchType)
                         .isPresent()) {
 
@@ -92,7 +91,7 @@ public final class MatchManagerImpl implements MatchManager {
         x = pos.x() + 1;
         while (isInBounds(board, x, y) 
                 && board.getCellAt(new Position(x, y))
-                        .map(Cell::getType)
+                        .map(cell -> cell != null ? cell.getType() : null)
                         .filter(type -> type == matchType)
                         .isPresent()) {
 
@@ -113,7 +112,7 @@ public final class MatchManagerImpl implements MatchManager {
         int y = pos.y() - 1;
         while (isInBounds(board, x, y) 
                 && board.getCellAt(new Position(x, y))
-                        .map(Cell::getType)
+                        .map(cell -> cell != null ? cell.getType() : null)
                         .filter(type -> type == matchType)
                         .isPresent()) {
 
@@ -124,7 +123,7 @@ public final class MatchManagerImpl implements MatchManager {
         y = pos.y() + 1;
         while (isInBounds(board, x, y) 
                 && board.getCellAt(new Position(x, y))
-                        .map(Cell::getType)
+                        .map(cell -> cell != null ? cell.getType() : null)
                         .filter(type -> type == matchType)
                         .isPresent()) {
 

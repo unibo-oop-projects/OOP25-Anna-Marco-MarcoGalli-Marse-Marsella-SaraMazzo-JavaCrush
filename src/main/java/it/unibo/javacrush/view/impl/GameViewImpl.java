@@ -295,7 +295,7 @@ public class GameViewImpl implements GameView {
                             }
                         });
 
-                        final KeyFrame frame = new KeyFrame(Duration.seconds(0.5), event -> {
+                        final KeyFrame frame = new KeyFrame(Duration.seconds(0.3), event -> {
 
                             final boolean isFalling = this.controller.applyGravity();
 
