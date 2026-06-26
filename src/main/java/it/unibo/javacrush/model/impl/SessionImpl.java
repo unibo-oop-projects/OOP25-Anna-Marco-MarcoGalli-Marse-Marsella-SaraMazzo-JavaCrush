@@ -93,7 +93,8 @@ public class SessionImpl implements Session {
      * @return true if all goals are reached, false otherwise
      */
     private boolean isGameWon() {
-        return this.goals.stream().allMatch(Goal::isReached);
+        return this.goals.stream()
+            .allMatch((goal -> goal != null && goal.isReached()));
     }
 
     /**
