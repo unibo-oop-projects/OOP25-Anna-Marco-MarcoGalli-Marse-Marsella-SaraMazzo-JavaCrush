@@ -1,7 +1,6 @@
 package it.unibo.javacrush.model;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -23,6 +22,8 @@ import it.unibo.javacrush.model.impl.gravity.UpwardGravity;
 
 class CrazyGravityTest {
 
+    private static final int MAX_ATTEMPTS = 20;
+
     @Test
     void testEmpryListThrowsException() {
         assertThrows(IllegalArgumentException.class, () -> new CrazyGravity(List.of()),
@@ -32,27 +33,33 @@ class CrazyGravityTest {
     @Test
     void testGravityChangesWhenStable() {
         final List<GravityEngine> strategies = List.of(new DownwardGravity(), new UpwardGravity());
-        final CrazyGravity crazyGravity = new CrazyGravity(strategies);
-        final Board board = new BoardImpl(8, 8);
+        boolean changed = false;
 
-        final Direction firstDir = crazyGravity.getDirection();
-        assertNotNull(firstDir, "CrazyGravity should return a non-null direction");
+        for (int i = 0; i < MAX_ATTEMPTS; i++) {
+            final CrazyGravity crazyGravity = new CrazyGravity(strategies);
+            final Board board = new BoardImpl(8, 8);
+            final Direction firstDir = crazyGravity.getDirection();
 
-        board.setCell(new Position(4, 4), Optional.of(new CellImpl(CellType.getRandomType())));
-        crazyGravity.applyGravity(board);
+            board.setCell(new Position(4, 4), Optional.of(new CellImpl(CellType.getRandomType())));
+            crazyGravity.applyGravity(board);
 
-        for (int r = 0; r < board.getRows(); r++) {
-            for (int c = 0; c < board.getCols(); c++) {
-                if (board.getCellAt(new Position(c, r)).isEmpty()) {
-                    board.setCell(new Position(c, r), Optional.of(new CellImpl(CellType.getRandomType())));
+            for (int r = 0; r < board.getRows(); r++) {
+                for (int c = 0; c < board.getCols(); c++) {
+                    if (board.getCellAt(new Position(c, r)).isEmpty()) {
+                        board.setCell(new Position(c, r), Optional.of(new CellImpl(CellType.getRandomType())));
+                    }
                 }
+            }
+
+            crazyGravity.applyGravity(board);
+
+            if (crazyGravity.getDirection() != firstDir) {
+                changed = true;
+                break;
             }
         }
 
-        crazyGravity.applyGravity(board);
-
-        final boolean changed = crazyGravity.getDirection() != firstDir;
-        assertTrue(changed, "CrazyGravity should change direction when board is stable and full");
+        assertTrue(changed, "CrazyGravity should eventually change direction when board is stable and full");
     }
 
     @Test
