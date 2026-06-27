@@ -83,7 +83,6 @@ public final class InstructionsViewImpl implements InstructionsView {
 
         instructionsBox.getChildren().addAll(matchesTitle, matchesBody);
 
-        
         final Text hintTitle = new Text("\nNeed a Hint?");
         hintTitle.setStyle(STYLE);
         final Label hintBody = new Label("If you can't find a match, don't worry! After a short period of inactivity, "
@@ -92,7 +91,7 @@ public final class InstructionsViewImpl implements InstructionsView {
         hintBody.setMaxWidth(MAX_WIDTH);
 
         instructionsBox.getChildren().addAll(hintTitle, hintBody);
-        
+
         final Text powerupsTitle = new Text("\nUnleash Power-Ups");
         powerupsTitle.setStyle(STYLE);
         final Label powerusBody = new Label("""
